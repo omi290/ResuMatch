@@ -1,1 +1,25 @@
-# Python package dependencies 
+# Web Framework
+flask
+flask-cors
+
+# Data Processing
+numpy
+pandas
+
+
+# NLP and Machine Learning
+nltk
+scikit-learn
+
+# Resume Parsing
+python-docx
+PyPDF2
+pdfplumber
+
+# Utils
+python-dotenv
+requests
+
+# HTML to PDF Resume Generation
+Jinja2
+WeasyPrint
