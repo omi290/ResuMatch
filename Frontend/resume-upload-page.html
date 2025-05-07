@@ -73,6 +73,7 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             padding: 30px;
+            position: relative;
         }
         
         .drop-area {
@@ -109,6 +110,7 @@
         
         .parsing-preview {
             margin-top: 30px;
+            display: none;
         }
         
         .preview-title {
@@ -124,10 +126,17 @@
             gap: 30px;
         }
         
+        @media (max-width: 768px) {
+            .preview-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
         .preview-section {
             background-color: #f9f9f9;
             border-radius: 6px;
             padding: 20px;
+            margin-bottom: 20px;
         }
         
         .section-title {
@@ -135,25 +144,13 @@
             margin-bottom: 15px;
             color: #333;
             font-size: 16px;
+            display: flex;
+            align-items: center;
         }
         
-        .skill-item, .exp-item, .edu-item {
-            background-color: #eee;
-            height: 12px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-        }
-        
-        .skill-item {
-            width: 80%;
-        }
-        
-        .exp-item-long {
-            width: 90%;
-        }
-        
-        .exp-item-short {
-            width: 60%;
+        .section-title i {
+            margin-right: 8px;
+            color: #3498db;
         }
         
         .actions {
@@ -186,16 +183,99 @@
             display: none; /* Initially hidden */
         }
         
-        .preview-visible .resume-info {
-            display: block;
-        }
-        
-        .preview-visible .drop-area {
-            padding: 30px 20px;
-        }
-        
         .header-actions a {
             text-decoration: none;
+            color: white;
+        }
+        
+        .skills-list, .experience-list, .education-list, .certifications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .skill-tag {
+            background-color: #e1f0fa;
+            color: #2980b9;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+            display: inline-block;
+            margin: 2px;
+        }
+
+        .experience-item, .education-item, .certification-item {
+            background-color: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid #3498db;
+            margin-bottom: 10px;
+        }
+
+        .experience-title, .education-title, .certification-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+
+        .experience-company, .education-school, .certification-issuer {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .experience-duration, .education-duration, .certification-date, .education-gpa {
+            color: #95a5a6;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+        
+        .experience-description {
+            margin-top: 8px;
+            color: #34495e;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        /* Status message */
+        .status-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Loading spinner */
+        .loading-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
     </style>
 </head>
@@ -218,118 +298,51 @@
                 <h3 class="drop-text">Drag & drop or browse</h3>
                 <p class="file-types">your resume PDF/DOCX</p>
             </div>
-            
-            <div class="parsing-preview" id="parsingPreview">
-                <h3 class="preview-title">Parsing Preview</h3>
-                <div class="preview-content">
-                    <div class="preview-section">
-                        <div class="section-title">Skills</div>
-                        <div class="skill-item"></div>
-                        <div class="skill-item"></div>
-                        <div class="skill-item"></div>
+            <div id="statusMessage" class="status-message"></div>
+            <div class="actions">
+                <button class="btn-primary" id="confirmBtn">Confirm & Continue</button>
+            </div>
+        </div>
+        
+        <div class="parsing-preview" id="parsingPreview">
+            <h3 class="preview-title">Resume Parsing Results</h3>
+            <div class="preview-content">
+                <div class="preview-section">
+                    <div class="section-title">
+                        <i>💪</i> Skills
                     </div>
-                    
-                    <div class="preview-section">
-                        <div class="section-title">Experience</div>
-                        <div class="exp-item exp-item-long"></div>
-                        <div class="exp-item exp-item-short"></div>
-                        <div class="exp-item exp-item-long"></div>
+                    <div id="skillsList" class="skills-list"></div>
+                </div>
+                
+                <div class="preview-section">
+                    <div class="section-title">
+                        <i>💼</i> Professional Experience
                     </div>
-                    
-                    <div class="preview-section">
-                        <div class="section-title">Education</div>
-                        <div class="edu-item"></div>
-                        <div class="edu-item"></div>
+                    <div id="experienceList" class="experience-list"></div>
+                </div>
+                
+                <div class="preview-section">
+                    <div class="section-title">
+                        <i>🎓</i> Education
                     </div>
+                    <div id="educationList" class="education-list"></div>
+                </div>
+                
+                <div class="preview-section" id="certificationsSection" style="display: none;">
+                    <div class="section-title">
+                        <i>🏆</i> Certifications
+                    </div>
+                    <div id="certificationsList" class="certifications-list"></div>
                 </div>
             </div>
             
-            <div class="actions">
-                <button class="btn-primary">Confirm & Continue</button>
+            <div class="actions" style="margin-top: 20px;">
+                <a href="job-matching-page.html" class="btn-primary">Find Matching Jobs</a>
             </div>
         </div>
     </div>
 
-    <script>
-        const dropArea = document.getElementById('dropArea');
-        const fileInput = document.getElementById('fileInput');
-        const parsingPreview = document.getElementById('parsingPreview');
-        
-        // Prevent default drag behaviors
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, preventDefaults, false);
-            document.body.addEventListener(eventName, preventDefaults, false);
-        });
-        
-        // Highlight drop area when item is dragged over it
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropArea.addEventListener(eventName, highlight, false);
-        });
-        
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, unhighlight, false);
-        });
-        
-        // Handle dropped files
-        dropArea.addEventListener('drop', handleDrop, false);
-        
-        // Handle selected files
-        fileInput.addEventListener('change', handleFiles, false);
-        
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        
-        function highlight() {
-            dropArea.style.borderColor = '#3498db';
-            dropArea.style.backgroundColor = '#f0f8ff';
-        }
-        
-        function unhighlight() {
-            dropArea.style.borderColor = '#ccc';
-            dropArea.style.backgroundColor = '#f9f9f9';
-        }
-        
-        function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            handleFiles(files);
-        }
-        
-        function handleFiles(files) {
-            const file = files.length ? files[0] : this.files[0];
-            if (file) {
-                // Show parsing preview
-                showParsingPreview();
-                
-                // Add success action to the confirm button
-                const confirmBtn = document.querySelector('.btn-primary');
-                if (confirmBtn) {
-                    confirmBtn.addEventListener('click', function() {
-                        alert('Resume uploaded successfully!');
-                        window.location.href = 'job-matching-page.html';
-                    });
-                }
-            }
-        }
-        
-        function showParsingPreview() {
-            // Just for the prototype - in a real app, you'd extract data from the file
-            document.querySelector('.upload-container').classList.add('preview-visible');
-            
-            // Animate the preview items to simulate parsing
-            const items = document.querySelectorAll('.skill-item, .exp-item, .edu-item');
-            items.forEach((item, index) => {
-                setTimeout(() => {
-                    item.style.backgroundColor = '#3498db';
-                }, index * 200);
-            });
-        }
-
-        document.querySelector('.header-actions .btn:last-child').addEventListener('click', function() {
-            alert('Help Center: For assistance with job matching, resume generation, or resume uploads, please contact support@resumatch.com');
-        });
-    </script>
+    <!-- Import the updated JavaScript -->
+    <script src="resume-upload.js"></script>
 </body>
 </html>
