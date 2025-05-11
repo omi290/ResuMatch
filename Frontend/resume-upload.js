@@ -249,14 +249,29 @@ document.addEventListener('DOMContentLoaded', function() {
         // Display education
         const educationList = document.getElementById('educationList');
         if (data.education && data.education.length > 0) {
-            educationList.innerHTML = data.education.map(edu => `
-                <div class="education-item">
-                    <div class="education-title">${edu.degree || 'Degree'}</div>
-                    <div class="education-school">${edu.school || 'School'}</div>
-                    <div class="education-duration">${edu.duration || 'Duration'}</div>
-                    ${edu.gpa ? `<div class="education-gpa">GPA: ${edu.gpa}</div>` : ''}
-                </div>
-            `).join('');
+            educationList.innerHTML = data.education.map(edu => {
+                // Fallbacks for CGPA/Percentage in degree/description
+                let cgpaText = edu.cgpa || '';
+                let percentageText = edu.percentage || '';
+                if (!cgpaText && edu.degree && edu.degree.toLowerCase().includes('cgpa')) cgpaText = edu.degree;
+                if (!cgpaText && edu.description && edu.description.toLowerCase().includes('cgpa')) cgpaText = edu.description;
+                if (!percentageText && edu.degree && edu.degree.toLowerCase().includes('percentage')) percentageText = edu.degree;
+                if (!percentageText && edu.description && edu.description.toLowerCase().includes('percentage')) percentageText = edu.description;
+
+                return `
+                    <div class="education-item">
+                        <div class="education-title">${edu.degree || ''}</div>
+                        ${edu.specialization ? `<div class="education-specialization">${edu.specialization}</div>` : ''}
+                        <div class="education-school">${edu.school || ''}</div>
+                        ${edu.year ? `<div class="education-year">${edu.year}</div>` : ''}
+                        ${edu.duration ? `<div class="education-duration">${edu.duration}</div>` : ''}
+                        ${percentageText ? `<div class="education-percentage">Percentage: ${percentageText.replace(/percentage:?/i, '').trim()}</div>` : ''}
+                        ${cgpaText ? `<div class="education-cgpa">CGPA: ${cgpaText.replace(/cgpa:?/i, '').trim()}</div>` : ''}
+                        ${edu.gpa ? `<div class="education-gpa">GPA: ${edu.gpa}</div>` : ''}
+                        ${edu.description ? `<div class="education-description">${edu.description}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
         } else {
             educationList.innerHTML = '<p>No education found</p>';
         }

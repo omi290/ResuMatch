@@ -1,483 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ResuMatch - Job Matching</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body { 
-            background-color: #f5f5f5;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        
-        .logo span {
-            color: #3498db;
-        }
-        
-        .header-title {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        
-        .header-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .btn {
-            padding: 8px 16px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s;
-        }
-        
-        .btn:hover {
-            background-color: #2980b9;
-        }
-        
-        .search-container {
-            margin-top: 30px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 20px;
-        }
-        
-        .search-box {
-            position: relative;
-            margin-bottom: 30px;
-        }
-        
-        .search-input {
-            width: 100%;
-            padding: 12px 20px 12px 45px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 30px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        
-        .search-input:focus {
-            border-color: #3498db;
-        }
-        
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #777;
-            font-size: 18px;
-        }
-        
-        .jobs-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        
-        .job-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 20px;
-            border: 1px solid #eee;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .job-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .job-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-        
-        .job-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 5px;
-        }
-        
-        .job-company {
-            color: #7f8c8d;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .match-score {
-            background-color: #e1f5fe;
-            color: #0288d1;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-        }
-        
-        .high-match {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-        }
-        
-        .medium-match {
-            background-color: #fff8e1;
-            color: #ff8f00;
-        }
-        
-        .low-match {
-            background-color: #ffebee;
-            color: #c62828;
-        }
-        
-        .job-skills {
-            margin-top: 15px;
-        }
-        
-        .skills-title {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #555;
-        }
-        
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .skill-item {
-            background-color: #f0f0f0;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            color: #555;
-        }
-        
-        .matching-skill {
-            background-color: #e1f5fe;
-            color: #0288d1;
-        }
-        
-        .job-actions {
-            margin-top: 20px;
-            display: flex;
-            justify-content: flex-end;
-        }
-        
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-            gap: 5px;
-        }
-        
-        .page-item {
-            width: 35px;
-            height: 35px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-        
-        .page-item:hover {
-            background-color: #f0f0f0;
-        }
-        
-        .page-item.active {
-            background-color: #3498db;
-            color: white;
-            border-color: #3498db;
-        }
-        
-        .page-nav {
-            padding: 0 10px;
-        }
-        
-        .no-match-message {
-            text-align: center;
-            padding: 40px 0;
-            color: #7f8c8d;
-        }
-        
-        @media (max-width: 768px) {
-            .jobs-container {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .header-actions a {
-            text-decoration: none;
-        }
-        
-        .logo {
-            text-decoration: none;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ResuMatch - Job Matching</title>
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2c3e50;
+      text-decoration: none;
+    }
+    .logo span {
+      color: #3498db;
+    }
+    .btn {
+      padding: 8px 16px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .jobs-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .job-card {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      border: 1px solid #ddd;
+    }
+    .job-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+    .job-company {
+      font-size: 14px;
+      color: #7f8c8d;
+      margin-top: 4px;
+    }
+    .job-skills {
+      margin-top: 15px;
+    }
+    .skills-title {
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 8px;
+    }
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .skill-item {
+      background-color: #e1f0fa;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .job-actions {
+      margin-top: 15px;
+    }
+    .no-match-message {
+      text-align: center;
+      margin-top: 40px;
+      color: #999;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <a href="job-matching-page.html" class="logo">Resu<span>Match</span></a>
-            <div class="header-title">Job Matching</div>
-            <div class="header-actions">
-                <a href="resume-upload-page.html" class="btn">Upload Resume</a>
-                <a href="resume-generation-page.html" class="btn">Generate Resume</a>
-                <button class="btn">Help</button>
-            </div>
-        </div>
-        
-        <div class="search-container">
-            <div class="search-box">
-                <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" placeholder="Search jobs by title, location, keywords...">
-            </div>
-            
-            <div class="jobs-container">
-                <!-- Job Card 1 - High Match -->
-                <div class="job-card">
-                    <div class="job-header">
-                        <div>
-                            <h3 class="job-title">Full Stack Developer</h3>
-                            <div class="job-company">TechCorp Inc.</div>
-                        </div>
-                        <div class="match-score high-match">87% Match</div>
-                    </div>
-                    
-                    <div class="job-skills">
-                        <div class="skills-title">Required Skills</div>
-                        <div class="skills-list">
-                            <span class="skill-item matching-skill">JavaScript</span>
-                            <span class="skill-item matching-skill">React</span>
-                            <span class="skill-item matching-skill">Node.js</span>
-                            <span class="skill-item">MongoDB</span>
-                            <span class="skill-item matching-skill">Git</span>
-                        </div>
-                    </div>
-                    
-                    <div class="job-actions">
-                        <button class="btn">Generate Resume for this Job</button>
-                    </div>
-                </div>
-                
-                <!-- Job Card 2 - Medium Match -->
-                <div class="job-card">
-                    <div class="job-header">
-                        <div>
-                            <h3 class="job-title">Frontend Developer</h3>
-                            <div class="job-company">WebSolutions Ltd.</div>
-                        </div>
-                        <div class="match-score medium-match">65% Match</div>
-                    </div>
-                    
-                    <div class="job-skills">
-                        <div class="skills-title">Required Skills</div>
-                        <div class="skills-list">
-                            <span class="skill-item matching-skill">HTML/CSS</span>
-                            <span class="skill-item matching-skill">JavaScript</span>
-                            <span class="skill-item">Vue.js</span>
-                            <span class="skill-item">SASS</span>
-                            <span class="skill-item matching-skill">Responsive Design</span>
-                        </div>
-                    </div>
-                    
-                    <div class="job-actions">
-                        <button class="btn">Generate Resume for this Job</button>
-                    </div>
-                </div>
-                
-                <!-- Job Card 3 - High Match -->
-                <div class="job-card">
-                    <div class="job-header">
-                        <div>
-                            <h3 class="job-title">React Developer</h3>
-                            <div class="job-company">App Innovate</div>
-                        </div>
-                        <div class="match-score high-match">92% Match</div>
-                    </div>
-                    
-                    <div class="job-skills">
-                        <div class="skills-title">Required Skills</div>
-                        <div class="skills-list">
-                            <span class="skill-item matching-skill">React</span>
-                            <span class="skill-item matching-skill">Redux</span>
-                            <span class="skill-item matching-skill">JavaScript</span>
-                            <span class="skill-item matching-skill">RESTful APIs</span>
-                            <span class="skill-item">GraphQL</span>
-                        </div>
-                    </div>
-                    
-                    <div class="job-actions">
-                        <button class="btn">Generate Resume for this Job</button>
-                    </div>
-                </div>
-                
-                <!-- Job Card 4 - Low Match -->
-                <div class="job-card">
-                    <div class="job-header">
-                        <div>
-                            <h3 class="job-title">DevOps Engineer</h3>
-                            <div class="job-company">CloudSys Technologies</div>
-                        </div>
-                        <div class="match-score low-match">35% Match</div>
-                    </div>
-                    
-                    <div class="job-skills">
-                        <div class="skills-title">Required Skills</div>
-                        <div class="skills-list">
-                            <span class="skill-item">AWS</span>
-                            <span class="skill-item">Docker</span>
-                            <span class="skill-item matching-skill">Linux</span>
-                            <span class="skill-item">Kubernetes</span>
-                            <span class="skill-item">CI/CD</span>
-                        </div>
-                    </div>
-                    
-                    <div class="job-actions">
-                        <button class="btn">Generate Resume for this Job</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="pagination">
-                <div class="page-item page-nav">«</div>
-                <div class="page-item active">1</div>
-                <div class="page-item">2</div>
-                <div class="page-item">3</div>
-                <div class="page-item">4</div>
-                <div class="page-item page-nav">»</div>
-            </div>
-        </div>
+  <div class="container">
+    <div class="header">
+      <a href="job-matching-page.html" class="logo">Resu<span>Match</span></a>
+      <div class="header-actions">
+        <a href="resume-upload-page.html" class="btn">Upload Resume</a>
+        <a href="resume-generation-page.html" class="btn">Generate Resume</a>
+      </div>
     </div>
+    <div class="jobs-container">
+      <p>Loading jobs...</p>
+    </div>
+  </div>
 
-    <script>
-        // Simple search functionality
-        const searchInput = document.querySelector('.search-input');
-        const jobCards = document.querySelectorAll('.job-card');
-        
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            
-            jobCards.forEach(card => {
-                const title = card.querySelector('.job-title').textContent.toLowerCase();
-                const company = card.querySelector('.job-company').textContent.toLowerCase();
-                const skills = Array.from(card.querySelectorAll('.skill-item'))
-                    .map(skill => skill.textContent.toLowerCase());
-                
-                const isVisible = 
-                    title.includes(searchTerm) || 
-                    company.includes(searchTerm) || 
-                    skills.some(skill => skill.includes(searchTerm));
-                
-                card.style.display = isVisible ? 'block' : 'none';
-            });
-            
-            // Check if no jobs match the search
-            const visibleJobs = document.querySelectorAll('.job-card[style="display: block"]');
-            const jobsContainer = document.querySelector('.jobs-container');
-            
-            // Remove previous "no matches" message if it exists
-            const prevNoMatch = document.querySelector('.no-match-message');
-            if (prevNoMatch) {
-                prevNoMatch.remove();
-            }
-            
-            // Show "no matches" message if needed
-            if (visibleJobs.length === 0 && searchTerm !== '') {
-                const noMatchMessage = document.createElement('div');
-                noMatchMessage.className = 'no-match-message';
-                noMatchMessage.textContent = 'No jobs match your search criteria.';
-                jobsContainer.appendChild(noMatchMessage);
-            }
+  <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      const container = document.querySelector('.jobs-container');
+      container.innerHTML = '<p>Loading jobs...</p>';
+
+      try {
+        const parsed = JSON.parse(localStorage.getItem('parsedResume') || '{}');
+        const skills = parsed.skills || [];
+        const query = skills.join(' ') || 'developer';
+
+        const response = await fetch(`/external-jobs?q=${encodeURIComponent(query)}`);
+        const jobs = await response.json();
+
+        if (!Array.isArray(jobs)) throw new Error(jobs.error || 'No jobs received');
+
+        if (jobs.length === 0) {
+          container.innerHTML = '<div class="no-match-message">No matching jobs found.</div>';
+          return;
+        }
+
+        container.innerHTML = '';
+        jobs.forEach(job => {
+          const jobHTML = `
+            <div class="job-card">
+              <div class="job-title">${job.title}</div>
+              <div class="job-company">${job.company_name}</div>
+              <div class="job-skills">
+                <div class="skills-title">Required Skills</div>
+                <div class="skills-list">
+                  ${(job.tags || []).map(tag => `<span class="skill-item">${tag}</span>`).join('')}
+                </div>
+              </div>
+              <div class="job-actions">
+                <a href="${job.url}" target="_blank" class="btn">Apply Now</a>
+              </div>
+            </div>
+          `;
+          container.insertAdjacentHTML('beforeend', jobHTML);
         });
-        
-        // Generate Resume button functionality
-        const generateButtons = document.querySelectorAll('.job-actions .btn');
-        generateButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const jobCard = this.closest('.job-card');
-                const jobTitle = jobCard.querySelector('.job-title').textContent;
-                const company = jobCard.querySelector('.job-company').textContent;
-                
-                // Add loading state
-                const originalText = this.textContent;
-                this.textContent = 'Preparing...';
-                this.disabled = true;
-                
-                // Simulate a short delay before redirecting
-                setTimeout(() => {
-                    window.location.href = `resume-generation-page.html?job=${encodeURIComponent(jobTitle)}&company=${encodeURIComponent(company)}`;
-                }, 500);
-            });
-        });
-        
-        // Pagination functionality
-        const pageItems = document.querySelectorAll('.page-item');
-        pageItems.forEach(item => {
-            item.addEventListener('click', function() {
-                // Reset active state
-                document.querySelector('.page-item.active')?.classList.remove('active');
-                
-                // Set active state if it's a number
-                if (!this.classList.contains('page-nav')) {
-                    this.classList.add('active');
-                }
-                
-                // In a real application, this would load different job listings
-                // For demo purposes, we'll just scroll to top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
-        
-        // Help button functionality
-        document.querySelector('.header-actions .btn:last-child').addEventListener('click', function() {
-            alert('Help Center: For assistance with job matching, resume generation, or resume uploads, please contact support@resumatch.com');
-        });
-    </script>
+      } catch (err) {
+        console.error('Error loading jobs:', err);
+        container.innerHTML = '<div class="no-match-message">Failed to load jobs. Try again later.</div>';
+      }
+    });
+  </script>
 </body>
 </html>

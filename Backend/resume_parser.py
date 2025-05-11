@@ -180,64 +180,74 @@ def parse_experience_section(experience_lines):
     return experience_entries
 
 def parse_education_section(education_lines):
-    """Parse the education section to extract education entries"""
+    """Parse the education section to extract grouped education entries"""
     if not education_lines:
         return []
-    
+
     education_entries = []
     current_entry = {}
-    date_pattern = r'\b(19|20)\d{2}\s*(-|–|to|till|until|\s)\s*(19|20)?\d{0,2}|^(19|20)\d{2}$'
-    
-    for i, line in enumerate(education_lines):
-        # Check if this line contains a date range
-        date_match = re.search(date_pattern, line)
-        
-        # If we have a date or this is the first line of a new entry
-        if date_match or (i > 0 and len(line) < 80 and not line.startswith('•') and not line.startswith('-')):
-            # Save the previous entry if it exists
-            if current_entry and 'degree' in current_entry:
+    degree_keywords = ["grade", "bachelor", "master", "phd", "diploma", "specialization"]
+    percentage_keywords = ["percentage", "%"]
+    cgpa_keywords = ["cgpa", "gpa"]
+    school_keywords = ["school", "university", "college", "institute"]
+    year_pattern = r"(19|20)\\d{2}"
+
+    def is_degree(line):
+        return any(k in line.lower() for k in degree_keywords)
+
+    def is_percentage(line):
+        return any(k in line.lower() for k in percentage_keywords)
+
+    def is_cgpa(line):
+        return any(k in line.lower() for k in cgpa_keywords)
+
+    def is_school(line):
+        return any(k in line.lower() for k in school_keywords)
+
+    def is_year(line):
+        return bool(re.search(year_pattern, line))
+
+    for line in education_lines:
+        line = line.strip()
+        if not line:
+            continue
+        # Start a new entry if we see a degree/level
+        if is_degree(line):
+            if current_entry:
                 education_entries.append(current_entry)
                 current_entry = {}
-            
-            # Start a new entry
-            if date_match:
-                duration = line
-                degree_line = education_lines[i-1] if i > 0 else ""
-                school_line = education_lines[i-2] if i > 1 else ""
-                
-                current_entry = {
-                    "degree": degree_line.strip(),
-                    "school": school_line.strip(),
-                    "duration": duration.strip()
-                }
+            current_entry["degree"] = line
+        elif is_school(line):
+            current_entry["school"] = line
+        elif is_percentage(line):
+            current_entry["percentage"] = line
+        elif is_cgpa(line):
+            current_entry["cgpa"] = line
+        elif is_year(line):
+            # If the line contains both school and year, split them
+            if "|" in line:
+                parts = [p.strip() for p in line.split("|")]
+                if len(parts) == 2:
+                    if is_school(parts[0]):
+                        current_entry["school"] = parts[0]
+                    current_entry["year"] = parts[1]
+                else:
+                    current_entry["year"] = line
             else:
-                # Assume this is a new degree name
-                current_entry = {
-                    "degree": line.strip(),
-                    "school": "",
-                    "duration": ""
-                }
-        
-        # If the current line seems to be a school name (after a degree)
-        elif current_entry and 'degree' in current_entry and not current_entry.get('school') and len(line) < 80:
-            current_entry["school"] = line.strip()
-        
-        # If the current line seems to be a date range (after a school name)
-        elif current_entry and 'school' in current_entry and not current_entry.get('duration') and date_match:
-            current_entry["duration"] = line.strip()
-    
-    # Add the last entry if it exists
-    if current_entry and 'degree' in current_entry:
+                current_entry["year"] = line
+        else:
+            # If the line doesn't match any, try to add as specialization or extra info
+            if "specialization" in line.lower():
+                current_entry["specialization"] = line
+            else:
+                # fallback: add as description
+                if "description" in current_entry:
+                    current_entry["description"] += " " + line
+                else:
+                    current_entry["description"] = line
+    # Add the last entry
+    if current_entry:
         education_entries.append(current_entry)
-    
-    # If we couldn't parse any entries but have lines, create a simple entry
-    if not education_entries and education_lines:
-        education_entries = [{
-            "degree": education_lines[0] if len(education_lines) > 0 else "Bachelor's Degree",
-            "school": education_lines[1] if len(education_lines) > 1 else "University",
-            "duration": education_lines[2] if len(education_lines) > 2 else "2018 - 2022"
-        }]
-    
     return education_entries
 
 def extract_skills(text, skills_section):

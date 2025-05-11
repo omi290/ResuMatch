@@ -1,0 +1,51 @@
+{
+  "data": {
+    "document": {
+      "name": "Om Prakash Barmola",
+      "email": "omp723033@gmail.com",
+      "skills": [
+        "Python",
+        "Leadership",
+        "Teamwork",
+        "Data Analysis",
+        "Machine Learning",
+        "Artificial Intelligence"
+      ],
+      "experience": [],
+      "education": [
+        {
+          "degree": "Bachelor of Technology (B.Tech) in Computer Science and Engineering"
+        },
+        {
+          "degree": "Specialization: Artificial Intelligence and Data Science",
+          "school": "Graphic Era Hill University, Dehradun",
+          "description": "2023 – 2027"
+        },
+        {
+          "degree": "12th Grade",
+          "school": "Doon Heritage School, Dehradun",
+          "description": "2022",
+          "percentage": "Percentage: 82.50%"
+        },
+        {
+          "degree": "10th Grade",
+          "school": "Mnemonic Convent School, Haldwani",
+          "description": "2020",
+          "percentage": "Percentage: 84.33%"
+        }
+      ],
+      "additional_sections": {
+        "certifications": [
+          "- Google cloud computing foundations on Nptel."
+        ],
+        "extracurricular": [
+          "- Active participant in cricket tournaments, showcasing leadership and teamwork.",
+          "Hobbies",
+          "- Exploring new technologies and coding solutions.",
+          "- Watching movies and webseries.",
+          "- Playing cricket to enhance teamwork and leadership."
+        ]
+      }
+    }
+  }
+}

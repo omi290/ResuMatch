@@ -23,3 +23,6 @@ requests
 # HTML to PDF Resume Generation
 Jinja2
 WeasyPrint
+
+reportlab
+certifi 

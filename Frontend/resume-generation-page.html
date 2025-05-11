@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ResuMatch - Resume Generation</title>
-    <style> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -63,6 +64,14 @@
         
         .btn:hover {
             background-color: #2980b9;
+        }
+        
+        .btn-danger {
+            background-color: #e74c3c;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
         }
         
         .resume-container {
@@ -234,6 +243,7 @@
             padding: 15px;
             background-color: #f9f9f9;
             border-radius: 6px;
+            display: none; /* Hidden by default */
         }
         
         .matching-skills-title {
@@ -348,6 +358,25 @@
             gap: 15px;
         }
         
+        .education-entry {
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .remove-education {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #e74c3c;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
         @media (max-width: 768px) {
             .templates-grid {
                 grid-template-columns: 1fr 1fr;
@@ -365,7 +394,6 @@
             }
         }
         
-        /* Mock resume layout styles for template previews */
         .template-lines {
             width: 80%;
             height: 8px;
@@ -426,40 +454,69 @@
             <h2 class="section-title">Choose a template</h2>
             
             <div class="templates-grid">
-                <!-- Template 1: Professional -->
+                <!-- Professional Template Preview -->
                 <div class="template-card" data-template="professional">
-                    <div class="template-preview">
-                        <div class="template-lines"></div>
-                        <div class="template-lines"></div>
-                        <div class="template-lines template-short"></div>
-                        <div class="template-lines"></div>
-                        <div class="template-lines template-short"></div>
+                    <div class="template-preview professional-preview" style="width: 180px; height: 240px; background: #fff; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 6px #0001; position: relative;">
+                        <div style="display: flex; align-items: center; padding: 10px 12px 0 12px;">
+                            <div style="width: 36px; height: 36px; border-radius: 50%; background: #eee url('https://randomuser.me/api/portraits/men/32.jpg') center/cover; margin-right: 10px;"></div>
+                            <div>
+                                <div style="font-weight: bold; font-size: 15px; color: #222;">John Doe</div>
+                                <div style="font-size: 10px; color: #888;">Web Developer</div>
+                            </div>
+                        </div>
+                        <div style="padding: 8px 12px 0 12px;">
+                            <div style="font-size: 9px; color: #666; margin-bottom: 4px;">Profile</div>
+                            <div style="font-size: 10px; color: #444; margin-bottom: 8px;">Creative developer with 5+ years of experience...</div>
+                            <div style="display: flex;">
+                                <div style="width: 60%;">
+                                    <div style="font-size: 9px; color: #666; margin-bottom: 2px;">Employment History</div>
+                                    <div style="font-size: 10px; color: #444;">Company A<br>Company B</div>
+                                </div>
+                                <div style="width: 40%; padding-left: 6px;">
+                                    <div style="font-size: 9px; color: #666; margin-bottom: 2px;">Skills</div>
+                                    <div style="font-size: 10px; color: #444;">JS, React, Node</div>
+                                </div>
+                            </div>
+                            <div style="font-size: 9px; color: #666; margin-top: 8px;">Education</div>
+                            <div style="font-size: 10px; color: #444;">B.Tech, 2023</div>
+                        </div>
                     </div>
                     <div class="template-name">Professional</div>
                 </div>
-                
-                <!-- Template 2: Modern -->
+                <!-- Modern Template Preview -->
                 <div class="template-card selected" data-template="modern">
-                    <div class="template-preview template-modern">
-                        <div class="template-modern-sidebar"></div>
-                        <div class="template-modern-content">
-                            <div class="template-lines"></div>
-                            <div class="template-lines template-short"></div>
-                            <div class="template-lines"></div>
-                            <div class="template-lines template-short"></div>
+                    <div class="template-preview modern-preview" style="width: 180px; height: 240px; background: #fff; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 6px #0001; position: relative; display: flex;">
+                        <div style="width: 48px; background: #2c3e50; color: #fff; padding: 10px 0; display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: 32px; height: 32px; border-radius: 50%; background: #eee url('https://randomuser.me/api/portraits/women/44.jpg') center/cover; margin-bottom: 8px;"></div>
+                            <div style="font-size: 9px; font-weight: bold; margin-bottom: 4px;">Skills</div>
+                            <div style="font-size: 8px;">JS<br>React<br>Node</div>
+                        </div>
+                        <div style="flex: 1; padding: 10px 10px 0 10px;">
+                            <div style="font-weight: bold; font-size: 14px; color: #222;">Jane Smith</div>
+                            <div style="font-size: 9px; color: #888; margin-bottom: 6px;">Full Stack Dev</div>
+                            <div style="font-size: 9px; color: #666; margin-bottom: 2px;">Profile</div>
+                            <div style="font-size: 10px; color: #444; margin-bottom: 6px;">Passionate coder and team player...</div>
+                            <div style="font-size: 9px; color: #666; margin-bottom: 2px;">Experience</div>
+                            <div style="font-size: 10px; color: #444;">Company X</div>
+                            <div style="font-size: 9px; color: #666; margin-top: 6px;">Education</div>
+                            <div style="font-size: 10px; color: #444;">M.Sc, 2022</div>
                         </div>
                     </div>
                     <div class="template-name">Modern</div>
                 </div>
-                
-                <!-- Template 3: Minimalist -->
+                <!-- Minimalist Template Preview -->
                 <div class="template-card" data-template="minimalist">
-                    <div class="template-preview template-minimalist">
-                        <div class="template-minimalist-header"></div>
-                        <div class="template-lines"></div>
-                        <div class="template-lines template-short"></div>
-                        <div class="template-lines"></div>
-                        <div class="template-lines template-short"></div>
+                    <div class="template-preview minimalist-preview" style="width: 180px; height: 240px; background: #fff; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 6px #0001; position: relative;">
+                        <div style="background: #3498db; color: #fff; text-align: center; padding: 10px 0 6px 0; font-weight: bold; font-size: 15px;">Alex Brown</div>
+                        <div style="text-align: center; font-size: 10px; color: #888; margin-bottom: 8px;">alex@email.com</div>
+                        <div style="padding: 0 12px;">
+                            <div style="font-size: 9px; color: #666; margin-bottom: 2px;">Profile</div>
+                            <div style="font-size: 10px; color: #444; margin-bottom: 8px;">Detail-oriented and creative...</div>
+                            <div style="font-size: 9px; color: #666; margin-bottom: 2px;">Experience</div>
+                            <div style="font-size: 10px; color: #444;">Startup Y</div>
+                            <div style="font-size: 9px; color: #666; margin-top: 8px;">Skills</div>
+                            <div style="font-size: 10px; color: #444;">Python, SQL, Figma</div>
+                        </div>
                     </div>
                     <div class="template-name">Minimalist</div>
                 </div>
@@ -467,7 +524,8 @@
             
             <div class="editor-container">
                 <div class="sections-sidebar">
-                    <div class="section-item active" data-section="education">Education</div>
+                    <div class="section-item active" data-section="personal-info">Personal Information</div>
+                    <div class="section-item" data-section="education">Education</div>
                     <div class="section-item" data-section="experience">Experience</div>
                     <div class="section-item" data-section="skills">Skills</div>
                     <div class="section-item" data-section="summary">Professional Summary</div>
@@ -475,77 +533,65 @@
                 </div>
                 
                 <div class="content-editor">
-                    <!-- Skills section (shown by default) -->
-                    <div class="section-content" id="skills-section">
-                        <h3 class="section-title">Skills</h3>
-                        
-                        <div class="skills-container">
-                            <div class="skill-tag matching-skill-tag">JavaScript <span class="remove-skill">&times;</span></div>
-                            <div class="skill-tag matching-skill-tag">React <span class="remove-skill">&times;</span></div>
-                            <div class="skill-tag matching-skill-tag">Node.js <span class="remove-skill">&times;</span></div>
-                            <div class="skill-tag">HTML/CSS <span class="remove-skill">&times;</span></div>
-                            <div class="skill-tag">Git <span class="remove-skill">&times;</span></div>
-                            <div class="skill-tag">RESTful APIs <span class="remove-skill">&times;</span></div>
+                    <!-- Personal Info section -->
+                    <div class="section-content" id="personal-info-section">
+                        <h3 class="section-title">Personal Information</h3>
+                        <div class="field-group">
+                            <label class="field-label">Full Name</label>
+                            <input type="text" class="text-input" value="John Doe">
                         </div>
-                        
-                        <div class="add-skill">
-                            <input type="text" class="skill-input" placeholder="Add a skill...">
-                            <button class="btn">Add</button>
+                        <div class="field-group">
+                            <label class="field-label">Email</label>
+                            <input type="email" class="text-input" value="email@example.com">
                         </div>
-                        
-                        <div class="matching-skills">
-                            <div class="matching-skills-title">
-                                <span class="highlight-icon">✨</span> Job Matching Skills
-                            </div>
-                            <p>The highlighted skills match the selected job requirements.</p>
-                            <p>Job: <strong>Full Stack Developer at TechCorp Inc.</strong></p>
+                        <div class="field-group">
+                            <label class="field-label">Phone</label>
+                            <input type="text" class="text-input" value="(123) 456-7890">
                         </div>
                     </div>
                     
-                    <!-- Education section (hidden initially) -->
+                    <!-- Education section -->
                     <div class="section-content" id="education-section" style="display: none;">
                         <h3 class="section-title">Education</h3>
-                        
-                        <div class="field-group">
-                            <label class="field-label">Degree</label>
-                            <input type="text" class="text-input" value="Bachelor of Technology in Computer Science">
+                        <div class="education-entries">
+                            <div class="education-entry">
+                                <button class="remove-education">×</button>
+                                <div class="field-group">
+                                    <label class="field-label">Degree</label>
+                                    <input type="text" class="text-input" value="Bachelor of Technology in Computer Science">
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label">Institution</label>
+                                    <input type="text" class="text-input" value="University of Technology">
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label">Duration</label>
+                                    <input type="text" class="text-input" value="2019 - 2023">
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label">Description</label>
+                                    <textarea class="textarea">Graduated with First Class Honors. Specialized in Artificial Intelligence and Machine Learning. Developed a resume optimization system as part of the final year project.</textarea>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="field-group">
-                            <label class="field-label">Institution</label>
-                            <input type="text" class="text-input" value="University of Technology">
-                        </div>
-                        
-                        <div class="field-group">
-                            <label class="field-label">Duration</label>
-                            <input type="text" class="text-input" value="2019 - 2023">
-                        </div>
-                        
-                        <div class="field-group">
-                            <label class="field-label">Description</label>
-                            <textarea class="textarea">Graduated with First Class Honors. Specialized in Artificial Intelligence and Machine Learning. Developed a resume optimization system as part of the final year project.</textarea>
-                        </div>
+                        <button class="btn" id="addEducationBtn">Add Education</button>
                     </div>
                     
-                    <!-- Experience section (hidden initially) -->
+                    <!-- Experience section -->
                     <div class="section-content" id="experience-section" style="display: none;">
                         <h3 class="section-title">Experience</h3>
-                        
                         <div class="field-group">
                             <label class="field-label">Job Title</label>
                             <input type="text" class="text-input" value="Junior Web Developer">
                         </div>
-                        
                         <div class="field-group">
                             <label class="field-label">Company</label>
                             <input type="text" class="text-input" value="WebTech Solutions">
                         </div>
-                        
                         <div class="field-group">
                             <label class="field-label">Duration</label>
                             <input type="text" class="text-input" value="Jan 2023 - Present">
                         </div>
-                        
                         <div class="field-group">
                             <label class="field-label">Responsibilities & Achievements</label>
                             <textarea class="textarea">• Developed and maintained responsive web applications using React and Node.js
@@ -555,7 +601,46 @@
                         </div>
                     </div>
                     
-                    <!-- Other sections would be added here -->
+                    <!-- Skills section -->
+                    <div class="section-content" id="skills-section" style="display: none;">
+                        <h3 class="section-title">Skills</h3>
+                        <div class="skills-container" id="skillsContainer">
+                            <!-- Skills will be dynamically populated -->
+                        </div>
+                        <div class="add-skill">
+                            <input type="text" class="skill-input" placeholder="Add a skill...">
+                            <button class="btn">Add</button>
+                        </div>
+                        <div class="matching-skills" id="matchingSkills">
+                            <div class="matching-skills-title">
+                                <span class="highlight-icon">✨</span> Job Matching Skills
+                            </div>
+                            <p>The highlighted skills match the selected job requirements.</p>
+                            <p>Job: <strong id="jobTitle">Full Stack Developer at TechCorp Inc.</strong></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Professional Summary section -->
+                    <div class="section-content" id="summary-section" style="display: none;">
+                        <h3 class="section-title">Professional Summary</h3>
+                        <div class="field-group">
+                            <label class="field-label">Summary</label>
+                            <textarea class="textarea">Innovative and deadline-driven Web Developer with experience in designing and developing user-centered digital experiences. Skilled in React, Node.js, and JavaScript.</textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Projects section (placeholder) -->
+                    <div class="section-content" id="projects-section" style="display: none;">
+                        <h3 class="section-title">Projects</h3>
+                        <div class="field-group">
+                            <label class="field-label">Project Name</label>
+                            <input type="text" class="text-input" value="Resume Optimization System">
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">Description</label>
+                            <textarea class="textarea">Developed a web-based system to generate and optimize resumes using AI-driven keyword matching.</textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -571,53 +656,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Resume Preview</h3>
-                <button class="close-btn">&times;</button>
+                <button class="close-btn">×</button>
             </div>
-            
-            <div class="resume-preview">
-                <!-- This would be populated with actual resume content in a real application -->
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <h2>John Doe</h2>
-                    <p>Web Developer | john.doe@email.com | (123) 456-7890</p>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <h3 style="color: #3498db; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px;">Professional Summary</h3>
-                    <p>Innovative and deadline-driven Web Developer with experience in designing and developing user-centered digital experiences. Skilled in React, Node.js, and JavaScript.</p>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <h3 style="color: #3498db; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px;">Experience</h3>
-                    <h4>Junior Web Developer</h4>
-                    <p><em>WebTech Solutions | Jan 2023 - Present</em></p>
-                    <ul style="padding-left: 20px; margin-top: 10px;">
-                        <li>Developed and maintained responsive web applications using React and Node.js</li>
-                        <li>Implemented RESTful APIs for client-server communication</li>
-                        <li>Optimized application performance by 40% through code refactoring</li>
-                        <li>Collaborated with the UX team to implement design improvements</li>
-                    </ul>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <h3 style="color: #3498db; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px;">Education</h3>
-                    <h4>Bachelor of Technology in Computer Science</h4>
-                    <p><em>University of Technology | 2019 - 2023</em></p>
-                    <p>Graduated with First Class Honors. Specialized in Artificial Intelligence and Machine Learning. Developed a resume optimization system as part of the final year project.</p>
-                </div>
-                
-                <div>
-                    <h3 style="color: #3498db; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px;">Skills</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <span style="background-color: #e1f5fe; color: #0288d1; padding: 5px 10px; border-radius: 4px;">JavaScript</span>
-                        <span style="background-color: #e1f5fe; color: #0288d1; padding: 5px 10px; border-radius: 4px;">React</span>
-                        <span style="background-color: #e1f5fe; color: #0288d1; padding: 5px 10px; border-radius: 4px;">Node.js</span>
-                        <span style="background-color: #f0f0f0; color: #555; padding: 5px 10px; border-radius: 4px;">HTML/CSS</span>
-                        <span style="background-color: #f0f0f0; color: #555; padding: 5px 10px; border-radius: 4px;">Git</span>
-                        <span style="background-color: #f0f0f0; color: #555; padding: 5px 10px; border-radius: 4px;">RESTful APIs</span>
-                    </div>
-                </div>
-            </div>
-            
+            <div class="resume-preview"></div>
             <div class="modal-actions">
                 <button class="btn-secondary" id="closePreviewBtn">Close</button>
                 <button class="btn-primary">Download PDF</button>
@@ -625,15 +666,59 @@
         </div>
     </div>
     
+    <script src="./resumeGenerator.js"></script>
     <script>
+        // Check if coming from job-matching page and get required skills
+        const urlParams = new URLSearchParams(window.location.search);
+        const fromJobMatching = urlParams.get('fromJobMatching') === 'true';
+        const jobTitle = urlParams.get('jobTitle') || 'Full Stack Developer at TechCorp Inc.';
+        const requiredSkills = urlParams.get('requiredSkills') ? urlParams.get('requiredSkills').split(',') : [];
+        
+        // Function to add a skill tag
+        function addSkillTag(skillText, isMatching = false) {
+            const skillsContainer = document.getElementById('skillsContainer');
+            const newSkill = document.createElement('div');
+            newSkill.className = isMatching ? 'skill-tag matching-skill-tag' : 'skill-tag';
+            newSkill.innerHTML = `${skillText} <span class="remove-skill">×</span>`;
+            newSkill.querySelector('.remove-skill').addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.parentElement.remove();
+            });
+            skillsContainer.appendChild(newSkill);
+        }
+        
+        // Populate skills based on job requirements if coming from job-matching page
+        if (fromJobMatching && requiredSkills.length > 0) {
+            const matchingSkillsSection = document.getElementById('matchingSkills');
+            matchingSkillsSection.style.display = 'block';
+            document.getElementById('jobTitle').textContent = decodeURIComponent(jobTitle);
+            
+            // Clear existing skills and populate with required skills
+            const skillsContainer = document.getElementById('skillsContainer');
+            skillsContainer.innerHTML = '';
+            requiredSkills.forEach(skill => {
+                addSkillTag(decodeURIComponent(skill), true);
+            });
+        } else {
+            // Default skills if not coming from job-matching page
+            const defaultSkills = [
+                { name: 'JavaScript', matching: false },
+                { name: 'React', matching: false },
+                { name: 'Node.js', matching: false },
+                { name: 'HTML/CSS', matching: false },
+                { name: 'Git', matching: false },
+                { name: 'RESTful APIs', matching: false }
+            ];
+            defaultSkills.forEach(skill => {
+                addSkillTag(skill.name, skill.matching);
+            });
+        }
+
         // Template selection
         const templateCards = document.querySelectorAll('.template-card');
         templateCards.forEach(card => {
             card.addEventListener('click', function() {
-                // Remove selected class from all templates
                 templateCards.forEach(c => c.classList.remove('selected'));
-                
-                // Add selected class to clicked template
                 this.classList.add('selected');
             });
         });
@@ -644,27 +729,11 @@
         
         sectionItems.forEach(item => {
             item.addEventListener('click', function() {
-                // Remove active class from all section items
                 sectionItems.forEach(i => i.classList.remove('active'));
-                
-                // Add active class to clicked item
                 this.classList.add('active');
-                
-                // Hide all section contents
                 sectionContents.forEach(content => content.style.display = 'none');
-                
-                // Show the selected section content
                 const sectionName = this.getAttribute('data-section');
-                document.getElementById(`${sectionName}-section`)?.style.display = 'block';
-            });
-        });
-        
-        // Skill tag removal
-        const removeSkillBtns = document.querySelectorAll('.remove-skill');
-        removeSkillBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                this.parentElement.remove();
+                document.getElementById(`${sectionName}-section`).style.display = 'block';
             });
         });
         
@@ -675,39 +744,66 @@
         addSkillBtn.addEventListener('click', function() {
             const skillText = skillInput.value.trim();
             if (skillText) {
-                const skillsContainer = document.querySelector('.skills-container');
-                
-                const newSkill = document.createElement('div');
-                newSkill.className = 'skill-tag';
-                newSkill.innerHTML = `${skillText} <span class="remove-skill">&times;</span>`;
-                
-                // Add event listener to the new remove button
-                newSkill.querySelector('.remove-skill').addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    this.parentElement.remove();
-                });
-                
-                skillsContainer.appendChild(newSkill);
+                // Check if skill matches required skills (case-insensitive)
+                const isMatching = fromJobMatching && requiredSkills.some(
+                    requiredSkill => decodeURIComponent(requiredSkill).toLowerCase() === skillText.toLowerCase()
+                );
+                addSkillTag(skillText, isMatching);
                 skillInput.value = '';
             }
         });
         
-        // Also add skill when pressing Enter
         skillInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 addSkillBtn.click();
             }
         });
         
+        // Add education entry
+        const addEducationBtn = document.getElementById('addEducationBtn');
+        const educationEntries = document.querySelector('.education-entries');
+        
+        addEducationBtn.addEventListener('click', function() {
+            const newEntry = document.createElement('div');
+            newEntry.className = 'education-entry';
+            newEntry.innerHTML = `
+                <button class="remove-education">×</button>
+                <div class="field-group">
+                    <label class="field-label">Degree</label>
+                    <input type="text" class="text-input" value="">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Institution</label>
+                    <input type="text" class="text-input" value="">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Duration</label>
+                    <input type="text" class="text-input" value="">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Description</label>
+                    <textarea class="textarea"></textarea>
+                </div>
+            `;
+            educationEntries.appendChild(newEntry);
+            
+            // Add event listener for the new remove button
+            newEntry.querySelector('.remove-education').addEventListener('click', function() {
+                newEntry.remove();
+            });
+        });
+        
+        // Remove education entry
+        document.querySelectorAll('.remove-education').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.parentElement.remove();
+            });
+        });
+        
         // Preview modal functionality
-        const previewBtn = document.getElementById('previewBtn');
         const previewModal = document.getElementById('previewModal');
         const closePreviewBtn = document.getElementById('closePreviewBtn');
         const closeBtn = document.querySelector('.close-btn');
-        
-        previewBtn.addEventListener('click', function() {
-            previewModal.style.display = 'flex';
-        });
         
         closePreviewBtn.addEventListener('click', function() {
             previewModal.style.display = 'none';
@@ -717,22 +813,65 @@
             previewModal.style.display = 'none';
         });
         
-        // Close modal when clicking outside
         window.addEventListener('click', function(e) {
             if (e.target === previewModal) {
                 previewModal.style.display = 'none';
             }
         });
         
-        // Add this to the existing script section
-        document.getElementById('generateBtn').addEventListener('click', function() {
-            alert('Resume generated successfully!');
-            window.location.href = 'job-matching-page.html';
+        // Help button
+        document.querySelector('.header-actions .btn').addEventListener('click', function() {
+            alert('Help Center: For assistance with job matching, resume generation, or resume uploads, please contact support@resumatch.com');
         });
         
-        // Add this to the script section in resume-generation-page.html
-        document.querySelector('.header-actions .btn:last-child').addEventListener('click', function() {
-            alert('Help Center: For assistance with job matching, resume generation, or resume uploads, please contact support@resumatch.com');
+        // Backend integration for Generate & Download button
+        document.getElementById('generateBtn').addEventListener('click', async function() {
+            const resumeData = collectResumeData(); // Defined in resumeGenerator.js
+            try {
+                const response = await fetch('http://localhost:5000/backend/generate-resume', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(resumeData)
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'resume.pdf';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('Error generating resume:', error);
+                alert('Failed to generate resume. Please try again.');
+            }
+        });
+
+        // Backend integration for Download PDF button in preview modal
+        document.querySelector('.modal-actions .btn-primary').addEventListener('click', async function() {
+            const resumeData = collectResumeData();
+            try {
+                const response = await fetch('http://localhost:5000/backend/generate-resume', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(resumeData)
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'resume.pdf';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('Error generating resume:', error);
+                alert('Failed to generate resume. Please try again.');
+            }
         });
     </script>
 </body>
