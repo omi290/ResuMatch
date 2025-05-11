@@ -36,7 +36,7 @@ cd ResuMatch
 2. Create and activate a virtual environment:
 ```bash
 python -m venv resume
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source resume/bin/activate  # On Windows: resume\Scripts\activate
 ```
 
 3. Install dependencies:
@@ -44,10 +44,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Compile the C++ job matcher:
-```bash
-g++ -o job_matcher job_matcher.cpp
-```
+
 
 ### Running the Application
 1. Start the Flask server:
