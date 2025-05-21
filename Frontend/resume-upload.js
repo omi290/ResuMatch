@@ -234,12 +234,71 @@ document.addEventListener('DOMContentLoaded', function() {
         // Display experience
         const experienceList = document.getElementById('experienceList');
         if (data.experience && data.experience.length > 0) {
-            experienceList.innerHTML = data.experience.map(exp => `
+            // Group experience items based on identifying job titles and collecting descriptions
+            const groupedExperience = [];
+            let currentJob = null;
+
+            data.experience.forEach(exp => {
+                const title = exp.title ? exp.title.trim() : '';
+                const company = exp.company ? exp.company.trim() : '';
+                const duration = exp.duration ? exp.duration.trim() : '';
+
+                // Skip entries that are just bullet points or empty after trimming
+                if (!title || title === '•' || title === '*' || title === '-') {
+                    return; // Skip this entry
+                }
+
+                // A new job title is likely the first entry, or an entry with a title
+                // that doesn't start with a bullet and has a company or duration.
+                // We also need to handle cases where a company/duration might appear without a title first.
+                const isPotentialNewJob = (
+                    (title && !/^[•*-]\s*/.test(title) && (company || duration))
+                    || (!currentJob && (title || company || duration))
+                );
+
+                if (isPotentialNewJob) {
+                    // If there was a previous job, push it before starting a new one
+                    if (currentJob) {
+                        groupedExperience.push(currentJob);
+                    }
+                    // Start a new job entry
+                    currentJob = {
+                        title: title,
+                        company: company,
+                        duration: duration,
+                        descriptions: []
+                    };
+                } else if (currentJob && title) {
+                    // If there is a current job and this entry has a title, treat it as a description
+                    // Remove common leading bullet points and trim whitespace
+                    const cleanedDescription = title.replace(/^[•*-]\s*/, '').trim();
+                    if (cleanedDescription) {
+                         currentJob.descriptions.push(cleanedDescription);
+                    }
+                } else if (currentJob && company && !currentJob.company) {
+                     // If no title but has company, add to current job if company is missing
+                     currentJob.company = company;
+                } else if (currentJob && duration && !currentJob.duration) {
+                     // If no title or company but has duration, add to current job if duration is missing
+                     currentJob.duration = duration;
+                }
+            });
+
+            // Push the last job entry if it exists
+            if (currentJob) {
+                groupedExperience.push(currentJob);
+            }
+
+            experienceList.innerHTML = groupedExperience.map(exp => `
                 <div class="experience-item">
                     <div class="experience-title">${exp.title || 'Position'}</div>
                     <div class="experience-company">${exp.company || 'Company'}</div>
                     <div class="experience-duration">${exp.duration || 'Duration'}</div>
-                    ${exp.description ? `<div class="experience-description">${exp.description}</div>` : ''}
+                    ${exp.descriptions.length > 0 ? `
+                        <div class="experience-description">
+                            ${exp.descriptions.map(desc => `<p>• ${desc}</p>`).join('')}
+                        </div>
+                    ` : ''}
                 </div>
             `).join('');
         } else {

@@ -40,6 +40,7 @@
       border-radius: 4px;
       cursor: pointer;
       font-size: 14px;
+      text-decoration: none;
     }
     .jobs-container {
       display: grid;
@@ -100,56 +101,90 @@
       <div class="header-actions">
         <a href="resume-upload-page.html" class="btn">Upload Resume</a>
         <a href="resume-generation-page.html" class="btn">Generate Resume</a>
+        <button id="findMatchingJobsBtn" class="btn" style="margin-left: 10px;">Find Matching Jobs</button>
       </div>
     </div>
+    
     <div class="jobs-container">
       <p>Loading jobs...</p>
     </div>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', async function () {
+    document.addEventListener('DOMContentLoaded', function () {
       const container = document.querySelector('.jobs-container');
-      container.innerHTML = '<p>Loading jobs...</p>';
+      const findJobsBtn = document.getElementById('findJobsBtn');
+      const findMatchingJobsBtn = document.getElementById('findMatchingJobsBtn');
 
-      try {
-        const parsed = JSON.parse(localStorage.getItem('parsedResume') || '{}');
-        const skills = parsed.skills || [];
-        const query = skills.join(' ') || 'developer';
-
-        const response = await fetch(`/external-jobs?q=${encodeURIComponent(query)}`);
-        const jobs = await response.json();
-
-        if (!Array.isArray(jobs)) throw new Error(jobs.error || 'No jobs received');
-
-        if (jobs.length === 0) {
-          container.innerHTML = '<div class="no-match-message">No matching jobs found.</div>';
+      // Function to render jobs
+      function renderJobs(jobs, showMatch) {
+        if (!Array.isArray(jobs) || jobs.length === 0) {
+          container.innerHTML = '<div class="no-match-message">No jobs found.</div>';
           return;
         }
-
         container.innerHTML = '';
         jobs.forEach(job => {
+          const matchPercentage = showMatch && job.match_percentage ? job.match_percentage.toFixed(1) : null;
+          const matchBar = showMatch ? `
+            <div class="match-bar-container">
+              <div class="match-bar-fill" style="width: ${matchPercentage || 0}%;"></div>
+            </div>
+            <div class="match-percentage-text">Match: ${matchPercentage || 0}%</div>
+          ` : '';
           const jobHTML = `
             <div class="job-card">
-              <div class="job-title">${job.title}</div>
-              <div class="job-company">${job.company_name}</div>
+              <div class="job-title">${job.job_title}</div>
+              <div class="job-company">${job.employer_name}</div>
               <div class="job-skills">
                 <div class="skills-title">Required Skills</div>
                 <div class="skills-list">
                   ${(job.tags || []).map(tag => `<span class="skill-item">${tag}</span>`).join('')}
                 </div>
               </div>
+              ${matchBar}
               <div class="job-actions">
-                <a href="${job.url}" target="_blank" class="btn">Apply Now</a>
+                <a href="${job.job_apply_link || job.job_offer_expiration_datetime_utc}" target="_blank" class="btn">Apply Now</a>
               </div>
             </div>
           `;
           container.insertAdjacentHTML('beforeend', jobHTML);
         });
-      } catch (err) {
-        console.error('Error loading jobs:', err);
-        container.innerHTML = '<div class="no-match-message">Failed to load jobs. Try again later.</div>';
       }
+
+      // Fetch jobs from /jobs (no match %) for Find Jobs button
+      async function fetchJobs() {
+        container.innerHTML = '<p>Loading jobs...</p>';
+        try {
+          const response = await fetch('/jobs');
+          const jobs = await response.json();
+          renderJobs(jobs, false);
+        } catch (err) {
+          console.error('Error loading jobs:', err);
+          container.innerHTML = '<div class="no-match-message">Failed to load jobs. Try again later.</div>';
+        }
+      }
+
+      // Fetch jobs from /external-jobs (with match %) for Find Matching Jobs button
+      async function fetchMatchingJobs() {
+        container.innerHTML = '<p>Loading matching jobs...</p>';
+        try {
+          const parsed = JSON.parse(localStorage.getItem('parsedResume') || '{}');
+          const skills = parsed.skills || [];
+          const query = skills.length > 0 ? skills.join(' ') : 'software developer';
+          const response = await fetch(`/external-jobs?q=${encodeURIComponent(query)}`);
+          const jobs = await response.json();
+          renderJobs(jobs, true);
+        } catch (err) {
+          console.error('Error loading matching jobs:', err);
+          container.innerHTML = '<div class="no-match-message">Failed to load matching jobs. Try again later.</div>';
+        }
+      }
+
+      // Event listeners for buttons
+      document.getElementById('findMatchingJobsBtn').addEventListener('click', fetchMatchingJobs);
+      
+      // Load general jobs by default on page load
+      fetchJobs();
     });
   </script>
 </body>

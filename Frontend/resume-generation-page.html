@@ -243,7 +243,7 @@
             padding: 15px;
             background-color: #f9f9f9;
             border-radius: 6px;
-            display: none; /* Hidden by default */
+            display: none; 
         }
         
         .matching-skills-title {
@@ -454,7 +454,6 @@
             <h2 class="section-title">Choose a template</h2>
             
             <div class="templates-grid">
-                <!-- Professional Template Preview -->
                 <div class="template-card" data-template="professional">
                     <div class="template-preview professional-preview" style="width: 180px; height: 240px; background: #fff; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 6px #0001; position: relative;">
                         <div style="display: flex; align-items: center; padding: 10px 12px 0 12px;">
@@ -483,7 +482,6 @@
                     </div>
                     <div class="template-name">Professional</div>
                 </div>
-                <!-- Modern Template Preview -->
                 <div class="template-card selected" data-template="modern">
                     <div class="template-preview modern-preview" style="width: 180px; height: 240px; background: #fff; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 6px #0001; position: relative; display: flex;">
                         <div style="width: 48px; background: #2c3e50; color: #fff; padding: 10px 0; display: flex; flex-direction: column; align-items: center;">
@@ -504,7 +502,6 @@
                     </div>
                     <div class="template-name">Modern</div>
                 </div>
-                <!-- Minimalist Template Preview -->
                 <div class="template-card" data-template="minimalist">
                     <div class="template-preview minimalist-preview" style="width: 180px; height: 240px; background: #fff; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 6px #0001; position: relative;">
                         <div style="background: #3498db; color: #fff; text-align: center; padding: 10px 0 6px 0; font-weight: bold; font-size: 15px;">Alex Brown</div>
@@ -533,24 +530,22 @@
                 </div>
                 
                 <div class="content-editor">
-                    <!-- Personal Info section -->
                     <div class="section-content" id="personal-info-section">
                         <h3 class="section-title">Personal Information</h3>
                         <div class="field-group">
                             <label class="field-label">Full Name</label>
-                            <input type="text" class="text-input" value="John Doe">
+                            <input type="text" class="text-input" value="Vaibhav Baloni">
                         </div>
                         <div class="field-group">
                             <label class="field-label">Email</label>
-                            <input type="email" class="text-input" value="email@example.com">
+                            <input type="email" class="text-input" value="vaibhavbaloni07@gmail.com">
                         </div>
                         <div class="field-group">
                             <label class="field-label">Phone</label>
-                            <input type="text" class="text-input" value="(123) 456-7890">
+                            <input type="text" class="text-input" value="123456789">
                         </div>
                     </div>
-                    
-                    <!-- Education section -->
+
                     <div class="section-content" id="education-section" style="display: none;">
                         <h3 class="section-title">Education</h3>
                         <div class="education-entries">
@@ -576,8 +571,7 @@
                         </div>
                         <button class="btn" id="addEducationBtn">Add Education</button>
                     </div>
-                    
-                    <!-- Experience section -->
+ 
                     <div class="section-content" id="experience-section" style="display: none;">
                         <h3 class="section-title">Experience</h3>
                         <div class="field-group">
@@ -600,12 +594,11 @@
 • Collaborated with the UX team to implement design improvements</textarea>
                         </div>
                     </div>
-                    
-                    <!-- Skills section -->
+
                     <div class="section-content" id="skills-section" style="display: none;">
                         <h3 class="section-title">Skills</h3>
                         <div class="skills-container" id="skillsContainer">
-                            <!-- Skills will be dynamically populated -->
+                
                         </div>
                         <div class="add-skill">
                             <input type="text" class="skill-input" placeholder="Add a skill...">
@@ -619,8 +612,7 @@
                             <p>Job: <strong id="jobTitle">Full Stack Developer at TechCorp Inc.</strong></p>
                         </div>
                     </div>
-                    
-                    <!-- Professional Summary section -->
+
                     <div class="section-content" id="summary-section" style="display: none;">
                         <h3 class="section-title">Professional Summary</h3>
                         <div class="field-group">
@@ -628,8 +620,7 @@
                             <textarea class="textarea">Innovative and deadline-driven Web Developer with experience in designing and developing user-centered digital experiences. Skilled in React, Node.js, and JavaScript.</textarea>
                         </div>
                     </div>
-                    
-                    <!-- Projects section (placeholder) -->
+
                     <div class="section-content" id="projects-section" style="display: none;">
                         <h3 class="section-title">Projects</h3>
                         <div class="field-group">
@@ -650,8 +641,7 @@
             </div>
         </div>
     </div>
-    
-    <!-- Preview Modal -->
+
     <div class="preview-modal" id="previewModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -668,13 +658,11 @@
     
     <script src="./resumeGenerator.js"></script>
     <script>
-        // Check if coming from job-matching page and get required skills
         const urlParams = new URLSearchParams(window.location.search);
         const fromJobMatching = urlParams.get('fromJobMatching') === 'true';
         const jobTitle = urlParams.get('jobTitle') || 'Full Stack Developer at TechCorp Inc.';
         const requiredSkills = urlParams.get('requiredSkills') ? urlParams.get('requiredSkills').split(',') : [];
         
-        // Function to add a skill tag
         function addSkillTag(skillText, isMatching = false) {
             const skillsContainer = document.getElementById('skillsContainer');
             const newSkill = document.createElement('div');
@@ -686,21 +674,18 @@
             });
             skillsContainer.appendChild(newSkill);
         }
-        
-        // Populate skills based on job requirements if coming from job-matching page
+
         if (fromJobMatching && requiredSkills.length > 0) {
             const matchingSkillsSection = document.getElementById('matchingSkills');
             matchingSkillsSection.style.display = 'block';
             document.getElementById('jobTitle').textContent = decodeURIComponent(jobTitle);
-            
-            // Clear existing skills and populate with required skills
+
             const skillsContainer = document.getElementById('skillsContainer');
             skillsContainer.innerHTML = '';
             requiredSkills.forEach(skill => {
                 addSkillTag(decodeURIComponent(skill), true);
             });
         } else {
-            // Default skills if not coming from job-matching page
             const defaultSkills = [
                 { name: 'JavaScript', matching: false },
                 { name: 'React', matching: false },
@@ -713,8 +698,6 @@
                 addSkillTag(skill.name, skill.matching);
             });
         }
-
-        // Template selection
         const templateCards = document.querySelectorAll('.template-card');
         templateCards.forEach(card => {
             card.addEventListener('click', function() {
@@ -722,8 +705,7 @@
                 this.classList.add('selected');
             });
         });
-        
-        // Section navigation
+
         const sectionItems = document.querySelectorAll('.section-item');
         const sectionContents = document.querySelectorAll('.section-content');
         
@@ -736,15 +718,13 @@
                 document.getElementById(`${sectionName}-section`).style.display = 'block';
             });
         });
-        
-        // Add new skill
+
         const addSkillBtn = document.querySelector('.add-skill .btn');
         const skillInput = document.querySelector('.skill-input');
         
         addSkillBtn.addEventListener('click', function() {
             const skillText = skillInput.value.trim();
             if (skillText) {
-                // Check if skill matches required skills (case-insensitive)
                 const isMatching = fromJobMatching && requiredSkills.some(
                     requiredSkill => decodeURIComponent(requiredSkill).toLowerCase() === skillText.toLowerCase()
                 );
@@ -758,8 +738,6 @@
                 addSkillBtn.click();
             }
         });
-        
-        // Add education entry
         const addEducationBtn = document.getElementById('addEducationBtn');
         const educationEntries = document.querySelector('.education-entries');
         
@@ -786,21 +764,17 @@
                 </div>
             `;
             educationEntries.appendChild(newEntry);
-            
-            // Add event listener for the new remove button
             newEntry.querySelector('.remove-education').addEventListener('click', function() {
                 newEntry.remove();
             });
         });
         
-        // Remove education entry
         document.querySelectorAll('.remove-education').forEach(btn => {
             btn.addEventListener('click', function() {
                 this.parentElement.remove();
             });
         });
-        
-        // Preview modal functionality
+
         const previewModal = document.getElementById('previewModal');
         const closePreviewBtn = document.getElementById('closePreviewBtn');
         const closeBtn = document.querySelector('.close-btn');
@@ -818,17 +792,15 @@
                 previewModal.style.display = 'none';
             }
         });
-        
-        // Help button
+
         document.querySelector('.header-actions .btn').addEventListener('click', function() {
             alert('Help Center: For assistance with job matching, resume generation, or resume uploads, please contact support@resumatch.com');
         });
-        
-        // Backend integration for Generate & Download button
+
         document.getElementById('generateBtn').addEventListener('click', async function() {
-            const resumeData = collectResumeData(); // Defined in resumeGenerator.js
+            const resumeData = collectResumeData(); 
             try {
-                const response = await fetch('http://localhost:5000/backend/generate-resume', {
+                const response = await fetch('http://localhost:5000/generate-resume', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(resumeData)
@@ -849,11 +821,10 @@
             }
         });
 
-        // Backend integration for Download PDF button in preview modal
         document.querySelector('.modal-actions .btn-primary').addEventListener('click', async function() {
             const resumeData = collectResumeData();
             try {
-                const response = await fetch('http://localhost:5000/backend/generate-resume', {
+                const response = await fetch('http://localhost:5000/generate-resume', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(resumeData)
@@ -873,6 +844,6 @@
                 alert('Failed to generate resume. Please try again.');
             }
         });
-    </script>
+</script>
 </body>
-</html>
+</html> 

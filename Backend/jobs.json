@@ -1,0 +1,1151 @@
+[
+  {
+    "job_id": "bTzUv-8Qb52PoibxAAAAAA==",
+    "job_title": "Python Developer (SAS Experience) - REMOTE",
+    "employer_name": "KATMAI",
+    "employer_logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwRP2boQyHrx6krmPt0am0gQpant2GUZUWeQ9x&s=0",
+    "employer_website": null,
+    "job_publisher": "Indeed",
+    "job_employment_type": "Full-time",
+    "job_employment_types": [
+      "FULLTIME"
+    ],
+    "job_apply_link": "https://www.indeed.com/viewjob?jk=276ace176c6e0b69&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+    "job_apply_is_direct": false,
+    "apply_options": [
+      {
+        "publisher": "Indeed",
+        "apply_link": "https://www.indeed.com/viewjob?jk=276ace176c6e0b69&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "ZipRecruiter",
+        "apply_link": "https://www.ziprecruiter.com/c/Frontend-Arts/Job/Principal-Specialist-Python-Developer-REMOTE/-in-Cedar-Rapids,IA?jid=df6cd3f50e48d26e&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Monster",
+        "apply_link": "https://www.monster.com/job-openings/python-developer-remote-parsippany-nj--64dba6d1-1461-4df2-8998-e8448ac91db3?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Glassdoor",
+        "apply_link": "https://www.glassdoor.com/job-listing/python-developer-sas-experience-remote-katmai-JV_IC1138213_KO0,38_KE39,45.htm?jl=1009736195610&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "LinkedIn",
+        "apply_link": "https://www.linkedin.com/jobs/view/python-developer-remote-at-the-dignify-solutions-llc-4224067515?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Techfetch",
+        "apply_link": "https://www.techfetch.com/job-description/python-pyspark-developer-remote-work-from-home-j3620819?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Dive Into Python",
+        "apply_link": "https://diveintopython.org/jobs/placement-role-python-developer-only-gc-usc-remote-18826?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Jooble",
+        "apply_link": "https://jooble.org/jdp/-4597979492551138592?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      }
+    ],
+    "job_description": "Job Description:\n\nSUMMARY\n\nProvide support to the U.S. Census Bureau's Demographic Systems Division (DSD) by offering Python development services in support of DSD’s migration of survey processing systems from Statistical Analysis System (SAS) to Python.\n\nESSENTIAL DUTIES & RESPONSIBILITIES\n• Assist with the development and documentation of the rewrite of The Survey of Income and Program Participation (SIPP) production processing system into a Python codebase. The scope of the SIPP Production processing consists of 200+ edit programs. (Revamp SIPP system, named SIPP Seamless, is currently in its planning phase).\n• Support the ongoing SIPP production system and the SIPP Seamless system.\n• Assist DSD with the implementation of Python code solutions using efficient methodologies to utilize the language’s strengths.\n• Assist DSD in analyzing existing SAS-based system to glean functional requirements to develop optimized, Python-based solutions.\n• Write high quality code that is well-documented and easy to read, use, and maintain.\n• Use Python to read and reformat large datasets.\n• Improve Python code performance.\n• Attend branch meetings and share technical knowledge clearly.\n• Work with customers and subject matter experts to capture and document business needs and processes through meetings and requirements gathering.\n• Make recommendations concerning the feasibility of revising existing applications or developing new approaches to utilize resources more effectively.\n• Troubleshoot issues as needed and work with appropriate resources to resolve problems.\n• Assist DSD with developing proof-in-concepts, pilots, and alternatives analysis.\n• Provide thorough documentation based on Census Bureau and/or DSD standards. Documentation includes but is not limited to formal specifications and/or systems logical diagrams, training, and in-code documentation.\n• Participate in code and peer reviews, as well as formal walkthroughs as directed.\n• Conduct formal presentations and provide written documents outlining any issues and concerns to Census Management.\n• Utilize DSD version control system regularly to ensure all developed code is readily available to Census staff.\n• Review the existing software systems and make recommendations to improve the design.\n• Provide weekly and/or daily status reports in requested format to tasks manager or as directed.\n• Work with and train designated Census Bureau IT specialists to ensure that the system is fully understood by those designated individuals responsible for maintaining the system once released to production.\n• Maintain regular communications with team as required.\n• Complete tasks using, but not limited to, technologies such as:\n• Python related packages, tools, and products such as NumPy, Pandas, Anaconda, Jupyter Notebook, and VS code\n• SAS Software such as Advanced Base SAS, SAS Macro Language, and SAS ODS software\n• PostgreSQL Databases and related languages, tools, and products such as pgAdmin, and PL/pgSQL\n• Version control software such as Git, GitLab or GitHub\n• Linux terminal or other tools to allow for executing from the command line\n• Microsoft suite including Word, Excel, PowerPoint, SharePoint, and Teams\n• The following deliverables are required:\n• Finalized Python modules and code for performing identified, demographic edits for the SIPP survey\n• ISPB Python Programming Standards and Guidelines document\n• Regular status reports\n• Presentation and training material\n• Evaluation and recommendation for database implementation\n• Python code stored a version control software, such as SVN or GitLab\n• Maintain regular and punctual attendance.\n• Perform other duties as assigned.\n\nSUPERVISORY RESPONSIBILITIES\n\nNone.\n\nJob Requirements:\n\nMINIMUM QUALIFICATIONS\n• Bachelor’s degree in computer science or related field is preferred.\n• Five (5) to seven (7) years of related experience with backend and front-end development, relational database and developing applications or equivalent combination of experience preferred.\n• Knowledge of using GitLab or GitHub to configure pipelines for CI/CD.\n• Experience using Python to read and reformat large data files.\n• Experience improving code performance: able to profile and refactor code and find bottlenecks and overheads, preferably on production code.\n• Experience writing high quality code: well-documented and easy to read, use, maintain, and extend.\n• Experienced with Linux, able to perform basic commands as an end user.\n• Experience with data validation in a statistical processing environment.\n• Familiarity with SAS code.\n• Familiarity with database designs that balance usability with functionality.\n• Must pass the Census Bureau Security Investigation / background investigation.\n• Must obtain and maintain any necessary security access and/or background checks.\n\nDESIRED QUALIFICATIONS & SKILLS\n• Cloud computing, preferably with Amazon Web Service is a plus.\n• Statistical Analysis System (SAS) programming experience is a plus.\n• Excellent verbal and written communication skills.\n\nWORK SCHEDULE\n\nFull-time. May be required to work additional hours as needed to complete assignment or project.\n\nTRAVEL\n\nNone.\n\nDRIVING REQUIREMENTS\n\nNone.\n\nWORK ENVIRONMENT\n\nWork is expected to be remote; however, the company reserves the right to require onsite work.\n\nPHYSICAL DEMANDS\n\nPosition consists of sitting for long periods of time, using hands/ fingers, handling, reaching with hands and arms, speaking, or translating. Periods of walking, standing, bending, kneeling, stooping, crouching, and lifting equipment weighing up to 10 pounds. Moderate to extended periods of office work with heavy periods of computer usage. It is Katmai’s business philosophy and practice to provide reasonable accommodations, according to applicable state and federal laws, to all qualified individuals with physical or mental disabilities.\n\nCOMPENSATION & BENEFITS PACKAGE\n• Pay range: $130,000 to $150,000 per year.\n• Eligible Benefits: Medical, Dental, Vision, Life & AD&D Insurance, Long-Term & Short-Term Disability Insurance, 401(k) Savings Plan, Employee Assistance Program (EAP), Paid Time Off (PTO), 11 Paid Federal Holidays, and Leave of Absence.\n\nCompliance:\n\nTo be considered for this position, all applicants must apply on the company website, https://katmaicorp.com/life-at-katmai/\n\nWe are a VEVRAA Federal Contractor\n\nWe are an equal opportunity employer and all qualified applicants will receive consideration for employment without regard to age, race, color, religion, sex, sexual orientation, gender identity or national origin, disability status, protected veteran status, marital status, familial status or any other characteristic protected by law. https://katmaicorp.com/life-at-katmai/#equal_opportunity Preference will be given to Ouzinkie Shareholders, Descendants of Shareholders and Spouses of Shareholders in accordance with Title 43 U.S. Code 1626(g) and Title 42 U.S. Code 2000e - 2(i).",
+    "job_is_remote": true,
+    "job_posted_at": "13 days ago",
+    "job_posted_at_timestamp": 1746662400,
+    "job_posted_at_datetime_utc": "2025-05-08T00:00:00.000Z",
+    "job_location": "Washington, DC",
+    "job_city": "Washington",
+    "job_state": "District of Columbia",
+    "job_country": "US",
+    "job_latitude": 38.9071923,
+    "job_longitude": -77.0368707,
+    "job_benefits": [
+      "dental_coverage",
+      "paid_time_off",
+      "health_insurance"
+    ],
+    "job_google_link": "https://www.google.com/search?q=jobs&gl=us&hl=en&udm=8#vhid=vt%3D20/docid%3DbTzUv-8Qb52PoibxAAAAAA%3D%3D&vssid=jobs-detail-viewer",
+    "job_min_salary": 130000,
+    "job_max_salary": 150000,
+    "job_salary_period": "YEAR",
+    "job_highlights": {
+      "Qualifications": [
+        "Python related packages, tools, and products such as NumPy, Pandas, Anaconda, Jupyter Notebook, and VS code",
+        "SAS Software such as Advanced Base SAS, SAS Macro Language, and SAS ODS software",
+        "PostgreSQL Databases and related languages, tools, and products such as pgAdmin, and PL/pgSQL",
+        "Version control software such as Git, GitLab or GitHub",
+        "Linux terminal or other tools to allow for executing from the command line",
+        "Microsoft suite including Word, Excel, PowerPoint, SharePoint, and Teams",
+        "Knowledge of using GitLab or GitHub to configure pipelines for CI/CD",
+        "Experience using Python to read and reformat large data files",
+        "Experience improving code performance: able to profile and refactor code and find bottlenecks and overheads, preferably on production code",
+        "Experience writing high quality code: well-documented and easy to read, use, maintain, and extend",
+        "Experienced with Linux, able to perform basic commands as an end user",
+        "Experience with data validation in a statistical processing environment",
+        "Familiarity with SAS code",
+        "Familiarity with database designs that balance usability with functionality",
+        "Must pass the Census Bureau Security Investigation / background investigation",
+        "Must obtain and maintain any necessary security access and/or background checks",
+        "May be required to work additional hours as needed to complete assignment or project",
+        "Work is expected to be remote; however, the company reserves the right to require onsite work",
+        "Position consists of sitting for long periods of time, using hands/ fingers, handling, reaching with hands and arms, speaking, or translating",
+        "Moderate to extended periods of office work with heavy periods of computer usage",
+        "To be considered for this position, all applicants must apply on the company website, https://katmaicorp.com/life-at-katmai/"
+      ],
+      "Benefits": [
+        "COMPENSATION & BENEFITS PACKAGE",
+        "Pay range: $130,000 to $150,000 per year",
+        "Eligible Benefits: Medical, Dental, Vision, Life & AD&D Insurance, Long-Term & Short-Term Disability Insurance, 401(k) Savings Plan, Employee Assistance Program (EAP), Paid Time Off (PTO), 11 Paid Federal Holidays, and Leave of Absence"
+      ],
+      "Responsibilities": [
+        "Provide support to the U.S. Census Bureau's Demographic Systems Division (DSD) by offering Python development services in support of DSD’s migration of survey processing systems from Statistical Analysis System (SAS) to Python",
+        "Assist with the development and documentation of the rewrite of The Survey of Income and Program Participation (SIPP) production processing system into a Python codebase",
+        "The scope of the SIPP Production processing consists of 200+ edit programs",
+        "Support the ongoing SIPP production system and the SIPP Seamless system",
+        "Assist DSD with the implementation of Python code solutions using efficient methodologies to utilize the language’s strengths",
+        "Assist DSD in analyzing existing SAS-based system to glean functional requirements to develop optimized, Python-based solutions",
+        "Write high quality code that is well-documented and easy to read, use, and maintain",
+        "Use Python to read and reformat large datasets",
+        "Improve Python code performance",
+        "Attend branch meetings and share technical knowledge clearly",
+        "Work with customers and subject matter experts to capture and document business needs and processes through meetings and requirements gathering",
+        "Make recommendations concerning the feasibility of revising existing applications or developing new approaches to utilize resources more effectively",
+        "Troubleshoot issues as needed and work with appropriate resources to resolve problems",
+        "Assist DSD with developing proof-in-concepts, pilots, and alternatives analysis",
+        "Provide thorough documentation based on Census Bureau and/or DSD standards",
+        "Documentation includes but is not limited to formal specifications and/or systems logical diagrams, training, and in-code documentation",
+        "Participate in code and peer reviews, as well as formal walkthroughs as directed",
+        "Conduct formal presentations and provide written documents outlining any issues and concerns to Census Management",
+        "Utilize DSD version control system regularly to ensure all developed code is readily available to Census staff",
+        "Review the existing software systems and make recommendations to improve the design",
+        "Provide weekly and/or daily status reports in requested format to tasks manager or as directed",
+        "Work with and train designated Census Bureau IT specialists to ensure that the system is fully understood by those designated individuals responsible for maintaining the system once released to production",
+        "Maintain regular communications with team as required",
+        "Complete tasks using, but not limited to, technologies such as:",
+        "The following deliverables are required:",
+        "Finalized Python modules and code for performing identified, demographic edits for the SIPP survey",
+        "ISPB Python Programming Standards and Guidelines document",
+        "Regular status reports",
+        "Presentation and training material",
+        "Evaluation and recommendation for database implementation",
+        "Python code stored a version control software, such as SVN or GitLab",
+        "Maintain regular and punctual attendance",
+        "Perform other duties as assigned",
+        "Periods of walking, standing, bending, kneeling, stooping, crouching, and lifting equipment weighing up to 10 pounds"
+      ]
+    },
+    "job_onet_soc": "15113200",
+    "job_onet_job_zone": "4",
+    "match_percentage": 100.0,
+    "tags": [
+      "python",
+      "related",
+      "packages",
+      "tools",
+      "products",
+      "numpy",
+      "pandas",
+      "anaconda",
+      "jupyter",
+      "notebook"
+    ]
+  },
+  {
+    "job_id": "ol1jcQKNM1J_JlCvAAAAAA==",
+    "job_title": "Senior Python Developer - Onsite",
+    "employer_name": "Cognizant",
+    "employer_logo": null,
+    "employer_website": "https://www.cognizant.com",
+    "job_publisher": "Cognizant Careers",
+    "job_employment_type": "Full-time",
+    "job_employment_types": [
+      "FULLTIME"
+    ],
+    "job_apply_link": "https://careers.cognizant.com/global-en/jobs/00062775321/senior-python-developer-onsite/?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+    "job_apply_is_direct": false,
+    "apply_options": [
+      {
+        "publisher": "Cognizant Careers",
+        "apply_link": "https://careers.cognizant.com/global-en/jobs/00062775321/senior-python-developer-onsite/?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "BeBee",
+        "apply_link": "https://us.bebee.com/job/edd050c2d400aba7202ee3ddb22eafbc?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      }
+    ],
+    "job_description": "About Us:\n\nCognizant is one of the world's leading professional services companies, transforming clients' business, operating, and technology models for the digital era. Our unique industry-based, consultative approach helps clients envision, build, and run more innovative and efficient businesses. Headquartered in the U.S., Cognizant, a member of the NASDAQ-100, is ranked 195 on the Fortune 500 and is consistently listed among the most admired companies in the world. Learn how Cognizant helps clients lead with digital at www.cognizant.com.\n\nAbout Cognizant’s IoT Practice:\n\nIntelligent, IoT-enabled products will soon result in the proliferation of data and disrupt virtually all industries. To be successful, both large and small companies must leverage IoT capabilities by designing modern products that fundamentally connect people with processes. Within Cognizant IOT, we engineer industry-aligned, IoT-enabled products that merge industry needs with human drivers. Our intelligent products will revolutionize experiences and result in exciting, transformative outcomes. Without human-centered thinking, connected products are just standalone things—but with it, our modern connected products facilitate a unified way of life enjoyed by all.\n\nJob Summary\n\nWe are seeking a highly skilled Sr. Developer with 8 to 16 years of experience in Python to join our dynamic team. The ideal candidate will work in a hybrid model contributing to the development of innovative solutions that drive our company’s success. This role offers the opportunity to make a significant impact on our projects and the broader community.\n\nScope of Work:\n\nDevelop and maintain Python-based applications on EDGE platforms and microservices.\n\nDesign and implement efficient, scalable, and maintainable code.\n\nModernize existing legacy applications based on Excel.\n\nCreate and optimize database interactions using SQL and Postgres.\n\nDevelop and maintain Python libraries.\n\nBuild RESTful APIs using frameworks like Flask or Django REST Framework.\n\nDevelop data processing pipelines.\n\nIntegrate third-party services and APIs.\n\nOptimize application performance and database queries.\n\nImplement security best practices.\n\nCreate and maintain technical documentation.\n\nImplement robust error handling and logging mechanisms.\n\nWrite comprehensive unit and integration tests.\n\nPerform code reviews and provide technical guidance to junior developers.\n\nDevelop test plans and conduct user acceptance testing (UAT) to validate solutions.\n\nSkills / Experience Required:\n\nBasic understanding of building science, energy, embodied carbon calculations, and carbon neutrality strategies for buildings.\n\nAdherence to standards for timely and quality delivery of artifacts.\n\nMinimum 8 years of professional Python development experience.\n\nExpertise in Python 3.8+.\n\nStrong knowledge of:\n\nSQL, Postgres DB, stored procedures, and functions.\n\nFASTAPI.\n\nPython libraries like importlib and pydantic.\n\nCaching.\n\nCreating utilities in Python code.\n\nExcel.\n\nExperience with cloud platforms (Azure preferred).\n\nProficiency in version control.\n\nCompensation: - $100,000 to $160,000 +/- and this position are also eligible for Cognizant’s discretionary annual incentive program, based on performance and subject to the terms of Cognizant’s applicable plans. Application will be accepted till 06/21/2025\n\nBenefits: Cognizant offers the following benefits for this position, subject to applicable eligibility requirements:\n\n• Medical/Dental/Vision/Life Insurance\n\n• Paid holidays plus Paid Time Off\n\n• 401(k) plan and contributions\n\n• Long-term/Short-term Disability\n\n• Paid Parental Leave\n\n• Employee Stock Purchase Plan\n\nDisclaimer: The salary, other compensation, and benefits information is accurate as of the date of this posting. Cognizant reserves the right to modify this information at any time, subject to applicable law.\n\nWe are an equal opportunity employer and value diversity at our company. We do not discriminate on the basis of race, religion, color, national origin, sex, gender, gender expression, sexual orientation, age, marital status, veteran status, or disability status. We will ensure that individuals with disabilities are provided reasonable accommodation to participate in the job application or interview process, to perform essential job functions, and to receive other benefits and privileges of employment. Please contact us to request accommodation.",
+    "job_is_remote": false,
+    "job_posted_at": "2 days ago",
+    "job_posted_at_timestamp": 1747612800,
+    "job_posted_at_datetime_utc": "2025-05-19T00:00:00.000Z",
+    "job_location": "Washington, DC",
+    "job_city": "Washington",
+    "job_state": "District of Columbia",
+    "job_country": "US",
+    "job_latitude": 38.9071923,
+    "job_longitude": -77.0368707,
+    "job_benefits": [
+      "dental_coverage",
+      "health_insurance",
+      "paid_time_off"
+    ],
+    "job_google_link": "https://www.google.com/search?q=jobs&gl=us&hl=en&udm=8#vhid=vt%3D20/docid%3Dol1jcQKNM1J_JlCvAAAAAA%3D%3D&vssid=jobs-detail-viewer",
+    "job_salary": null,
+    "job_min_salary": null,
+    "job_max_salary": null,
+    "job_salary_period": null,
+    "job_highlights": {
+      "Qualifications": [
+        "We are seeking a highly skilled Sr",
+        "Developer with 8 to 16 years of experience in Python to join our dynamic team",
+        "Modernize existing legacy applications based on Excel",
+        "Basic understanding of building science, energy, embodied carbon calculations, and carbon neutrality strategies for buildings",
+        "Minimum 8 years of professional Python development experience",
+        "Expertise in Python 3.8+",
+        "SQL, Postgres DB, stored procedures, and functions",
+        "Python libraries like importlib and pydantic",
+        "Excel",
+        "Proficiency in version control"
+      ],
+      "Benefits": [
+        "Compensation: - $100,000 to $160,000 +/- and this position are also eligible for Cognizant’s discretionary annual incentive program, based on performance and subject to the terms of Cognizant’s applicable plans",
+        "Medical/Dental/Vision/Life Insurance",
+        "Paid holidays plus Paid Time Off",
+        "401(k) plan and contributions",
+        "Long-term/Short-term Disability",
+        "Paid Parental Leave",
+        "Employee Stock Purchase Plan",
+        "Disclaimer: The salary, other compensation, and benefits information is accurate as of the date of this posting"
+      ],
+      "Responsibilities": [
+        "Develop and maintain Python-based applications on EDGE platforms and microservices",
+        "Design and implement efficient, scalable, and maintainable code",
+        "Create and optimize database interactions using SQL and Postgres",
+        "Develop and maintain Python libraries",
+        "Build RESTful APIs using frameworks like Flask or Django REST Framework",
+        "Develop data processing pipelines",
+        "Integrate third-party services and APIs",
+        "Optimize application performance and database queries",
+        "Implement security best practices",
+        "Create and maintain technical documentation",
+        "Implement robust error handling and logging mechanisms",
+        "Write comprehensive unit and integration tests",
+        "Perform code reviews and provide technical guidance to junior developers",
+        "Develop test plans and conduct user acceptance testing (UAT) to validate solutions",
+        "Adherence to standards for timely and quality delivery of artifacts",
+        "Caching",
+        "Creating utilities in Python code"
+      ]
+    },
+    "job_onet_soc": "15113200",
+    "job_onet_job_zone": "4",
+    "match_percentage": 100.0,
+    "tags": [
+      "seeking",
+      "highly",
+      "skilled",
+      "developer",
+      "years",
+      "experience",
+      "python",
+      "join",
+      "our",
+      "dynamic"
+    ]
+  },
+  {
+    "job_id": "BHboM6ZmBPHtO8mSAAAAAA==",
+    "job_title": "Senior Data Engineer (Python, SQL, AWS)",
+    "employer_name": "Capital One",
+    "employer_logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7KR6ddAhl_bRXOgLnoqaEtirI8iHcZyNzObjR&s=0",
+    "employer_website": "https://www.capitalone.ca",
+    "job_publisher": "LinkedIn",
+    "job_employment_type": "Internship",
+    "job_employment_types": [
+      "INTERN"
+    ],
+    "job_apply_link": "https://www.linkedin.com/jobs/view/senior-data-engineer-python-sql-aws-at-capital-one-4231427151?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+    "job_apply_is_direct": false,
+    "apply_options": [
+      {
+        "publisher": "LinkedIn",
+        "apply_link": "https://www.linkedin.com/jobs/view/senior-data-engineer-python-sql-aws-at-capital-one-4231427151?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Monster",
+        "apply_link": "https://www.monster.com/job-openings/senior-lead-data-engineer-python-sql-aws-washington-dc--ff6c7fe3-01d8-4b24-bcbe-89db284cf666?mstr_dist=true&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Product Hired",
+        "apply_link": "https://producthired.com/jobs/1444955-senior-lead-data-engineer-python-sql-aws?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "IHire",
+        "apply_link": "https://www.ihire.com/jobs/view/477646441?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "SaluteMyJob",
+        "apply_link": "https://salutemyjob.com/jobs/senior-data-engineer-python-aws-washington-washington-dc/2151477066-2/?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Jobtrees",
+        "apply_link": "https://www.jobtrees.com/postid/63710bf2-5a50-355c-b9c8-dd5abdade465?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "ComputerJobs",
+        "apply_link": "http://computerjobs.com/us/en/mob/job/3BB4E7EEDD575B8F43?shid=078A0C9755B95D04B097&page=1&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Black Tech Jobs",
+        "apply_link": "https://www.blacktechjobs.com/jobs/390331161-senior-data-engineer-python-aws-at-capital-one?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      }
+    ],
+    "job_description": "Do you love building and pioneering in the technology space? Do you enjoy solving complex business problems in a fast-paced, collaborative,inclusive, and iterative delivery environment? At Capital One, you'll be part of a big group of makers, breakers, doers and disruptors, who solve real problems and meet real customer needs. We are seeking Data Engineers who are passionate about marrying data with emerging technologies. As a Capital One Data Engineer, you’ll have the opportunity to be on the forefront of driving a major transformation within Capital One.\n\nWhat You’ll Do\n• Collaborate with and across Agile teams to design, develop, test, implement, and support technical solutions in full-stack development tools and technologies\n• Work with a team of developers with deep experience in machine learning, distributed microservices, and full stack systems\n• Utilize programming languages like Java, Scala, Python and Open Source RDBMS and NoSQL databases and Cloud based data warehousing services such as Redshift and Snowflake\n• Share your passion for staying on top of tech trends, experimenting with and learning new technologies, participating in internal & external technology communities, and mentoring other members of the engineering community\n• Collaborate with digital product managers, and deliver robust cloud-based solutions that drive powerful experiences to help millions of Americans achieve financial empowerment\n• Perform unit tests and conduct reviews with other team members to make sure your code is rigorously designed, elegantly coded, and effectively tuned for performance\n\nBasic Qualifications\n• Bachelor’s Degree\n• At least 3 years of experience in application development (Internship experience does not apply)\n• At least 1 year of experience in big data technologies\n\nPreferred Qualifications\n• 5+ years of experience in application development including Python, SQL, Scala, or Java\n• 2+ years of experience with a public cloud (AWS, Microsoft Azure, Google Cloud)\n• 3+ years experience with Distributed data/computing tools (MapReduce, Hadoop, Hive, EMR, Kafka, Spark, Gurobi, or MySQL)\n• 2+ year experience working on real-time data and streaming applications\n• 2+ years of experience with NoSQL implementation (Mongo, Cassandra)\n• 2+ years of data warehousing experience (Redshift or Snowflake)\n• 3+ years of experience with UNIX/Linux including basic commands and shell scripting\n• 2+ years of experience with Agile engineering practices\n\nAt this time, Capital One will not sponsor a new applicant for employment authorization, or offer any immigration related support for this position (i.e. H1B, F-1 OPT, F-1 STEM OPT, F-1 CPT, J-1, TN, or another type of work authorization).\n\nThe minimum and maximum full-time annual salaries for this role are listed below, by location. Please note that this salary information is solely for candidates hired to perform work within one of these locations, and refers to the amount Capital One is willing to pay at the time of this posting. Salaries for part-time roles will be prorated based upon the agreed upon number of hours to be regularly worked.\n\nMcLean, VA: $158,600 - $181,000 for Senior Data Engineer\n\nRichmond, VA: $144,200 - $164,600 for Senior Data Engineer\n\nCandidates hired to work in other locations will be subject to the pay range associated with that location, and the actual annualized salary amount offered to any candidate at the time of hire will be reflected solely in the candidate’s offer letter.\n\nThis role is also eligible to earn performance based incentive compensation, which may include cash bonus(es) and/or long term incentives (LTI). Incentives could be discretionary or non discretionary depending on the plan.\n\nCapital One offers a comprehensive, competitive, and inclusive set of health, financial and other benefits that support your total well-being. Learn more at the Capital One Careers website. Eligibility varies based on full or part-time status, exempt or non-exempt status, and management level.\n\nThis role is expected to accept applications for a minimum of 5 business days.\n\nNo agencies please. Capital One is an equal opportunity employer committed to diversity and inclusion in the workplace. All qualified applicants will receive consideration for employment without regard to sex (including pregnancy, childbirth or related medical conditions), race, color, age, national origin, religion, disability, genetic information, marital status, sexual orientation, gender identity, gender reassignment, citizenship, immigration status, protected veteran status, or any other basis prohibited under applicable federal, state or local law. Capital One promotes a drug-free workplace. Capital One will consider for employment qualified applicants with a criminal history in a manner consistent with the requirements of applicable laws regarding criminal background inquiries, including, to the extent applicable, Article 23-A of the New York Correction Law; San Francisco, California Police Code Article 49, Sections 4901-4920; New York City’s Fair Chance Act; Philadelphia’s Fair Criminal Records Screening Act; and other applicable federal, state, and local laws and regulations regarding criminal background inquiries.\n\nIf you have visited our website in search of information on employment opportunities or to apply for a position, and you require an accommodation, please contact Capital One Recruiting at 1-800-304-9102 or via email at RecruitingAccommodation@capitalone.com. All information you provide will be kept confidential and will be used only to the extent required to provide needed reasonable accommodations.\n\nFor technical support or questions about Capital One's recruiting process, please send an email to Careers@capitalone.com\n\nCapital One does not provide, endorse nor guarantee and is not liable for third-party products, services, educational tools or other information available through this site.\n\nCapital One Financial is made up of several different entities. Please note that any position posted in Canada is for Capital One Canada, any position posted in the United Kingdom is for Capital One Europe and any position posted in the Philippines is for Capital One Philippines Service Corp. (COPSSC).",
+    "job_is_remote": false,
+    "job_posted_at": "20 hours ago",
+    "job_posted_at_timestamp": 1747756800,
+    "job_posted_at_datetime_utc": "2025-05-20T16:00:00.000Z",
+    "job_location": "Washington, DC",
+    "job_city": "Washington",
+    "job_state": "District of Columbia",
+    "job_country": "US",
+    "job_latitude": 38.9071923,
+    "job_longitude": -77.0368707,
+    "job_benefits": [
+      "health_insurance"
+    ],
+    "job_google_link": "https://www.google.com/search?q=jobs&gl=us&hl=en&udm=8#vhid=vt%3D20/docid%3DBHboM6ZmBPHtO8mSAAAAAA%3D%3D&vssid=jobs-detail-viewer",
+    "job_salary": null,
+    "job_min_salary": null,
+    "job_max_salary": null,
+    "job_salary_period": null,
+    "job_highlights": {
+      "Qualifications": [
+        "Bachelor’s Degree",
+        "At least 3 years of experience in application development (Internship experience does not apply)",
+        "At least 1 year of experience in big data technologies",
+        "At this time, Capital One will not sponsor a new applicant for employment authorization, or offer any immigration related support for this position (i.e. H1B, F-1 OPT, F-1 STEM OPT, F-1 CPT, J-1, TN, or another type of work authorization)"
+      ],
+      "Benefits": [
+        "Salaries for part-time roles will be prorated based upon the agreed upon number of hours to be regularly worked",
+        "McLean, VA: $158,600 - $181,000 for Senior Data Engineer",
+        "Candidates hired to work in other locations will be subject to the pay range associated with that location, and the actual annualized salary amount offered to any candidate at the time of hire will be reflected solely in the candidate’s offer letter",
+        "This role is also eligible to earn performance based incentive compensation, which may include cash bonus(es) and/or long term incentives (LTI)",
+        "Incentives could be discretionary or non discretionary depending on the plan",
+        "Capital One offers a comprehensive, competitive, and inclusive set of health, financial and other benefits that support your total well-being"
+      ],
+      "Responsibilities": [
+        "Collaborate with and across Agile teams to design, develop, test, implement, and support technical solutions in full-stack development tools and technologies",
+        "Work with a team of developers with deep experience in machine learning, distributed microservices, and full stack systems",
+        "Utilize programming languages like Java, Scala, Python and Open Source RDBMS and NoSQL databases and Cloud based data warehousing services such as Redshift and Snowflake",
+        "Share your passion for staying on top of tech trends, experimenting with and learning new technologies, participating in internal & external technology communities, and mentoring other members of the engineering community",
+        "Collaborate with digital product managers, and deliver robust cloud-based solutions that drive powerful experiences to help millions of Americans achieve financial empowerment",
+        "Perform unit tests and conduct reviews with other team members to make sure your code is rigorously designed, elegantly coded, and effectively tuned for performance"
+      ]
+    },
+    "job_onet_soc": "15113200",
+    "job_onet_job_zone": "4",
+    "match_percentage": 0.0,
+    "tags": [
+      "degree",
+      "least",
+      "years",
+      "experience",
+      "application",
+      "development",
+      "year",
+      "big",
+      "data",
+      "technologies"
+    ]
+  },
+  {
+    "job_id": "86f6dONtcahDawr9AAAAAA==",
+    "job_title": "Junior Python Developer (Chantilly OR Herndon, VA)",
+    "employer_name": "Edgesource",
+    "employer_logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeI5MCyR50_Ug-kubShlkC6bmPFaplDQPUCAyM&s=0",
+    "employer_website": "https://www.edgesource.com",
+    "job_publisher": "Indeed",
+    "job_employment_type": "Full-time",
+    "job_employment_types": [
+      "FULLTIME"
+    ],
+    "job_apply_link": "https://www.indeed.com/viewjob?jk=59a61f0ca6a8c63f&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+    "job_apply_is_direct": false,
+    "apply_options": [
+      {
+        "publisher": "Indeed",
+        "apply_link": "https://www.indeed.com/viewjob?jk=59a61f0ca6a8c63f&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "ZipRecruiter",
+        "apply_link": "https://www.ziprecruiter.com/c/Edgesource/Job/Junior-Python-Developer-(Chantilly-OR-Herndon,-VA)/-in-Washington,DC?jid=f24a7e992b6b72e1&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Glassdoor",
+        "apply_link": "https://www.glassdoor.com/job-listing/junior-python-developer-chantilly-or-herndon-va-edgesource-JV_IC1138213_KO0,47_KE48,58.htm?jl=1009736764869&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "SimplyHired",
+        "apply_link": "https://www.simplyhired.com/job/uR-O1e17WBjS5dYAAK_AeDWbjlEa3RoCcTN5s2VFNWYLXlDQknqCaQ?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "LinkedIn",
+        "apply_link": "https://www.linkedin.com/jobs/view/junior-python-developer-chantilly-or-herndon-va-at-edgesource-corporation-4226681294?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Monster",
+        "apply_link": "https://www.monster.com/job-openings/junior-python-developer-chantilly-or-herndon-va-washington-dc--ecde9a52-689b-491f-ac43-0c902145d0ac?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Jobilize",
+        "apply_link": "https://www.jobilize.com/job/us-dc-washington-junior-python-developer-chantilly-herndon-va-edgesource?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      }
+    ],
+    "job_description": "We offer many opportunities to work on leading programs in both the federal and commercial sectors. Edgesource has partnered with many organizations working on progressive projects vital to both their continued success and our national security. Edgesource is continually seeking top-tier professionals to join our ever-growing diverse teams.\n\nEdgesource offers competitive salaries and benefits packages across our various business units, please reference within individual job postings on our website for additional information. Edgesource is an Equal Opportunity employer committed to a diverse workforce.\n\nCompany Overview:\nFor over 25 years, Edgesource Corporation has served as an innovative technology service provider for the Department of Defense (DOD), Department of Homeland Security (DHS), Department of State (DOS), the U.S. Intelligence Community, Law Enforcement, and other federal, state, and commercial clients locally, nationally, and abroad. From providing boutique technical solutions in support of the DOD Counter Unmanned Aerial Systems (CUAS) mission set to addressing the most critical Cybersecurity threats facing our nation as a prime contractor with the DHS Cybersecurity & Infrastructure Security Agency (CISA), a career at Edgesource is an opportunity to do meaningful, interesting, and impactful work.\n\nPosition Overview:\nEdgesource is actively seeking a Junior Python Developer to work as part of a team to implement functionality as part of multiple efforts to build data processing applications. Job duties are performed 100% onsite at either the customer location in Chantilly or Herndon, VA.\n\nJob Duties:\n• Work with the Chief Engineer and Technical Leads to translate requirements into user stories to incorporate new functionality into various software applications\n• Build with automated testing frameworks to ensure code quality and robust CI/CD deployment processes\n• Develop Python-based web APIs to interface with cloud applications and databases as part of cloud native software applications\n• Work as part of an Agile team to iteratively deliver software\n• Help translate requirements into user stories to be implemented as part of an agile team\n• Integrate Python code into Docker containers as part of a distributed architecture\n• Implement functionality to interface with an existing system, as well as writing new functionality to interface with various open-source tools\n• Include automated tests as part of the CI/CD pipeline to validate the code\n\nRequired Qualifications:\n• Active TS/SCI with polygraph security clearance\n• 1-3 years’ of related work experience\n• Data Processing Python Libraries such as PySpark, Pandas and Numpy\n• Experience with API development in Python using libraries such as FastAPI\n• Experience with Unit Testing Frameworks in PyTest and Mocking\n• Knowledge of the cloud software deployment process\n• Familiarity with parallel processing in Python, large data processing using packages such as PySpark, and optimizing Python code for deployment as part of a containerized architecture\n\nDesired Qualifications (NOT REQUIRED):\n• Experience with Python ORM tools for database as code such as SQLAlchemy\n• Experience deploying containerized Python code using Docker on cloud platforms such as AWS\n\nWorking at Edgesource:\nAs an ISO 9001:2015 certified and CMMI Level 3 appraised small business, Edgesource specializes in providing a variety of technical solutions to include software development, database services, enterprise networking, data center virtualization, and management support. We are always seeking top-talent to join our team in helping to address the most critical technical challenges facing our nation.\n\nAt Edgesource, we understand that our employees are our greatest asset, and as such we offer a wide array of benefits to support the well-being of our staff to include:\n\n- Flexible PTO Policy + 11 Paid Holidays -\n- Flexible Work Schedules (Remote / Hybrid) -\n- Medical / Dental / Vision / Flexible Spending Account (FSA) -\n- 401k Plan with Match -\n- Tuition & Professional Development Support -\n- Commuter Benefits -\n- Bonus & Employee Referral Programs -\n- Career Growth Opportunities -\n\nDisclaimer:\nEdgesource Corporation is an affirmative action and equal opportunity employer. All qualified applicants will receive consideration for employment without regard to race, color, religion, sex, disability, age, sexual orientation, gender identity, national origin, veteran status, or genetic information. Edgesource is committed to providing access, equal opportunity and reasonable accommodation for individuals with disabilities in employment, its services, programs, and activities. To request reasonable accommodation, please contact our Recruiting Department by email at staffing@edgesource.com or by phone at (703) 837-0550.\n\n#CJ",
+    "job_is_remote": false,
+    "job_posted_at": "13 days ago",
+    "job_posted_at_timestamp": 1746662400,
+    "job_posted_at_datetime_utc": "2025-05-08T00:00:00.000Z",
+    "job_location": "Washington, DC",
+    "job_city": "Washington",
+    "job_state": "District of Columbia",
+    "job_country": "US",
+    "job_latitude": 38.9071923,
+    "job_longitude": -77.0368707,
+    "job_benefits": [
+      "paid_time_off",
+      "dental_coverage",
+      "health_insurance"
+    ],
+    "job_google_link": "https://www.google.com/search?q=jobs&gl=us&hl=en&udm=8#vhid=vt%3D20/docid%3D86f6dONtcahDawr9AAAAAA%3D%3D&vssid=jobs-detail-viewer",
+    "job_salary": null,
+    "job_min_salary": null,
+    "job_max_salary": null,
+    "job_salary_period": null,
+    "job_highlights": {
+      "Qualifications": [
+        "Active TS/SCI with polygraph security clearance",
+        "1-3 years’ of related work experience",
+        "Data Processing Python Libraries such as PySpark, Pandas and Numpy",
+        "Experience with API development in Python using libraries such as FastAPI",
+        "Experience with Unit Testing Frameworks in PyTest and Mocking",
+        "Knowledge of the cloud software deployment process",
+        "Familiarity with parallel processing in Python, large data processing using packages such as PySpark, and optimizing Python code for deployment as part of a containerized architecture"
+      ],
+      "Benefits": [
+        "Flexible PTO Policy + 11 Paid Holidays -",
+        "Flexible Work Schedules (Remote / Hybrid) -",
+        "Medical / Dental / Vision / Flexible Spending Account (FSA) -",
+        "401k Plan with Match -",
+        "Tuition & Professional Development Support -",
+        "Commuter Benefits -",
+        "Bonus & Employee Referral Programs -",
+        "Career Growth Opportunities -"
+      ],
+      "Responsibilities": [
+        "Work with the Chief Engineer and Technical Leads to translate requirements into user stories to incorporate new functionality into various software applications",
+        "Build with automated testing frameworks to ensure code quality and robust CI/CD deployment processes",
+        "Develop Python-based web APIs to interface with cloud applications and databases as part of cloud native software applications",
+        "Work as part of an Agile team to iteratively deliver software",
+        "Help translate requirements into user stories to be implemented as part of an agile team",
+        "Integrate Python code into Docker containers as part of a distributed architecture",
+        "Implement functionality to interface with an existing system, as well as writing new functionality to interface with various open-source tools",
+        "Include automated tests as part of the CI/CD pipeline to validate the code"
+      ]
+    },
+    "job_onet_soc": "15113200",
+    "job_onet_job_zone": "4",
+    "match_percentage": 100.0,
+    "tags": [
+      "active",
+      "polygraph",
+      "security",
+      "clearance",
+      "related",
+      "work",
+      "experience",
+      "data",
+      "processing",
+      "python"
+    ]
+  },
+  {
+    "job_id": "JxKCd-RqzucOlXZsAAAAAA==",
+    "job_title": "Senior Lead Software Engineer, Back End (Go, Python, AWS)",
+    "employer_name": "Capital One",
+    "employer_logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7KR6ddAhl_bRXOgLnoqaEtirI8iHcZyNzObjR&s=0",
+    "employer_website": "https://www.capitalone.ca",
+    "job_publisher": "LinkedIn",
+    "job_employment_type": "Internship",
+    "job_employment_types": [
+      "INTERN"
+    ],
+    "job_apply_link": "https://www.linkedin.com/jobs/view/senior-lead-software-engineer-back-end-go-python-aws-at-capital-one-4231422913?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+    "job_apply_is_direct": false,
+    "apply_options": [
+      {
+        "publisher": "LinkedIn",
+        "apply_link": "https://www.linkedin.com/jobs/view/senior-lead-software-engineer-back-end-go-python-aws-at-capital-one-4231422913?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Black Tech Jobs",
+        "apply_link": "https://www.blacktechjobs.com/jobs/393397593-lead-software-engineer-back-end-python-java-aws-at-capital-one?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Monster",
+        "apply_link": "https://www.monster.com/job-openings/lead-software-engineer-back-end-python-java-aws-washington-dc--c8d521cf-72fa-46ef-9bdb-e91d6ce18e88?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "SaluteMyJob",
+        "apply_link": "https://salutemyjob.com/jobs/lead-software-engineer-back-end-python-java-aws-washington-washington-dc/2151423553-2/?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "JobServe",
+        "apply_link": "https://www.jobserve.com/us/en/extjob/LEAD-SOFTWARE-ENGINEER-BACK-END-in-Washington-District-of-Columbia-USA-C4BF8F0C5A31777A15/?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "WhatJobs",
+        "apply_link": "https://www.whatjobs.com/gfj/1972539381?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Valley Central Jobs",
+        "apply_link": "https://jobs.valleycentral.com/jobs/senior-lead-software-engineer-back-end-go-python-aws-washington-washington-dc/2157781392-2/?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Jobrapido.com",
+        "apply_link": "https://us.jobrapido.com/jobpreview/3565177022978195456?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      }
+    ],
+    "job_description": "Do you love building and pioneering in the technology space? Do you enjoy solving complex business problems in a fast-paced, collaborative, inclusive, and iterative delivery environment? At Capital One, you'll be part of a big group of makers, breakers, doers and disruptors, who love to solve real problems and meet real customer needs. We are seeking Back End Software Engineers who are passionate about marrying data with emerging technologies. As a Capital One Software Engineer, you’ll have the opportunity to be on the forefront of driving a major transformation within Capital One.\n\nWhat You’ll Do\n• Lead a portfolio of diverse technology projects and a team of developers with deep experience in distributed microservices, and full stack systems to create solutions that help meet regulatory needs for the company\n• Share your passion for staying on top of tech trends, experimenting with and learning new technologies, participating in internal & external technology communities, mentoring other members of the engineering community, and from time to time, be asked to code or evaluate code\n• Collaborate with digital product managers, and deliver robust cloud-based solutions that drive powerful experiences to help millions of Americans achieve financial empowerment\n• Utilize programming languages including Java, Python, SQL, Go, Open Source RDBMS and NoSQL databases, Container Orchestration services including Docker, ECS, & Fargate, serverless technology including Glue & Lambda, and a variety of AWS tools and services\n\nBasic Qualifications\n• Bachelor’s Degree\n• At least 6 years of professional software engineering experience (Internship experience does not apply)\n• At least 1 year experience with cloud computing (AWS, Microsoft Azure, Google Cloud)\n\nPreferred Qualifications\n• Master’s Degree\n• 9+ years of experience in at least one of the following: Java, Python, or Go,\n• 3+ years of experience with AWS, GCP, Azure, or another cloud service\n• 4+ years of experience in open source frameworks\n• 1+ years of people management experience\n• 2+ years of experience in Agile practices\n\nCapital One will consider sponsoring a new qualified applicant for employment authorization for this position.\n\nThe minimum and maximum full-time annual salaries for this role are listed below, by location. Please note that this salary information is solely for candidates hired to perform work within one of these locations, and refers to the amount Capital One is willing to pay at the time of this posting. Salaries for part-time roles will be prorated based upon the agreed upon number of hours to be regularly worked.\n\nMcLean, VA: $225,400 - $257,200 for Sr. Lead Software Engineer\n\nCandidates hired to work in other locations will be subject to the pay range associated with that location, and the actual annualized salary amount offered to any candidate at the time of hire will be reflected solely in the candidate’s offer letter.\n\nThis role is also eligible to earn performance based incentive compensation, which may include cash bonus(es) and/or long term incentives (LTI). Incentives could be discretionary or non discretionary depending on the plan.\n\nCapital One offers a comprehensive, competitive, and inclusive set of health, financial and other benefits that support your total well-being. Learn more at the Capital One Careers website. Eligibility varies based on full or part-time status, exempt or non-exempt status, and management level.\n\nThis role is expected to accept applications for a minimum of 5 business days.\n\nNo agencies please. Capital One is an equal opportunity employer committed to diversity and inclusion in the workplace. All qualified applicants will receive consideration for employment without regard to sex (including pregnancy, childbirth or related medical conditions), race, color, age, national origin, religion, disability, genetic information, marital status, sexual orientation, gender identity, gender reassignment, citizenship, immigration status, protected veteran status, or any other basis prohibited under applicable federal, state or local law. Capital One promotes a drug-free workplace. Capital One will consider for employment qualified applicants with a criminal history in a manner consistent with the requirements of applicable laws regarding criminal background inquiries, including, to the extent applicable, Article 23-A of the New York Correction Law; San Francisco, California Police Code Article 49, Sections 4901-4920; New York City’s Fair Chance Act; Philadelphia’s Fair Criminal Records Screening Act; and other applicable federal, state, and local laws and regulations regarding criminal background inquiries.\n\nIf you have visited our website in search of information on employment opportunities or to apply for a position, and you require an accommodation, please contact Capital One Recruiting at 1-800-304-9102 or via email at RecruitingAccommodation@capitalone.com. All information you provide will be kept confidential and will be used only to the extent required to provide needed reasonable accommodations.\n\nFor technical support or questions about Capital One's recruiting process, please send an email to Careers@capitalone.com\n\nCapital One does not provide, endorse nor guarantee and is not liable for third-party products, services, educational tools or other information available through this site.\n\nCapital One Financial is made up of several different entities. Please note that any position posted in Canada is for Capital One Canada, any position posted in the United Kingdom is for Capital One Europe and any position posted in the Philippines is for Capital One Philippines Service Corp. (COPSSC).",
+    "job_is_remote": false,
+    "job_posted_at": "20 hours ago",
+    "job_posted_at_timestamp": 1747756800,
+    "job_posted_at_datetime_utc": "2025-05-20T16:00:00.000Z",
+    "job_location": "Washington, DC",
+    "job_city": "Washington",
+    "job_state": "District of Columbia",
+    "job_country": "US",
+    "job_latitude": 38.9071923,
+    "job_longitude": -77.0368707,
+    "job_benefits": [
+      "health_insurance"
+    ],
+    "job_google_link": "https://www.google.com/search?q=jobs&gl=us&hl=en&udm=8#vhid=vt%3D20/docid%3DJxKCd-RqzucOlXZsAAAAAA%3D%3D&vssid=jobs-detail-viewer",
+    "job_salary": null,
+    "job_min_salary": null,
+    "job_max_salary": null,
+    "job_salary_period": null,
+    "job_highlights": {
+      "Qualifications": [
+        "Bachelor’s Degree",
+        "At least 6 years of professional software engineering experience (Internship experience does not apply)",
+        "At least 1 year experience with cloud computing (AWS, Microsoft Azure, Google Cloud)"
+      ],
+      "Benefits": [
+        "Salaries for part-time roles will be prorated based upon the agreed upon number of hours to be regularly worked",
+        "McLean, VA: $225,400 - $257,200 for Sr",
+        "Candidates hired to work in other locations will be subject to the pay range associated with that location, and the actual annualized salary amount offered to any candidate at the time of hire will be reflected solely in the candidate’s offer letter",
+        "This role is also eligible to earn performance based incentive compensation, which may include cash bonus(es) and/or long term incentives (LTI)",
+        "Incentives could be discretionary or non discretionary depending on the plan",
+        "Capital One offers a comprehensive, competitive, and inclusive set of health, financial and other benefits that support your total well-being"
+      ],
+      "Responsibilities": [
+        "Lead a portfolio of diverse technology projects and a team of developers with deep experience in distributed microservices, and full stack systems to create solutions that help meet regulatory needs for the company",
+        "Share your passion for staying on top of tech trends, experimenting with and learning new technologies, participating in internal & external technology communities, mentoring other members of the engineering community, and from time to time, be asked to code or evaluate code",
+        "Collaborate with digital product managers, and deliver robust cloud-based solutions that drive powerful experiences to help millions of Americans achieve financial empowerment",
+        "Utilize programming languages including Java, Python, SQL, Go, Open Source RDBMS and NoSQL databases, Container Orchestration services including Docker, ECS, & Fargate, serverless technology including Glue & Lambda, and a variety of AWS tools and services"
+      ]
+    },
+    "job_onet_soc": "15113200",
+    "job_onet_job_zone": "4",
+    "match_percentage": 0.0,
+    "tags": [
+      "degree",
+      "least",
+      "years",
+      "professional",
+      "software",
+      "engineering",
+      "experience",
+      "year",
+      "cloud",
+      "computing"
+    ]
+  },
+  {
+    "job_id": "UxX9jGKHqRQqUV4LAAAAAA==",
+    "job_title": "Junior Backend Python Developer",
+    "employer_name": "LyteForge",
+    "employer_logo": null,
+    "employer_website": null,
+    "job_publisher": "LinkedIn",
+    "job_employment_type": "Full-time",
+    "job_employment_types": [
+      "FULLTIME"
+    ],
+    "job_apply_link": "https://www.linkedin.com/jobs/view/junior-backend-python-developer-at-lyteforge-4230022568?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+    "job_apply_is_direct": false,
+    "apply_options": [
+      {
+        "publisher": "LinkedIn",
+        "apply_link": "https://www.linkedin.com/jobs/view/junior-backend-python-developer-at-lyteforge-4230022568?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "ZipRecruiter",
+        "apply_link": "https://www.ziprecruiter.com/c/LyteForge/Job/Junior-Backend-Python-Developer/-in-Mclean,VA?jid=32f33b0f70386f29&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "BeBee",
+        "apply_link": "https://us.bebee.com/job/4d16a7a974cca21761c2c27441b8ec11?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Recruit.net",
+        "apply_link": "https://www.recruit.net/job/backend-python-developer-jobs/073745A32E9F1D94?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Jobrapido.com",
+        "apply_link": "https://us.jobrapido.com/jobpreview/9168474507906646016?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "WKRN Jobs",
+        "apply_link": "https://jobs.wkrn.com/jobs/junior-backend-python-developer-mclean-virginia/2166302453-2/?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      }
+    ],
+    "job_description": "Our organization is a unique software development company based in McLean, Virginia, dedicated to providing top-tier solutions to defend the United States and its businesses.\n\nWe are seeking a highly skilled and passionate Junior Backend Python Developer who embodies our commitment to excellence and is driven to \"do it right.\" This is a long-term opportunity for serious professionals who meet our stringent requirements and are eager to contribute to our critical mission. Compensation will be commensurate with experience, and we offer significant opportunities for professional growth and advancement within our best-of-the-best team.\n\nDESCRIPTION:\n\nWe are seeking a motivated and enthusiastic Junior Backend Python Developer to join our talented team. This role offers an exciting opportunity to contribute to the development of robust and scalable backend systems for critical applications. The ideal candidate will have a solid foundation in Python and a strong desire to learn and grow while working with technologies such as Flask, RESTful APIs, SocketIO, and graph query languages. You will work closely with senior developers to build and maintain backend services that power our mission-critical solutions.\n\nDay-to-day responsibilities and duties include:\n• Develop and maintain backend REST APIs using Python and the Flask framework.\n• Implement real-time communication features using Python and SocketIO.\n• Work with graph databases and implement efficient data retrieval and manipulation using graph query languages (e.g., Cypher, Gremlin, graphql ,and aql).\n• Collaborate with frontend developers to integrate backend APIs and services.\n• Write clean, well-documented, and maintainable Python code.\n• Participate in code reviews to ensure code quality and adherence to best practices.\n• Troubleshoot and debug backend issues.\n• Learn and apply best practices for backend development, security, and performance.\n• Work effectively within an agile development environment.\n• Assist in the design and implementation of database schemas and data models.\n• Stay up-to-date with the latest backend development trends and technologies.\n• Contribute to the continuous improvement of our development processes and tools.\n\nREQUIREMENTS:\n\nApplicants MUST\n\n- must be able to qualify and maintain security clearance.\n\n- have at least 3 years of Backend Python Developer experience and have a good understanding of professional business environments.\n\n- be very friendly and able to calmly handle clients and staff\n\n- be able to carry themselves in a professional manner\n\n- be punctual, responsible, and reliable\n\n- have good written and verbal communication skills (answering the phone and composing emails in a professional manner)\n\nBenefits / Additional Compensation:\n• Health Insurance\n• Dental Insurance\n• Vision Insurance\n• 401k match\n• Paid Time off\n• Paternal/Maternal Leave\n\nJob Type: Full-time\n\nPay: From $103,000 per year excluding bonus and benefits.\n\nSchedule:\n• The schedule for this position is project driven and can be highly variable depending on project deadlines and the specific needs of the software development teams.\n• Monday to Friday\n• Weekends as needed\n\nWork Location: In person\n\nTO APPLY: Please submit a resume. A cover letter is not required, although a short personal message explaining your work experience as it relates to this listing is extremely helpful.",
+    "job_is_remote": false,
+    "job_posted_at": "7 days ago",
+    "job_posted_at_timestamp": 1747180800,
+    "job_posted_at_datetime_utc": "2025-05-14T00:00:00.000Z",
+    "job_location": "McLean, VA",
+    "job_city": "McLean",
+    "job_state": "Virginia",
+    "job_country": "US",
+    "job_latitude": 38.9338676,
+    "job_longitude": -77.1772604,
+    "job_benefits": [
+      "paid_time_off",
+      "health_insurance",
+      "dental_coverage"
+    ],
+    "job_google_link": "https://www.google.com/search?q=jobs&gl=us&hl=en&udm=8#vhid=vt%3D20/docid%3DUxX9jGKHqRQqUV4LAAAAAA%3D%3D&vssid=jobs-detail-viewer",
+    "job_salary": null,
+    "job_min_salary": null,
+    "job_max_salary": null,
+    "job_salary_period": null,
+    "job_highlights": {
+      "Qualifications": [
+        "must be able to qualify and maintain security clearance",
+        "have at least 3 years of Backend Python Developer experience and have a good understanding of professional business environments",
+        "be very friendly and able to calmly handle clients and staff",
+        "be able to carry themselves in a professional manner",
+        "be punctual, responsible, and reliable",
+        "have good written and verbal communication skills (answering the phone and composing emails in a professional manner)"
+      ],
+      "Benefits": [
+        "Compensation will be commensurate with experience, and we offer significant opportunities for professional growth and advancement within our best-of-the-best team",
+        "Health Insurance",
+        "Dental Insurance",
+        "Vision Insurance",
+        "401k match",
+        "Paid Time off",
+        "Paternal/Maternal Leave",
+        "Pay: From $103,000 per year excluding bonus and benefits",
+        "The schedule for this position is project driven and can be highly variable depending on project deadlines and the specific needs of the software development teams",
+        "Monday to Friday"
+      ],
+      "Responsibilities": [
+        "This role offers an exciting opportunity to contribute to the development of robust and scalable backend systems for critical applications",
+        "The ideal candidate will have a solid foundation in Python and a strong desire to learn and grow while working with technologies such as Flask, RESTful APIs, SocketIO, and graph query languages",
+        "You will work closely with senior developers to build and maintain backend services that power our mission-critical solutions",
+        "Day-to-day responsibilities and duties include:",
+        "Develop and maintain backend REST APIs using Python and the Flask framework",
+        "Implement real-time communication features using Python and SocketIO",
+        "Work with graph databases and implement efficient data retrieval and manipulation using graph query languages (e.g., Cypher, Gremlin, graphql ,and aql)",
+        "Collaborate with frontend developers to integrate backend APIs and services",
+        "Write clean, well-documented, and maintainable Python code",
+        "Participate in code reviews to ensure code quality and adherence to best practices",
+        "Troubleshoot and debug backend issues",
+        "Learn and apply best practices for backend development, security, and performance",
+        "Work effectively within an agile development environment",
+        "Assist in the design and implementation of database schemas and data models",
+        "Stay up-to-date with the latest backend development trends and technologies",
+        "Contribute to the continuous improvement of our development processes and tools"
+      ]
+    },
+    "job_onet_soc": "15113200",
+    "job_onet_job_zone": "4",
+    "match_percentage": 100.0,
+    "tags": [
+      "able",
+      "qualify",
+      "maintain",
+      "security",
+      "clearance",
+      "least",
+      "years",
+      "backend",
+      "python",
+      "developer"
+    ]
+  },
+  {
+    "job_id": "vnvcblJ7AgRlNkidAAAAAA==",
+    "job_title": "Python Developer (East Coast)",
+    "employer_name": "StarCompliance",
+    "employer_logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8zq0ZnkRNUPY1OMJhjvAHCpkCaVoeoEOLqEFQ&s=0",
+    "employer_website": "https://www.starcompliance.com",
+    "job_publisher": "Indeed",
+    "job_employment_type": "Full-time",
+    "job_employment_types": [
+      "FULLTIME"
+    ],
+    "job_apply_link": "https://www.indeed.com/viewjob?jk=6299c02fa82b2457&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+    "job_apply_is_direct": true,
+    "apply_options": [
+      {
+        "publisher": "Indeed",
+        "apply_link": "https://www.indeed.com/viewjob?jk=6299c02fa82b2457&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": true
+      },
+      {
+        "publisher": "LinkedIn",
+        "apply_link": "https://www.linkedin.com/jobs/view/python-developer-east-coast-at-starcompliance-4233118469?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "ZipRecruiter",
+        "apply_link": "https://www.ziprecruiter.com/c/StarCompliance/Job/Python-Developer-(West-Coast)/-in-Rockville,MD?jid=9c1df2a64d0755a9&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Built In",
+        "apply_link": "https://builtin.com/job/python-developer-west-coast/6266951?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Glassdoor",
+        "apply_link": "https://www.glassdoor.com/job-listing/python-developer-west-coast-starcompliance-JV_IC1153899_KO0,27_KE28,42.htm?jl=1009748333018&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": true
+      },
+      {
+        "publisher": "SimplyHired",
+        "apply_link": "https://www.simplyhired.com/job/uyp3osAsuKtJjTPpUhSnY-ZMiRvEzxSNG_G1HbyvM3YI2xZ3Uha49Q?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Jobs And Talents In AI, ML, Data Science And Big Data",
+        "apply_link": "https://aijobs.net/job/1268866-python-developer-west-coast/?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "EarnBetter",
+        "apply_link": "https://earnbetter.com/app/job/01JVR8M4A91AGY3DAC4SXSHZKJ/?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      }
+    ],
+    "job_description": "About StarCompliance\n\nStarCompliance is on a mission to make compliance simple and easy. Trusted globally by enterprise financial institutions, the user-friendly STAR platform empowers organizations to achieve regulatory compliance while safeguarding their integrity and business reputations. Through a customizable, 360-degree view of employee activity, the STAR software enables firms to automate the detection and resolution of potential areas of conflict while streamlining daily workflows and increasing efficiency.\n\nRole\n\nWorking as part of a highly agile team, this is a challenging but exciting opportunity for a lead developer to play an important part in developing key service components that help create best in class employee compliance solutions.\n\nThe candidate must have a good level of experience of working with and overseeing the development of complex, multi-tenanted, scalable applications/microservices. Great coding hygiene, solid design and architecture experience are essential. The candidate will work closely with a technical lead to ensure applications that are developed are of a high standard and fit for purpose.\n\nResponsibilities\n• Assist the technical lead in driving solutions to complex problems\n• Build new and enhance existing services and their components\n• Contribute to improving development and DataOps experience\n• Look for ways to help others, whether this be through mentoring, pair programming or other approach to knowledge sharing\n\nSkills & Experience\n• Advance skills in Python\n• Experience of using ORM frameworks (e.g.SqlAlchemy, Django)\n• A good understanding of Object-Oriented Programming and Design\n• Commercial experience of working on enterprise level applications\n• A proven track record overseeing the development of large/complex projects\n• Experience of relational database management systems (e.g. SQL Server, Oracle,PostgreSQL)\n• Strong interpersonal skills, working with internal technical staff and stakeholders\n• Practical experience of analysing requirements\n• Ability to quickly learn new technical skills\n• Coaching and mentoring\n\nDesirable\n• Experience of working with Flask, MongoDB, Kafka, Typescript, AWS\n• Experience of working with statically typed Python codebases\n• Experience defining, implementing or supporting software in financial services industry(either traditional finance or crypto) preferred\n• Experience of Domain Driven Design (DDD)\n\nStarCompliance Background Checks\n• All positions require pre-employment screening due to employees potentially having access to highly sensitive and confidential information involving finance and compliance; candidates must be trustworthy and have a heightened sensitivity to protecting confidential financial, professional information. To be eligible for employment with StarCompliance, candidates must undergo a rigorous background investigation with checks including, but not limited to, criminal record history, consumer credit, employment history, qualifications, and education checks.\n\nEqual Opportunity Employer Statement\n• We prohibit discrimination and harassment of any kind based on race, sex, religion, sexual orientation, national origin, disability, genetic information, pregnancy, gender identity or expression, marital/civil union/domestic partnership status, veteran status or any other protected characteristic as outlined by country, state, or local laws.\n• This policy applies to all employment practices within our organisation, including hiring, recruiting, promotion, termination, layoff, recall, leave of absence, compensation, benefits, training, and apprenticeship. StarCompliance makes hiring decisions based solely on qualifications, merit, and business needs at the time. For more information, please request a copy of our Equal Opportunities Policy.",
+    "job_is_remote": false,
+    "job_posted_at": "2 days ago",
+    "job_posted_at_timestamp": 1747612800,
+    "job_posted_at_datetime_utc": "2025-05-19T00:00:00.000Z",
+    "job_location": "Rockville, MD",
+    "job_city": "Rockville",
+    "job_state": "Maryland",
+    "job_country": "US",
+    "job_latitude": 39.0839973,
+    "job_longitude": -77.1527578,
+    "job_benefits": null,
+    "job_google_link": "https://www.google.com/search?q=jobs&gl=us&hl=en&udm=8#vhid=vt%3D20/docid%3DvnvcblJ7AgRlNkidAAAAAA%3D%3D&vssid=jobs-detail-viewer",
+    "job_salary": null,
+    "job_min_salary": null,
+    "job_max_salary": null,
+    "job_salary_period": null,
+    "job_highlights": {
+      "Qualifications": [
+        "The candidate must have a good level of experience of working with and overseeing the development of complex, multi-tenanted, scalable applications/microservices",
+        "Great coding hygiene, solid design and architecture experience are essential",
+        "The candidate will work closely with a technical lead to ensure applications that are developed are of a high standard and fit for purpose",
+        "Advance skills in Python",
+        "Experience of using ORM frameworks (e.g.SqlAlchemy, Django)",
+        "A good understanding of Object-Oriented Programming and Design",
+        "Commercial experience of working on enterprise level applications",
+        "A proven track record overseeing the development of large/complex projects",
+        "Experience of relational database management systems (e.g. SQL Server, Oracle,PostgreSQL)",
+        "Strong interpersonal skills, working with internal technical staff and stakeholders",
+        "Practical experience of analysing requirements",
+        "Ability to quickly learn new technical skills",
+        "Coaching and mentoring",
+        "Experience of working with Flask, MongoDB, Kafka, Typescript, AWS",
+        "Experience of working with statically typed Python codebases",
+        "Experience of Domain Driven Design (DDD)",
+        "StarCompliance Background Checks",
+        "All positions require pre-employment screening due to employees potentially having access to highly sensitive and confidential information involving finance and compliance; candidates must be trustworthy and have a heightened sensitivity to protecting confidential financial, professional information",
+        "To be eligible for employment with StarCompliance, candidates must undergo a rigorous background investigation with checks including, but not limited to, criminal record history, consumer credit, employment history, qualifications, and education checks"
+      ],
+      "Responsibilities": [
+        "Working as part of a highly agile team, this is a challenging but exciting opportunity for a lead developer to play an important part in developing key service components that help create best in class employee compliance solutions",
+        "Assist the technical lead in driving solutions to complex problems",
+        "Build new and enhance existing services and their components",
+        "Contribute to improving development and DataOps experience",
+        "Look for ways to help others, whether this be through mentoring, pair programming or other approach to knowledge sharing"
+      ]
+    },
+    "job_onet_soc": "15113200",
+    "job_onet_job_zone": "4",
+    "match_percentage": 0.0,
+    "tags": [
+      "candidate",
+      "good",
+      "level",
+      "experience",
+      "working",
+      "overseeing",
+      "development",
+      "complex",
+      "scalable",
+      "great"
+    ]
+  },
+  {
+    "job_id": "x9r-KLjf5S4t1NtrAAAAAA==",
+    "job_title": "Sr Python Engineer(remote)",
+    "employer_name": "Claritev",
+    "employer_logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjs9VVpNIEaDsT5eqz7PBwi4WtWGArGRCBTf2q&s=0",
+    "employer_website": "https://www.claritev.com",
+    "job_publisher": "LinkedIn",
+    "job_employment_type": "Full-time",
+    "job_employment_types": [
+      "FULLTIME"
+    ],
+    "job_apply_link": "https://www.linkedin.com/jobs/view/sr-python-engineer-remote-at-claritev-4234080810?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+    "job_apply_is_direct": false,
+    "apply_options": [
+      {
+        "publisher": "LinkedIn",
+        "apply_link": "https://www.linkedin.com/jobs/view/sr-python-engineer-remote-at-claritev-4234080810?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      }
+    ],
+    "job_description": "At Claritev, we pride ourselves on being a dynamic team of innovative professionals. Our purpose is simple - we strive to bend the cost curve in healthcare for all. Our dedication to service excellence extends to all our stakeholders - internal and external - driving us to consistently exceed expectations. We are intentionally bold, we foster innovation, we nurture accountability, we champion diversity, and empower each other to illuminate our collective potential.\n\nBe part of our amazing transformational journey as we optimize the opportunity towards becoming a leading technology, data, and innovation voice in healthcare. Onward and Upward!!!\n\nJob Summary\n\nSenior Python Engineer responsible for designing and implementing automation strategies to reduce operational costs of business. As a full-stack developer, you will contribute to building high-performance applications, mentor junior engineers, and drive technical excellence within an Agile team. This role requires strong problem-solving skills, expertise in Python, cloud technologies, and a deep understanding of modern software development practices.\n\nJob Role And Responsibilities\n• Design and implement automation strategies to reduce operational costs of business\n• Build and maintain scalable, stable, and high-performing applications following best engineering practices.\n• Collaborate with engineers to define high-level technical designs while adhering to architectural principles.\n• Participate in Agile methodologies, ensuring best practices in coding, testing, and deployment automation.\n• Stay up-to-date with the latest technologies, frameworks, and industry trends to drive innovation.\n• Foster a high-performing, self-organized engineering team by mentoring and coaching junior developers.\n• Identify technical challenges, propose solutions, and communicate effectively with stakeholders.\n\n,\n\nRequired\n\nJOB REQUIREMENTS (Education, Experience, and Training):\n• 5+ years of progressive software experience in Python (Flask, FastAPI, Django, etc.). Courage to learn new programming languages and technologies, combined with strong analytical skills.\n• Must have experience using Generative AI tools (e.g., ChatGPT, GitHub Copilot, etc.) for developer productivity, including code generation, debugging assistance, and documentation generation.\n• Ability to design and document software architectures, system workflows, and service interactions using flowcharts, sequence diagrams, and other visualization techniques\n• TDD (Unit & Integration tests).\n• SQL & NoSQL Databases (SQL Server, PostgreSQL, MongoDB, etc).\n• Experience in utilizing Cloud services and best practices in deploying and maintaining applications in Cloud (Azure/AWS/OCI).\n• Hands-on experience with Serverless Computing such as Azure Functions, AWS Lambda, or similar technologies.\n• Familiarity with OCR, data extraction, and ML/AI services such as Azure AI Document Intelligence, Amazon Textract, etc. is preferred!\n• CI/CD, Containers, Docker.\n• Experience guiding and mentoring junior developers.\n• BS in Computer related field is preferred or equivalent work experience in software development\n\nNice To Have\n• Experience in automating business workflows.\n• RPA (Robotic Process Automation) or Web Scraping.\n• Extreme Programming (XP) experience including Pair Programming.\n• API Gateways.\n• Application security.\n• HTML/CSS/JavaScript.\n\nCompensation\n\nThe salary range for this position is $140K to $145K. Specific offers take into account a candidate’s education, experience and skills, as well as the candidate’s work location and internal equity. This position is also eligible for health insurance, 401k and bonus opportunity.\n\nBenefits\n\nWe realize that our employees are instrumental to our success, and we reward them accordingly with very competitive compensation and benefits packages, an incentive bonus program, as well as recognition and awards programs. Our work environment is friendly and supportive, and we offer flexible schedules whenever possible, as well as a wide range of live and web-based professional development and educational programs to prepare you for advancement opportunities.\n\nYour Benefits Will Include\n• Medical, dental and vision coverage with low deductible & copay\n• Life insurance\n• Short and long-term disability\n• Paid Parental Leave\n• 401(k) + match\n• Employee Stock Purchase Plan\n• Generous Paid Time Off - accrued based on years of service\n• WA Candidates: the accrual rate is 4.61 hours every other week for the first two years of tenure before increasing with additional years of service\n• 10 paid company holidays\n• Tuition reimbursement\n• Flexible Spending Account\n• Employee Assistance Program\n• Sick time benefits - for eligible employees, one hour of sick time for every 30 hours worked, up to a maximum accrual of 40 hours per calendar year, unless the laws of the state in which the employee is located provide for more generous sick time benefits.\n\nEEO STATEMENT\n\nClaritev is an Equal Opportunity Employer and complies with all applicable laws and regulations. Qualified applicants will receive consideration for employment without regard to age, race, color, religion, gender, sexual orientation, gender identity, national origin, disability or protected veteran status. If you would like more information on your EEO rights under the law, please click here.\n\nAPPLICATION DEADLINE\n\nWe will generally accept applications for at least 15 calendar days from the posting date or as long as the job remains posted.",
+    "job_is_remote": false,
+    "job_posted_at": "5 hours ago",
+    "job_posted_at_timestamp": 1747810800,
+    "job_posted_at_datetime_utc": "2025-05-21T07:00:00.000Z",
+    "job_location": "McLean, VA",
+    "job_city": "McLean",
+    "job_state": "Virginia",
+    "job_country": "US",
+    "job_latitude": 38.9338676,
+    "job_longitude": -77.1772604,
+    "job_benefits": [
+      "dental_coverage",
+      "paid_time_off",
+      "health_insurance"
+    ],
+    "job_google_link": "https://www.google.com/search?q=jobs&gl=us&hl=en&udm=8#vhid=vt%3D20/docid%3Dx9r-KLjf5S4t1NtrAAAAAA%3D%3D&vssid=jobs-detail-viewer",
+    "job_salary": null,
+    "job_min_salary": null,
+    "job_max_salary": null,
+    "job_salary_period": null,
+    "job_highlights": {
+      "Qualifications": [
+        "5+ years of progressive software experience in Python (Flask, FastAPI, Django, etc.). Courage to learn new programming languages and technologies, combined with strong analytical skills",
+        "Must have experience using Generative AI tools (e.g., ChatGPT, GitHub Copilot, etc.) for developer productivity, including code generation, debugging assistance, and documentation generation",
+        "Ability to design and document software architectures, system workflows, and service interactions using flowcharts, sequence diagrams, and other visualization techniques",
+        "TDD (Unit & Integration tests)",
+        "SQL & NoSQL Databases (SQL Server, PostgreSQL, MongoDB, etc)",
+        "Experience in utilizing Cloud services and best practices in deploying and maintaining applications in Cloud (Azure/AWS/OCI)",
+        "Hands-on experience with Serverless Computing such as Azure Functions, AWS Lambda, or similar technologies",
+        "CI/CD, Containers, Docker",
+        "Experience guiding and mentoring junior developers",
+        "Experience in automating business workflows",
+        "RPA (Robotic Process Automation) or Web Scraping",
+        "Extreme Programming (XP) experience including Pair Programming",
+        "API Gateways",
+        "Application security"
+      ],
+      "Benefits": [
+        "HTML/CSS/JavaScript",
+        "The salary range for this position is $140K to $145K",
+        "This position is also eligible for health insurance, 401k and bonus opportunity",
+        "We realize that our employees are instrumental to our success, and we reward them accordingly with very competitive compensation and benefits packages, an incentive bonus program, as well as recognition and awards programs",
+        "Our work environment is friendly and supportive, and we offer flexible schedules whenever possible, as well as a wide range of live and web-based professional development and educational programs to prepare you for advancement opportunities",
+        "Medical, dental and vision coverage with low deductible & copay",
+        "Life insurance",
+        "Short and long-term disability",
+        "Paid Parental Leave",
+        "401(k) + match",
+        "Employee Stock Purchase Plan",
+        "Generous Paid Time Off - accrued based on years of service",
+        "WA Candidates: the accrual rate is 4.61 hours every other week for the first two years of tenure before increasing with additional years of service",
+        "10 paid company holidays",
+        "Tuition reimbursement",
+        "Flexible Spending Account",
+        "Employee Assistance Program",
+        "Sick time benefits - for eligible employees, one hour of sick time for every 30 hours worked, up to a maximum accrual of 40 hours per calendar year, unless the laws of the state in which the employee is located provide for more generous sick time benefits"
+      ],
+      "Responsibilities": [
+        "Senior Python Engineer responsible for designing and implementing automation strategies to reduce operational costs of business",
+        "As a full-stack developer, you will contribute to building high-performance applications, mentor junior engineers, and drive technical excellence within an Agile team",
+        "This role requires strong problem-solving skills, expertise in Python, cloud technologies, and a deep understanding of modern software development practices",
+        "Design and implement automation strategies to reduce operational costs of business",
+        "Build and maintain scalable, stable, and high-performing applications following best engineering practices",
+        "Collaborate with engineers to define high-level technical designs while adhering to architectural principles",
+        "Participate in Agile methodologies, ensuring best practices in coding, testing, and deployment automation",
+        "Stay up-to-date with the latest technologies, frameworks, and industry trends to drive innovation",
+        "Foster a high-performing, self-organized engineering team by mentoring and coaching junior developers",
+        "Identify technical challenges, propose solutions, and communicate effectively with stakeholders"
+      ]
+    },
+    "job_onet_soc": "15113200",
+    "job_onet_job_zone": "4",
+    "match_percentage": 100.0,
+    "tags": [
+      "years",
+      "progressive",
+      "software",
+      "experience",
+      "python",
+      "fastapi",
+      "django",
+      "courage",
+      "learn",
+      "programming"
+    ]
+  },
+  {
+    "job_id": "eZ96NC7tGwvSWD85AAAAAA==",
+    "job_title": "Senior Software Engineer, Full Stack (Python)",
+    "employer_name": "Capital One",
+    "employer_logo": null,
+    "employer_website": "https://www.capitalone.ca",
+    "job_publisher": "Capital One Careers",
+    "job_employment_type": "Full-time and Part-time",
+    "job_employment_types": [
+      "FULLTIME",
+      "PARTTIME"
+    ],
+    "job_apply_link": "https://www.capitalonecareers.com/job/mclean/senior-software-engineer-full-stack-python/1732/81301284256?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+    "job_apply_is_direct": false,
+    "apply_options": [
+      {
+        "publisher": "Capital One Careers",
+        "apply_link": "https://www.capitalonecareers.com/job/mclean/senior-software-engineer-full-stack-python/1732/81301284256?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Indeed",
+        "apply_link": "https://www.indeed.com/viewjob?jk=ddee42c8786f2747&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "AnitaB.org Job Board",
+        "apply_link": "https://jobs.anitab.org/companies/capital-one/jobs/50077215-senior-software-engineer-full-stack?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Built In NYC",
+        "apply_link": "https://www.builtinnyc.com/job/senior-software-engineer-full-stack/6212372?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "ZipRecruiter",
+        "apply_link": "https://www.ziprecruiter.com/c/Capital-One/Job/Senior-Software-Engineer,-Full-Stack-(Bank-Modernization)/-in-Mclean,VA?jid=f6c598b05798af68&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Built In",
+        "apply_link": "https://builtin.com/job/senior-software-engineer-full-stack/4821469?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "The Muse",
+        "apply_link": "https://www.themuse.com/jobs/capitalone/senior-software-engineer-full-stack-bank-modernization-b7c645?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      },
+      {
+        "publisher": "Monster",
+        "apply_link": "https://www.monster.com/job-openings/senior-software-engineer-full-stack-golang-java-angular-mclean-va--22d41c83-4aa7-4a63-bb47-7768be427f4a?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": false
+      }
+    ],
+    "job_description": "Senior Software Engineer, Full Stack (Python)\n\nDo you love building and pioneering in the technology space? Do you enjoy solving complex business problems in a fast-paced, collaborative, inclusive, and iterative delivery environment? At Capital One, you'll be part of a big group of makers, breakers, doers and disruptors, who solve real problems and meet real customer needs. We are seeking Full Stack Software Engineers who are passionate about marrying data with emerging technologies. As a Capital One Software Engineer, you’ll have the opportunity to be on the forefront of driving a major transformation within Capital One.\n\nWhat You’ll Do:\n• Collaborate with and across Agile teams to design, develop, test, implement, and support technical solutions in full-stack development tools and technologies\n• Share your passion for staying on top of tech trends, experimenting with and learning new technologies, participating in internal & external technology communities, mentoring other members of the engineering community\n• Collaborate with digital product managers, and deliver robust cloud-based solutions that drive powerful experiences to help millions of Americans achieve financial empowerment\n• Utilize programming languages like JavaScript, Java, HTML/CSS, TypeScript, SQL, Python, and Go, Open Source RDBMS and NoSQL databases, Container Orchestration services including Docker and Kubernetes, and a variety of AWS tools and services\n\nBasic Qualifications:\n• Bachelor’s Degree\n• At least 3 years of experience in software engineering (Internship experience does not apply)\n\nPreferred Qualifications:\n• 5+ years of experience in at least one of the following: JavaScript, Java, TypeScript, SQL, Python, or Go\n• 1+ years of experience with AWS, GCP, Microsoft Azure, or another cloud service\n• 3+ years of experience in open source frameworks\n• 2+ years of experience in Agile practices\n\nAt this time, Capital One will not sponsor a new applicant for employment authorization, or offer any immigration related support for this position (i.e. H1B, F-1 OPT, F-1 STEM OPT, F-1 CPT, J-1, TN, or another type of work authorization).\n\nThe minimum and maximum full-time annual salaries for this role are listed below, by location. Please note that this salary information is solely for candidates hired to perform work within one of these locations, and refers to the amount Capital One is willing to pay at the time of this posting. Salaries for part-time roles will be prorated based upon the agreed upon number of hours to be regularly worked.\n\nMcLean, VA: $158,600 - $181,000 for Principal Associate Senior Software Engineer; $158,600 - $181,000 for Senior Software Engineer\n\nCandidates hired to work in other locations will be subject to the pay range associated with that location, and the actual annualized salary amount offered to any candidate at the time of hire will be reflected solely in the candidate’s offer letter.\n\nThis role is also eligible to earn performance based incentive compensation, which may include cash bonus(es) and/or long term incentives (LTI). Incentives could be discretionary or non discretionary depending on the plan.\n\nCapital One offers a comprehensive, competitive, and inclusive set of health, financial and other benefits that support your total well-being. Learn more at the Capital One Careers website. Eligibility varies based on full or part-time status, exempt or non-exempt status, and management level.\n\nThis role is expected to accept applications for a minimum of 5 business days.\n\nNo agencies please. Capital One is an equal opportunity employer committed to diversity and inclusion in the workplace. All qualified applicants will receive consideration for employment without regard to sex (including pregnancy, childbirth or related medical conditions), race, color, age, national origin, religion, disability, genetic information, marital status, sexual orientation, gender identity, gender reassignment, citizenship, immigration status, protected veteran status, or any other basis prohibited under applicable federal, state or local law. Capital One promotes a drug-free workplace. Capital One will consider for employment qualified applicants with a criminal history in a manner consistent with the requirements of applicable laws regarding criminal background inquiries, including, to the extent applicable, Article 23-A of the New York Correction Law; San Francisco, California Police Code Article 49, Sections 4901-4920; New York City’s Fair Chance Act; Philadelphia’s Fair Criminal Records Screening Act; and other applicable federal, state, and local laws and regulations regarding criminal background inquiries.\n\nIf you have visited our website in search of information on employment opportunities or to apply for a position, and you require an accommodation, please contact Capital One Recruiting at 1-800-304-9102 or via email at RecruitingAccommodation@capitalone.com. All information you provide will be kept confidential and will be used only to the extent required to provide needed reasonable accommodations.\n\nFor technical support or questions about Capital One's recruiting process, please send an email to Careers@capitalone.com\n\nCapital One does not provide, endorse nor guarantee and is not liable for third-party products, services, educational tools or other information available through this site.\n\nCapital One Financial is made up of several different entities. Please note that any position posted in Canada is for Capital One Canada, any position posted in the United Kingdom is for Capital One Europe and any position posted in the Philippines is for Capital One Philippines Service Corp. (COPSSC).",
+    "job_is_remote": false,
+    "job_posted_at": "7 days ago",
+    "job_posted_at_timestamp": 1747180800,
+    "job_posted_at_datetime_utc": "2025-05-14T00:00:00.000Z",
+    "job_location": "McLean, VA",
+    "job_city": "McLean",
+    "job_state": "Virginia",
+    "job_country": "US",
+    "job_latitude": 38.9338676,
+    "job_longitude": -77.1772604,
+    "job_benefits": [
+      "health_insurance"
+    ],
+    "job_google_link": "https://www.google.com/search?q=jobs&gl=us&hl=en&udm=8#vhid=vt%3D20/docid%3DeZ96NC7tGwvSWD85AAAAAA%3D%3D&vssid=jobs-detail-viewer",
+    "job_salary": null,
+    "job_min_salary": null,
+    "job_max_salary": null,
+    "job_salary_period": null,
+    "job_highlights": {
+      "Qualifications": [
+        "Bachelor’s Degree",
+        "At least 3 years of experience in software engineering (Internship experience does not apply)",
+        "At this time, Capital One will not sponsor a new applicant for employment authorization, or offer any immigration related support for this position (i.e. H1B, F-1 OPT, F-1 STEM OPT, F-1 CPT, J-1, TN, or another type of work authorization)"
+      ],
+      "Benefits": [
+        "Salaries for part-time roles will be prorated based upon the agreed upon number of hours to be regularly worked",
+        "McLean, VA: $158,600 - $181,000 for Principal Associate Senior Software Engineer; $158,600 - $181,000 for Senior Software Engineer",
+        "Candidates hired to work in other locations will be subject to the pay range associated with that location, and the actual annualized salary amount offered to any candidate at the time of hire will be reflected solely in the candidate’s offer letter",
+        "This role is also eligible to earn performance based incentive compensation, which may include cash bonus(es) and/or long term incentives (LTI)",
+        "Incentives could be discretionary or non discretionary depending on the plan",
+        "Capital One offers a comprehensive, competitive, and inclusive set of health, financial and other benefits that support your total well-being"
+      ],
+      "Responsibilities": [
+        "Collaborate with and across Agile teams to design, develop, test, implement, and support technical solutions in full-stack development tools and technologies",
+        "Share your passion for staying on top of tech trends, experimenting with and learning new technologies, participating in internal & external technology communities, mentoring other members of the engineering community",
+        "Collaborate with digital product managers, and deliver robust cloud-based solutions that drive powerful experiences to help millions of Americans achieve financial empowerment",
+        "Utilize programming languages like JavaScript, Java, HTML/CSS, TypeScript, SQL, Python, and Go, Open Source RDBMS and NoSQL databases, Container Orchestration services including Docker and Kubernetes, and a variety of AWS tools and services"
+      ]
+    },
+    "job_onet_soc": "15113300",
+    "job_onet_job_zone": "4",
+    "match_percentage": 0.0,
+    "tags": [
+      "degree",
+      "least",
+      "years",
+      "experience",
+      "software",
+      "engineering",
+      "time",
+      "capital",
+      "sponsor",
+      "applicant"
+    ]
+  },
+  {
+    "job_id": "fT0LU_Tt7I5m7QWLAAAAAA==",
+    "job_title": "Data Integration Developer – Python",
+    "employer_name": "Blue Signal Search",
+    "employer_logo": null,
+    "employer_website": "https://bluesignal.com",
+    "job_publisher": "Blue Signal",
+    "job_employment_type": "Contractor",
+    "job_employment_types": [
+      "CONTRACTOR",
+      "CONTRACTOR"
+    ],
+    "job_apply_link": "https://bluesignal.com/job/data-integration-developer-python-washington-dc/?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+    "job_apply_is_direct": true,
+    "apply_options": [
+      {
+        "publisher": "Blue Signal",
+        "apply_link": "https://bluesignal.com/job/data-integration-developer-python-washington-dc/?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic",
+        "is_direct": true
+      }
+    ],
+    "job_description": "Data Integration Developer – Python\n\nJoin a High-Impact Initiative in Capital Markets Technology\n\nStep into a mission-critical role at a leading-edge financial technology program driving transformation across one of the largest institutions in the U.S. This opportunity offers a front-row seat to major digital modernization efforts within Capital Markets – enabling scalable, data-driven decision-making through advanced cloud architecture and API development.\n\nWe’re hiring a Data Integration Developer with deep expertise in Python and AWS to support strategic cost allocation and financial data engineering initiatives. If you’re passionate about building robust, scalable data pipelines and working with a diverse set of AWS services, this is the role to showcase your skillset on a high-visibility, multi-year initiative.\n\nWhat You’ll Do:\n\nDesign and implement high-performance data pipelines using AWS-native tools such as Glue, Redshift, Lambda, and Step Functions.\n\nLeverage Python and APIs to build scalable backend services that integrate large-scale financial datasets.\n\nOptimize storage and retrieval of structured/unstructured data across S3, RDS, and EC2 instances.\n\nCollaborate cross-functionally to design intuitive data models, automate data flows, and support analytics/visualization efforts.\n\nTroubleshoot, test, and refine data interfaces, pipelines, and system integrations.\n\nSupport DevOps pipelines using AWS CLI, infrastructure-as-code tools, and CI/CD best practices.\n\nEngage with product owners, stakeholders, and agile team members to refine functionality and deliver value iteratively.\n\nWhat You Bring:\n\n5+ years of hands-on experience with Python programming and backend development.\n\nStrong command of AWS services including Redshift, Glue, Lambda, S3, Step Functions, EC2, ECS, RDS, and CloudWatch.\n\nProven track record working with Pandas, PySpark, and advanced SQL for data manipulation and transformation.\n\nExperience working with APIs (Flask, FastAPI, or Django) to build and deploy scalable services.\n\nFamiliarity with scripting and version control tools such as Git, Bitbucket, or GitLab.\n\nUnderstanding of data modeling, schema design, and building dashboards or visualizations (bonus if with financial data).\n\nExcellent communication skills and ability to collaborate in a team-oriented environment.\n\nComfortable working in a structured Agile development process using tools like Jira and Confluence.\n\nBonus Points For:\n\nExposure to JavaScript frameworks like React or Angular for UI/UX components.\n\nExperience with SAS or financial analytics platforms.\n\nFamiliarity with Terraform, Jenkins, and automation of cloud infrastructure.\n\nFinancial services or Capital Markets domain knowledge.\n\nWhy This Role?\n\nImpact: Help shape data strategy and engineering execution within a nationally significant fintech initiative.\n\nStability & Longevity: 2+ year engagement with strong potential for extension or full-time conversion.\n\nGrowth: Gain experience at scale while working on modern technologies across cloud, data, and financial platforms.\n\nFlexibility: Available as W2 with benefits or C2C – choose the arrangement that works best for your lifestyle.\n\nAbout Blue Signal:\n\nBlue Signal is an award-winning, executive search firm specializing in various specialties. Our recruiters have a proven track record of placing top-tier talent across industry verticals, with deep expertise in numerous professional services. Learn more at bit.ly/46Gs4yS",
+    "job_is_remote": false,
+    "job_posted_at": "29 days ago",
+    "job_posted_at_timestamp": 1745280000,
+    "job_posted_at_datetime_utc": "2025-04-22T00:00:00.000Z",
+    "job_location": "Washington, DC",
+    "job_city": "Washington",
+    "job_state": "District of Columbia",
+    "job_country": "US",
+    "job_latitude": 38.9071923,
+    "job_longitude": -77.0368707,
+    "job_benefits": null,
+    "job_google_link": "https://www.google.com/search?q=jobs&gl=us&hl=en&udm=8#vhid=vt%3D20/docid%3DfT0LU_Tt7I5m7QWLAAAAAA%3D%3D&vssid=jobs-detail-viewer",
+    "job_salary": null,
+    "job_min_salary": null,
+    "job_max_salary": null,
+    "job_salary_period": null,
+    "job_highlights": {
+      "Qualifications": [
+        "5+ years of hands-on experience with Python programming and backend development",
+        "Strong command of AWS services including Redshift, Glue, Lambda, S3, Step Functions, EC2, ECS, RDS, and CloudWatch",
+        "Proven track record working with Pandas, PySpark, and advanced SQL for data manipulation and transformation",
+        "Experience working with APIs (Flask, FastAPI, or Django) to build and deploy scalable services",
+        "Familiarity with scripting and version control tools such as Git, Bitbucket, or GitLab",
+        "Understanding of data modeling, schema design, and building dashboards or visualizations (bonus if with financial data)",
+        "Excellent communication skills and ability to collaborate in a team-oriented environment",
+        "Comfortable working in a structured Agile development process using tools like Jira and Confluence",
+        "Exposure to JavaScript frameworks like React or Angular for UI/UX components",
+        "Experience with SAS or financial analytics platforms",
+        "Familiarity with Terraform, Jenkins, and automation of cloud infrastructure",
+        "Financial services or Capital Markets domain knowledge",
+        "Impact: Help shape data strategy and engineering execution within a nationally significant fintech initiative",
+        "Stability & Longevity: 2+ year engagement with strong potential for extension or full-time conversion",
+        "Growth: Gain experience at scale while working on modern technologies across cloud, data, and financial platforms"
+      ],
+      "Benefits": [
+        "Flexibility: Available as W2 with benefits or C2C – choose the arrangement that works best for your lifestyle"
+      ],
+      "Responsibilities": [
+        "Design and implement high-performance data pipelines using AWS-native tools such as Glue, Redshift, Lambda, and Step Functions",
+        "Leverage Python and APIs to build scalable backend services that integrate large-scale financial datasets",
+        "Optimize storage and retrieval of structured/unstructured data across S3, RDS, and EC2 instances",
+        "Collaborate cross-functionally to design intuitive data models, automate data flows, and support analytics/visualization efforts",
+        "Troubleshoot, test, and refine data interfaces, pipelines, and system integrations",
+        "Support DevOps pipelines using AWS CLI, infrastructure-as-code tools, and CI/CD best practices",
+        "Engage with product owners, stakeholders, and agile team members to refine functionality and deliver value iteratively"
+      ]
+    },
+    "job_onet_soc": "15113200",
+    "job_onet_job_zone": "4",
+    "match_percentage": 100.0,
+    "tags": [
+      "years",
+      "experience",
+      "python",
+      "programming",
+      "backend",
+      "development",
+      "strong",
+      "command",
+      "aws",
+      "services"
+    ]
+  }
+]

@@ -121,14 +121,16 @@
         }
         
         .preview-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
         }
         
         @media (max-width: 768px) {
             .preview-content {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                gap: 20px;
             }
         }
         
@@ -136,7 +138,10 @@
             background-color: #f9f9f9;
             border-radius: 6px;
             padding: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 0;
+            flex: 1 1 auto;
+            min-width: 300px;
+            box-sizing: border-box;
         }
         
         .section-title {
@@ -210,37 +215,44 @@
             margin: 2px;
         }
 
-        .experience-item, .education-item, .certification-item {
+        .experience-item {
             background-color: #f8f9fa;
-            padding: 12px;
+            padding: 15px;
             border-radius: 6px;
             border-left: 3px solid #3498db;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        .experience-title, .education-title, .certification-name {
+        .experience-title {
             font-weight: 600;
             color: #2c3e50;
             margin-bottom: 4px;
+            font-size: 16px;
         }
 
-        .experience-company, .education-school, .certification-issuer {
+        .experience-company {
             color: #7f8c8d;
             font-size: 14px;
             margin-bottom: 4px;
         }
 
-        .experience-duration, .education-duration, .certification-date, .education-gpa {
+        .experience-duration {
             color: #95a5a6;
             font-size: 13px;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
         }
         
         .experience-description {
-            margin-top: 8px;
+            margin-top: 10px;
             color: #34495e;
             font-size: 14px;
-            line-height: 1.4;
+            line-height: 1.5;
+        }
+
+        .experience-description p {
+            margin: 4px 0;
+            padding-left: 5px;
         }
         
         /* Status message */

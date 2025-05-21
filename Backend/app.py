@@ -12,6 +12,10 @@ from reportlab.lib.units import inch
 from reportlab.lib import colors
 from io import BytesIO
 import json
+from dotenv import load_dotenv  # Add this import
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -150,25 +154,193 @@ def format_response_data(parsed_data):
         print(f"Error formatting response data: {str(e)}")
         return jsonify(formatted_data)
 
+import subprocess
+import tempfile
+import json
+import os
+
 @app.route('/external-jobs')
 def external_jobs():
     import requests
     try:
-        query = request.args.get("q", "python")
+        query = request.args.get("q", "python developer")
+        location = request.args.get("location", "")
         print(f"[DEBUG] Fetching jobs for: {query}")
-        res = requests.get(
-            "https://remotive.io/api/remote-jobs",
-            params={"search": query},
-            verify=False  # Disable SSL cert verification temporarily
-        )
-        res.raise_for_status()
-        jobs = res.json().get("jobs", [])
-        return jsonify(jobs[:10])
+        
+        # Get API key from environment
+        api_key = os.getenv("RAPIDAPI_KEY")
+        if not api_key:
+            print("[ERROR] RAPIDAPI_KEY not found in environment variables")
+            return jsonify({"error": "API key not configured"}), 500
+        
+        url = "https://jsearch.p.rapidapi.com/search"
+        headers = {
+            "X-RapidAPI-Key": api_key,
+            "X-RapidAPI-Host": "jsearch.p.rapidapi.com"
+        }
+        
+        # Split query into individual skills/keywords
+        skills = query.split()
+        all_jobs = []
+        seen_job_ids = set()
+        
+        # Load parsed resume skills from JSON file
+        parsed_resume_path = os.path.join(pathlib.Path(__file__).parent.absolute(), 'parsed_resume.json')
+        with open(parsed_resume_path, 'r', encoding='utf-8') as f:
+            parsed_resume_data = json.load(f)
+        resume_skills = parsed_resume_data.get('skills', [])
+        if not resume_skills:
+            # Fallback to skills from query if parsed resume skills not found
+            resume_skills = skills
+        
+        # Define a set of stopwords/prepositions to filter out from job skills
+        stopwords = set([
+            "in", "at", "on", "and", "or", "the", "a", "an", "to", "for", "with", "of", "by", "from",
+            "is", "are", "was", "were", "be", "been", "has", "have", "had", "will", "would", "can",
+            "could", "should", "may", "might", "must", "do", "does", "did", "but", "if", "else", "then",
+            "when", "where", "how", "what", "which", "who", "whom", "this", "that", "these", "those",
+            "as", "such", "not", "no", "yes", "all", "any", "some", "each", "every", "other", "more",
+            "most", "many", "much", "few", "several", "one", "two", "first", "second", "new", "used"
+        ])
+        
+        for skill in skills:
+            params = {
+                "query": skill,
+                "page": "1",
+                "num_pages": "1",
+                "date_posted": "month"  # Get jobs from last month
+            }
+            if location:
+                params["query"] = f"{skill} {location}"
+            
+            print(f"[DEBUG] Making request to: {url} with skill: {skill}")
+            res = requests.get(url, headers=headers, params=params, timeout=10)
+            
+            if res.status_code != 200:
+                print(f"[ERROR] API returned status code: {res.status_code} for skill: {skill}")
+                print(f"[ERROR] Response: {res.text}")
+                continue
+            
+            data = res.json()
+            jobs = data.get("data", [])
+            
+            for job in jobs:
+                job_id = job.get("job_id") or job.get("job_apply_link") or job.get("job_title")  # Use unique identifier
+                if job_id and job_id not in seen_job_ids:
+                    seen_job_ids.add(job_id)
+                    
+                    # Extract and clean job skills/tags
+                    job_tags = job.get("job_highlights", {}).get("Qualifications", [])
+                    job_skills_list = []
+                    for qual in job_tags:
+                        # Split by commas and spaces, filter out stopwords and short words
+                        words = [w.strip().lower() for w in qual.replace(',', ' ').split()]
+                        filtered_words = [w for w in words if w.isalpha() and len(w) > 2 and w not in stopwords]
+                        job_skills_list.extend(filtered_words)
+                    
+                    # Remove duplicates and limit to 10 skills
+                    job_skills_list = list(dict.fromkeys(job_skills_list))[:10]
+                    
+                    # Write job tags to a temporary JSON file for matching
+                    with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix='.json') as job_file:
+                        job_json = {"tags": job_skills_list}
+                        json.dump(job_json, job_file)
+                        job_file_path = job_file.name
+                    
+                    # Write resume skills to a temporary JSON file
+                    with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix='.json') as resume_file:
+                        resume_json = {"skills": resume_skills}
+                        json.dump(resume_json, resume_file)
+                        resume_file_path = resume_file.name
+                    
+                    # Call the C++ skill matcher executable
+                    skill_matcher_executable = os.path.join(pathlib.Path(__file__).parent.absolute(), 'skill_matcher')
+                    if os.name == 'nt':
+                        skill_matcher_executable += '.exe'
+                    
+                    try:
+                        result = subprocess.run([skill_matcher_executable, resume_file_path, job_file_path], capture_output=True, text=True, timeout=5)
+                        output = result.stdout.strip()
+                        # Parse match percentage from output
+                        match_percentage = 0.0
+                        if output.startswith("Match Percentage:"):
+                            match_percentage = float(output.split(":")[1].replace("%", "").strip())
+                    except Exception as e:
+                        print(f"[ERROR] Skill matcher execution failed: {e}")
+                        match_percentage = 0.0
+                    
+                    # Clean up temporary files
+                    os.unlink(job_file_path)
+                    os.unlink(resume_file_path)
+                    
+                    job['match_percentage'] = match_percentage
+                    job['tags'] = job_skills_list
+                    all_jobs.append(job)
+            
+            # Limit total jobs to 50 to avoid large responses
+            if len(all_jobs) >= 50:
+                break
+        
+        # Save all jobs to jobs.json for reuse
+        jobs_json_path = os.path.join(pathlib.Path(__file__).parent.absolute(), 'jobs.json')
+        try:
+            with open(jobs_json_path, 'w', encoding='utf-8') as f:
+                json.dump(all_jobs, f, ensure_ascii=False, indent=2)
+            print(f"[DEBUG] Saved {len(all_jobs)} jobs to jobs.json")
+        except Exception as e:
+            print(f"[ERROR] Failed to save jobs.json: {e}")
+        
+        # Transform the combined job data to match the frontend expectations
+        formatted_jobs = []
+        for job in all_jobs[:15]:  # Limit to 15 jobs
+            formatted_job = {
+                "title": job.get("job_title", ""),
+                "company_name": job.get("employer_name", ""),
+                "url": job.get("job_apply_link", "") or job.get("job_offer_expiration_datetime_utc", ""),
+                "tags": job.get("tags", []),
+                "location": job.get("job_city", "") + ", " + job.get("job_state", "") if job.get("job_city") else job.get("job_country", ""),
+                "employment_type": job.get("job_employment_type", ""),
+                "salary": job.get("job_salary", ""),
+                "description": job.get("job_description", "")[:500] + "..." if job.get("job_description") else "",
+                "match_percentage": job.get("match_percentage", 0.0)
+            }
+            formatted_jobs.append(formatted_job)
+        
+        print(f"[DEBUG] Returning {len(formatted_jobs)} jobs")
+        return jsonify(formatted_jobs)
+        
+    except requests.Timeout:
+        print("[ERROR] Request timed out")
+        return jsonify({"error": "Request timed out. Please try again."}), 500
+    except requests.RequestException as e:
+        print(f"[ERROR] Request failed: {e}")
+        return jsonify({"error": f"Failed to fetch jobs: {str(e)}"}), 500
     except Exception as e:
         print(f"[ERROR] Failed to fetch jobs: {e}")
         return jsonify({"error": str(e)}), 500
 
+@app.route('/jobs')
+def get_jobs():
+    jobs_json_path = os.path.join(pathlib.Path(__file__).parent.absolute(), 'jobs.json')
+    try:
+        with open(jobs_json_path, 'r', encoding='utf-8') as f:
+            jobs = json.load(f)
+        # Remove match_percentage for general job listing
+        for job in jobs:
+            if 'match_percentage' in job:
+                del job['match_percentage']
+        return jsonify(jobs)
+    except Exception as e:
+        print(f"[ERROR] Failed to read jobs.json: {e}")
 
+# Add a test endpoint to check if API key is loaded
+@app.route('/test-api-key')
+def test_api_key():
+    api_key = os.getenv("RAPIDAPI_KEY")
+    return jsonify({
+        "api_key_loaded": bool(api_key),
+        "api_key_preview": f"{api_key[:10]}..." if api_key else None
+    })
 
 # Generate Resume (POST)
 @app.route('/generate-resume', methods=['POST'])
@@ -182,11 +354,9 @@ def generate_resume():
         if template_name not in ['professional', 'modern', 'minimalist']:
             return jsonify({"error": "Invalid template name"}), 400
 
-        # Generate PDF
         pdf_buffer = generate_pdf_resume(data, template_name)
         pdf_buffer.seek(0)
 
-        # Send the PDF as a downloadable file
         return send_file(
             pdf_buffer,
             as_attachment=True,
@@ -199,7 +369,6 @@ def generate_resume():
         return jsonify({"error": str(e)}), 500
 
 def generate_pdf_resume(data, template_name):
-    """Generate a PDF resume using reportlab with the specified template"""
     template = get_template_styles(template_name)
     buffer = BytesIO()
     doc = SimpleDocTemplate(
@@ -213,17 +382,14 @@ def generate_pdf_resume(data, template_name):
     styles = template['styles']
     story = []
 
-    # Header: Name
     if template_name == 'minimalist' and template['layout'].get('header_bar'):
         story.append(Paragraph(data.get('name', 'Name'), styles['HeaderBar']))
     else:
         story.append(Paragraph(data.get('name', 'Name'), styles['Header']))
-    
-    # Contact Info
+
     contact_info = f"{data.get('email', '')} | {data.get('phone', '')}"
     story.append(Paragraph(contact_info, styles['Contact']))
-    
-    # Header Border (Professional)
+
     if template['layout'].get('header_border'):
         story.append(Spacer(1, 0.1 * inch))
         story.append(Table(
@@ -232,20 +398,15 @@ def generate_pdf_resume(data, template_name):
             rowHeights=[2],
             style=TableStyle([('BACKGROUND', (0, 0), (-1, -1), colors.black)])
         ))
-    
+
     story.append(Spacer(1, template['layout']['section_spacing']))
 
-    # Sidebar Layout for Modern Template
     if template_name == 'modern' and template['layout'].get('sidebar'):
-        # Create two-column layout: sidebar (skills) and main content
         main_content = []
-        
-        # Professional Summary
         main_content.append(Paragraph('Professional Summary', styles['SubHeader']))
         main_content.append(Paragraph(data.get('summary', ''), styles['Normal']))
         main_content.append(Spacer(1, template['layout']['section_spacing']))
 
-        # Experience
         main_content.append(Paragraph('Experience', styles['SubHeader']))
         for exp in data.get('experience', []):
             main_content.append(Paragraph(exp.get('jobTitle', ''), styles['NormalBold']))
@@ -256,7 +417,6 @@ def generate_pdf_resume(data, template_name):
             main_content.append(Spacer(1, 0.1 * inch))
         main_content.append(Spacer(1, template['layout']['section_spacing']))
 
-        # Education
         main_content.append(Paragraph('Education', styles['SubHeader']))
         for edu in data.get('education', []):
             main_content.append(Paragraph(edu.get('degree', ''), styles['NormalBold']))
@@ -265,21 +425,18 @@ def generate_pdf_resume(data, template_name):
             main_content.append(Spacer(1, 0.1 * inch))
         main_content.append(Spacer(1, template['layout']['section_spacing']))
 
-        # Projects
         main_content.append(Paragraph('Projects', styles['SubHeader']))
         for proj in data.get('projects', []):
             main_content.append(Paragraph(proj.get('name', ''), styles['NormalBold']))
             main_content.append(Paragraph(proj.get('description', ''), styles['Normal']))
             main_content.append(Spacer(1, 0.1 * inch))
 
-        # Sidebar: Skills
         sidebar_content = []
         sidebar_content.append(Paragraph('Skills', styles['Sidebar']))
         skills = data.get('skills', [])
         skill_list = [ListItem(Paragraph(skill['name'], styles['Sidebar'])) for skill in skills]
         sidebar_content.append(ListFlowable(skill_list, bulletType='bullet', start='•'))
 
-        # Combine sidebar and main content in a table
         table_data = [[sidebar_content, main_content]]
         table = Table(
             table_data,
@@ -291,19 +448,16 @@ def generate_pdf_resume(data, template_name):
         )
         story.append(table)
     else:
-        # Professional Summary
         story.append(Paragraph('Professional Summary', styles['SubHeader']))
         story.append(Paragraph(data.get('summary', ''), styles['Normal']))
         story.append(Spacer(1, template['layout']['section_spacing']))
 
-        # Skills
         story.append(Paragraph('Skills', styles['SubHeader']))
         skills = data.get('skills', [])
         skill_list = [ListItem(Paragraph(skill['name'], styles['Normal'])) for skill in skills]
         story.append(ListFlowable(skill_list, bulletType='bullet', start='•'))
         story.append(Spacer(1, template['layout']['section_spacing']))
 
-        # Experience
         story.append(Paragraph('Experience', styles['SubHeader']))
         for exp in data.get('experience', []):
             story.append(Paragraph(exp.get('jobTitle', ''), styles['NormalBold']))
@@ -314,7 +468,6 @@ def generate_pdf_resume(data, template_name):
             story.append(Spacer(1, 0.1 * inch))
         story.append(Spacer(1, template['layout']['section_spacing']))
 
-        # Education
         story.append(Paragraph('Education', styles['SubHeader']))
         for edu in data.get('education', []):
             story.append(Paragraph(edu.get('degree', ''), styles['NormalBold']))
@@ -323,7 +476,6 @@ def generate_pdf_resume(data, template_name):
             story.append(Spacer(1, 0.1 * inch))
         story.append(Spacer(1, template['layout']['section_spacing']))
 
-        # Projects
         story.append(Paragraph('Projects', styles['SubHeader']))
         for proj in data.get('projects', []):
             story.append(Paragraph(proj.get('name', ''), styles['NormalBold']))
@@ -333,6 +485,5 @@ def generate_pdf_resume(data, template_name):
     doc.build(story)
     return buffer
 
-# Run the app
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

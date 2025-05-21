@@ -1,51 +1,73 @@
 {
   "data": {
     "document": {
-      "name": "Om Prakash Barmola",
-      "email": "omp723033@gmail.com",
+      "name": "Vaibhav Baloni",
+      "email": "vaibhavbaloni07@gmail.com",
       "skills": [
-        "Python",
-        "Leadership",
-        "Teamwork",
-        "Data Analysis",
-        "Machine Learning",
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "React",
+        "Node.js",
+        "Git",
+        "Communication",
         "Artificial Intelligence"
       ],
-      "experience": [],
-      "education": [
+      "experience": [
         {
-          "degree": "Bachelor of Technology (B.Tech) in Computer Science and Engineering"
+          "title": "Junior Web Developer",
+          "company": "",
+          "duration": "WebTech Solutions | Jan 2023 - Present"
         },
         {
-          "degree": "Specialization: Artificial Intelligence and Data Science",
-          "school": "Graphic Era Hill University, Dehradun",
-          "description": "2023 – 2027"
+          "title": "",
+          "company": "",
+          "duration": ""
         },
         {
-          "degree": "12th Grade",
-          "school": "Doon Heritage School, Dehradun",
-          "description": "2022",
-          "percentage": "Percentage: 82.50%"
+          "title": "Developed and maintained responsive web applications using React and Node.js",
+          "company": "",
+          "duration": ""
         },
         {
-          "degree": "10th Grade",
-          "school": "Mnemonic Convent School, Haldwani",
-          "description": "2020",
-          "percentage": "Percentage: 84.33%"
+          "title": "",
+          "company": "",
+          "duration": ""
+        },
+        {
+          "title": "Implemented RESTful APIs for client-server communication",
+          "company": "",
+          "duration": ""
+        },
+        {
+          "title": "",
+          "company": "",
+          "duration": ""
+        },
+        {
+          "title": "Optimized application performance by 40% through code refactoring",
+          "company": "",
+          "duration": ""
+        },
+        {
+          "title": "",
+          "company": "",
+          "duration": ""
+        },
+        {
+          "title": "Collaborated with the UX team to implement design improvements",
+          "company": "",
+          "duration": ""
         }
       ],
-      "additional_sections": {
-        "certifications": [
-          "- Google cloud computing foundations on Nptel."
-        ],
-        "extracurricular": [
-          "- Active participant in cricket tournaments, showcasing leadership and teamwork.",
-          "Hobbies",
-          "- Exploring new technologies and coding solutions.",
-          "- Watching movies and webseries.",
-          "- Playing cricket to enhance teamwork and leadership."
-        ]
-      }
+      "education": [
+        {
+          "degree": "Bachelor of Technology in Computer Science",
+          "school": "University of Technology | 2019 - 2023",
+          "description": "Graduated with First Class Honors. Specialized in Artificial Intelligence and Machine Learning. Developed a resume optimization system as part of the final year project."
+        }
+      ],
+      "additional_sections": {}
     }
   }
 }
