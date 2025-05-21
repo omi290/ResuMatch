@@ -329,7 +329,21 @@ def get_jobs():
         for job in jobs:
             if 'match_percentage' in job:
                 del job['match_percentage']
-        return jsonify(jobs)
+        # Format jobs to match frontend expectations
+        formatted_jobs = []
+        for job in jobs:
+            formatted_job = {
+                "title": job.get("job_title", ""),
+                "company_name": job.get("employer_name", ""),
+                "url": job.get("job_apply_link", "") or job.get("job_offer_expiration_datetime_utc", ""),
+                "tags": job.get("tags", []),
+                "location": job.get("job_city", "") + ", " + job.get("job_state", "") if job.get("job_city") else job.get("job_country", ""),
+                "employment_type": job.get("job_employment_type", ""),
+                "salary": job.get("job_salary", ""),
+                "description": job.get("job_description", "")[:500] + "..." if job.get("job_description") else "",
+            }
+            formatted_jobs.append(formatted_job)
+        return jsonify(formatted_jobs)
     except Exception as e:
         print(f"[ERROR] Failed to read jobs.json: {e}")
 
