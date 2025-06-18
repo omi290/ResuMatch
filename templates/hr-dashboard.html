@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+
+{% block title %}HR Dashboard - ResuMatch{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="sidebar">
+        <h2>HR Dashboard</h2>
+        <nav>
+            <ul>
+                <li><a href="#jobs" class="active">Jobs</a></li>
+                <li><a href="#matches">Matches</a></li>
+                <li><a href="#post-job">Post New Job</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <!-- Job Posting Form -->
+        <section id="post-job" class="section">
+            <h2>Post New Job</h2>
+            <form id="jobPostingForm" class="form">
+                <div class="form-group">
+                    <label for="title">Job Title</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Company</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Job Description</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="requirements">Requirements (comma-separated)</label>
+                    <textarea id="requirements" name="requirements" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="jobType">Job Type</label>
+                    <select id="jobType" name="jobType" required aria-label="Select job type">
+                        <option value="full-time">Full Time</option>
+                        <option value="part-time">Part Time</option>
+                        <option value="contract">Contract</option>
+                        <option value="internship">Internship</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="salary">Salary Range</label>
+                    <input type="text" id="salary" name="salary" placeholder="e.g., $50,000 - $70,000">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Post Job</button>
+            </form>
+        </section>
+
+        <!-- Jobs List -->
+        <section id="jobs" class="section active">
+            <div class="section-header">
+                <h2>Posted Jobs</h2>
+                <div class="filters">
+                    <input type="text" id="jobSearch" placeholder="Search jobs...">
+                    <select id="statusFilter" aria-label="Filter jobs by status">
+                        <option value="active">Active</option>
+                        <option value="closed">Closed</option>
+                        <option value="all">All</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="jobsList" class="jobs-grid">
+                <!-- Jobs will be dynamically loaded here -->
+            </div>
+        </section>
+
+        <!-- Matches Section -->
+        <section id="matches" class="section">
+            <div class="section-header">
+                <h2>Job Matches</h2>
+                <div class="filters">
+                    <select id="matchStatusFilter" aria-label="Filter matches by status">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="reviewed">Reviewed</option>
+                        <option value="shortlisted">Shortlisted</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="matchesList" class="matches-grid">
+                <!-- Matches will be dynamically loaded here -->
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<style>
+.dashboard-container {
+    display: flex;
+    min-height: calc(100vh - 60px);
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-right: 1px solid #dee2e6;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar nav ul li a {
+    display: block;
+    padding: 10px;
+    color: #666;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li a.active {
+    background-color: #e9ecef;
+    color: #333;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.section {
+    display: none;
+    margin-bottom: 30px;
+}
+
+.section.active {
+    display: block;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+}
+
+.form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-group textarea {
+    min-height: 100px;
+}
+
+.jobs-grid,
+.matches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.job-card,
+.match-card {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.job-card h3,
+.match-card h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.company,
+.location,
+.type,
+.match-score,
+.status {
+    color: #666;
+    margin: 5px 0;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 4px;
+    color: white;
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+}
+
+.notification.success {
+    background-color: #28a745;
+}
+
+.notification.error {
+    background-color: #dc3545;
+}
+
+.notification.info {
+    background-color: #17a2b8;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/hr-dashboard.js') }}"></script>
+{% endblock %} 

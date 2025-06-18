@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Matches - ResuMatch</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .matches-container {
+            max-width: 1200px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .matches-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .matches-header h1 {
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 0;
+        }
+        .filters {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .filters select {
+            border-radius: 0.375rem;
+            border: 1px solid #dee2e6;
+            padding: 0.5rem 0.75rem;
+        }
+        .matches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        .match-card {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            transition: transform 0.2s ease;
+        }
+        .match-card:hover {
+            transform: translateY(-5px);
+        }
+        .match-score {
+            flex-shrink: 0;
+            text-align: center;
+        }
+        .score-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .score-number {
+            font-size: 1.8rem;
+        }
+        .score-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        .job-info {
+            flex-grow: 1;
+        }
+        .job-info h2 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .company-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 0.8rem;
+        }
+        .company-info .company-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+        .company-info h3 {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 0;
+        }
+        .company-info p {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-bottom: 0;
+        }
+        .job-details span {
+            display: inline-block;
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-right: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .job-details i {
+            margin-right: 0.4rem;
+            color: var(--primary-color);
+        }
+        .skills-match {
+            margin-top: 1rem;
+        }
+        .skills-match h4 {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 0.8rem;
+        }
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .skill-tag {
+            padding: 0.3rem 0.7rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .skill-tag.match {
+            background-color: #e6f7ea;
+            color: #28a745;
+        }
+        .skill-tag.missing {
+            background-color: #ffe0e6;
+            color: #dc3545;
+        }
+        .match-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+        .match-actions .btn {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .matches-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .filters {
+                flex-direction: column;
+                width: 100%;
+            }
+            .filters select, .filters .btn {
+                width: 100%;
+            }
+            .matches-grid {
+                grid-template-columns: 1fr;
+            }
+            .match-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .job-info {
+                text-align: center;
+            }
+            .company-info {
+                justify-content: center;
+            }
+            .job-details span {
+                display: block;
+                margin-right: 0;
+                margin-bottom: 0.2rem;
+            }
+            .skills-match h4 {
+                text-align: center;
+            }
+            .skills-grid {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">ResuMatch</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/signup">Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container matches-container flex-grow-1">
+        <div class="matches-header">
+            <h1>Job Matches</h1>
+            <div class="filters">
+                <select id="sortBy" class="form-select form-select-sm" title="Sort by">
+                    <option value="match">Match Score</option>
+                    <option value="date">Date Posted</option>
+                    <option value="salary">Salary</option>
+                </select>
+                <select id="filterBy" class="form-select form-select-sm" title="Filter by">
+                    <option value="all">All Jobs</option>
+                    <option value="applied">Applied</option>
+                    <option value="saved">Saved</option>
+                </select>
+                <button id="refreshMatches" class="btn btn-secondary btn-sm">
+                    <i class="fas fa-sync-alt me-2"></i> Refresh
+                </button>
+            </div>
+        </div>
+
+        <div class="matches-grid">
+            {% for job in matches %}
+            <div class="match-card">
+                <div class="match-score">
+                    <div class="score-circle">
+                        <span class="score-number">{{ job.match_score }}%</span>
+                        <span class="score-label">Match</span>
+                    </div>
+                </div>
+                <div class="job-info">
+                    <h2>{{ job.title }}</h2>
+                    <div class="company-info">
+                        <img src="{{ job.company_logo }}" alt="{{ job.company }}" class="company-logo">
+                        <div>
+                            <h3>{{ job.company }}</h3>
+                            <p><i class="fas fa-map-marker-alt"></i> {{ job.location }}</p>
+                        </div>
+                    </div>
+                    <div class="job-details">
+                        <span><i class="fas fa-clock"></i> {{ job.type }}</span>
+                        <span><i class="fas fa-money-bill-wave"></i> {{ job.salary_range }}</span>
+                        <span><i class="fas fa-briefcase"></i> {{ job.experience }}</span>
+                    </div>
+                    <div class="skills-match">
+                        <h4>Matching Skills</h4>
+                        <div class="skills-grid">
+                            {% for skill in job.matching_skills %}
+                            <span class="skill-tag match">{{ skill }}</span>
+                            {% endfor %}
+                            {% for skill in job.missing_skills %}
+                            <span class="skill-tag missing">{{ skill }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="match-actions">
+                    <button class="btn btn-primary">Apply Now</button>
+                    <button class="btn btn-secondary">Save Job</button>
+                    <button class="btn btn-info">View Details</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-content bg-dark text-white">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-white">ResuMatch</h4>
+                    <p class="text-white-50">AI-powered resume optimization & job matching platform helping job seekers find their perfect career match.</p>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h4 class="text-white">Quick Links</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="/about" class="text-white-50 text-decoration-none">About Us</a></li>
+                        <li class="mb-2"><a href="/login" class="text-white-50 text-decoration-none">Login</a></li>
+                        <li class="mb-2"><a href="/signup" class="text-white-50 text-decoration-none">Sign Up</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white">Contact Us</h4>
+                    <ul class="list-unstyled">
+                        <li class="text-white-50 mb-2"><i class="fas fa-map-marker-alt me-2"></i> 123 Main St, Anytown USA</li>
+                        <li class="text-white-50 mb-2"><i class="fas fa-envelope me-2"></i> info@resumatch.com</li>
+                        <li class="text-white-50 mb-2"><i class="fas fa-phone me-2"></i> +1 (123) 456-7890</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white">Newsletter</h4>
+                    <p class="text-white-50">Subscribe to our newsletter for the latest updates and job opportunities.</p>
+                    <form class="newsletter-form">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Enter your email" required>
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="footer-bottom bg-dark text-white py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <small class="text-white-50">© 2024 ResuMatch by Omi. All rights reserved.</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <small class="text-white-50">
+                        <a href="#" class="text-white-50 text-decoration-none me-3">Privacy Policy</a>
+                        <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/view-matches.js') }}"></script>
+</body>
+</html>

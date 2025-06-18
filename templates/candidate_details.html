@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Details - ResuMatch</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .candidate-details-container {
+            max-width: 900px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .section-header {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            color: var(--primary-color);
+        }
+        .section-content p {
+            margin-bottom: 8px;
+        }
+        .skills-list .badge {
+            margin-right: 5px;
+            margin-bottom: 5px;
+            background-color: #e9ecef;
+            color: #495057;
+            font-weight: normal;
+            border: 1px solid #dee2e6;
+        }
+        .experience-item, .education-item {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+        .experience-item h5, .education-item h5 {
+            color: #343a40;
+            margin-bottom: 5px;
+        }
+        .experience-item p, .education-item p {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 3px;
+        }
+        .progress-bar {
+            background-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">ResuMatch</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/hr-dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container candidate-details-container flex-grow-1">
+        <h1 class="mb-4 text-center text-primary">Candidate Application Details</h1>
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary"><i class="fas fa-info-circle me-2"></i>Application Info</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li><strong>Candidate Name:</strong> {{ candidate.seeker_name | default('N/A') }}</li>
+                            <li><strong>Applied For:</strong> {{ candidate.job_title | default('N/A') }} at {{ candidate.company_name | default('N/A') }}</li>
+                            <li><strong>Application Date:</strong> {{ candidate.application_date | default('N/A') }}</li>
+                            <li><strong>Status:</strong> <span class="badge bg-{{ candidate.status_color }}">{{ candidate.status | default('N/A') }}</span></li>
+                            {% if candidate.match_score is not none %}
+                            <li><strong>Match Score:</strong> {{ candidate.match_score | default('N/A') }}%</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary"><i class="fas fa-id-card me-2"></i>Contact Info</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li><strong>Email:</strong> {{ candidate.seeker_email | default('N/A') }}</li>
+                            <li><strong>Phone:</strong> {{ candidate.seeker_phone | default('N/A') }}</li>
+                            <li><strong>Location:</strong> {{ candidate.seeker_location | default('N/A') }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-header"><i class="fas fa-file-alt me-2"></i>Candidate Resume</h2>
+
+        <!-- Personal Information -->
+        <div class="mb-4">
+            <h4 class="text-primary">Personal Information</h4>
+            <div class="section-content">
+                <p><strong>Name:</strong> {{ candidate.resume_data.name | default('N/A') }}</p>
+                <p><strong>Email:</strong> {{ candidate.resume_data.email | default('N/A') }}</p>
+                <p><strong>Phone:</strong> {{ candidate.resume_data.phone | default('N/A') }}</p>
+                <p><strong>Location:</strong> {{ candidate.resume_data.location | default('N/A') }}</p>
+                <p><strong>Summary:</strong> {{ candidate.resume_data.summary | default('N/A') }}</p>
+            </div>
+        </div>
+
+        <!-- Skills -->
+        {% if candidate.resume_data.skills %}
+        <div class="mb-4">
+            <h4 class="text-primary">Skills</h4>
+            <div class="section-content skills-list">
+                {% for skill in candidate.resume_data.skills %}
+                <span class="badge">{{ skill }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Experience -->
+        {% if candidate.resume_data.experience %}
+        <div class="mb-4">
+            <h4 class="text-primary">Experience</h4>
+            <div class="section-content">
+                {% for exp in candidate.resume_data.experience %}
+                <div class="experience-item">
+                    <h5>{{ exp.title | default('N/A') }}</h5>
+                    <p class="text-muted">{{ exp.company | default('N/A') }}</p>
+                    <p class="text-muted">{{ exp.duration | default('') }}</p>
+                    {% if exp.description %}
+                    <p>{{ exp.description | default('N/A') }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Education -->
+        {% if candidate.resume_data.education %}
+        <div class="mb-4">
+            <h4 class="text-primary">Education</h4>
+            <div class="section-content">
+                {% for edu in candidate.resume_data.education %}
+                    {% set has_content = (edu.degree and edu.degree != 'N/A') or (edu.institution and edu.institution != 'N/A') or (edu.year and edu.year != 'N/A') %}
+                    {% if has_content %}
+                    <div class="education-item">
+                        {% if edu.degree and edu.degree != 'N/A' %}
+                            <h5>{{ edu.degree }}</h5>
+                        {% endif %}
+                        {% if edu.institution and edu.institution != 'N/A' %}
+                            <p class="text-muted">{{ edu.institution }}</p>
+                        {% endif %}
+                        {% if edu.year and edu.year != 'N/A' %}
+                            <p class="text-muted">{{ edu.year }}</p>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Certifications -->
+        {% if candidate.resume_data.additional_sections.certifications %}
+        <div class="mb-4">
+            <h4 class="text-primary">Certifications</h4>
+            <div class="section-content skills-list">
+                {% for cert in candidate.resume_data.additional_sections.certifications %}
+                <span class="badge">{{ cert }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Extracurricular Activities -->
+        {% if candidate.resume_data.additional_sections.extracurricular %}
+        <div class="mb-4">
+            <h4 class="text-primary">Extracurricular Activities</h4>
+            <div class="section-content skills-list">
+                {% for activity in candidate.resume_data.additional_sections.extracurricular %}
+                <span class="badge">{{ activity }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-content bg-dark text-white mt-auto">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-white">ResuMatch</h4>
+                    <p class="text-white-50">AI-powered resume optimization & job matching platform helping job seekers find their perfect career match.</p>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h4 class="text-white">Quick Links</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="/about" class="text-white-50 text-decoration-none">About Us</a></li>
+                        <li class="mb-2"><a href="/login" class="text-white-50 text-decoration-none">Login</a></li>
+                        <li class="mb-2"><a href="/signup" class="text-white-50 text-decoration-none">Sign Up</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/hr-dashboard.js') }}"></script> <!-- Keep HR dashboard JS for shared functionality if needed -->
+</body>
+</html> 

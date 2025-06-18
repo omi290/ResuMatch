@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - ResuMatch</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .role-option {
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+        }
+        .role-option:hover {
+            background-color: #f0f0f0;
+        }
+        .role-option.selected {
+            border-color: var(--primary-color);
+            background-color: var(--light-bg);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+        }
+        .role-option input[type="radio"] {
+            margin-right: 8px;
+        }
+        #companyField {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2 class="card-title text-center mb-4"><i class="fas fa-user-plus"></i> Create Account</h2>
+            <form id="signupForm" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" required>
+                    <div class="invalid-feedback">Please enter your full name.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" required minlength="8">
+                    <div class="invalid-feedback">Password must be at least 8 characters long.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="confirm-password" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm-password" required>
+                    <div class="invalid-feedback">Passwords do not match.</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Select Your Role</label>
+                    <div class="role-options">
+                        <div class="form-check role-option" onclick="selectRole(this)">
+                            <input class="form-check-input" type="radio" name="role" value="seeker" id="roleSeeker" required>
+                            <label class="form-check-label mb-0" for="roleSeeker">
+                                <i class="fas fa-user-tie me-2"></i>Job Seeker
+                            </label>
+                        </div>
+                        <div class="form-check role-option" onclick="selectRole(this)">
+                            <input class="form-check-input" type="radio" name="role" value="hr" id="roleHR" required>
+                            <label class="form-check-label mb-0" for="roleHR">
+                                <i class="fas fa-building me-2"></i>HR Professional
+                            </label>
+                        </div>
+                    </div>
+                    <div class="invalid-feedback">Please select a role.</div>
+                </div>
+                <div class="mb-3" id="companyField">
+                    <label for="company" class="form-label">Company Name</label>
+                    <input type="text" class="form-control" id="company">
+                    <div class="invalid-feedback">Please enter your company name.</div>
+                </div>
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+                </div>
+            </form>
+            <div class="mt-3 text-center auth-links">
+                <a href="/login" class="text-decoration-none">Already have an account? Login</a>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function selectRole(element) {
+            // Remove selected class from all role options
+            document.querySelectorAll('.role-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            element.classList.add('selected');
+            
+            // Check the radio button
+            const radio = element.querySelector('input[type="radio"]');
+            radio.checked = true;
+            
+            // Show/hide company field based on role
+            const companyField = document.getElementById('companyField');
+            if (radio.value === 'hr') {
+                companyField.style.display = 'block';
+                companyField.querySelector('input').required = true;
+            } else {
+                companyField.style.display = 'none';
+                companyField.querySelector('input').required = false;
+            }
+        }
+
+        // Form validation
+        document.getElementById('signupForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const form = this;
+            form.classList.add('was-validated');
+
+            if (!form.checkValidity()) {
+                return;
+            }
+
+            const passwordField = document.getElementById('password');
+            const confirmPasswordField = document.getElementById('confirm-password');
+            
+            if (passwordField.value.trim() !== confirmPasswordField.value.trim()) {
+                confirmPasswordField.setCustomValidity('Passwords do not match');
+                confirmPasswordField.reportValidity();
+                return;
+            } else {
+                confirmPasswordField.setCustomValidity('');
+            }
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = passwordField.value.trim();
+            const role = document.querySelector('input[name="role"]:checked').value;
+            let company_name = null;
+
+            if (role === 'hr') {
+                const companyField = document.getElementById('company');
+                company_name = companyField.value.trim();
+                if (!company_name) {
+                    companyField.setCustomValidity('Company name is required for HR professionals');
+                    companyField.reportValidity();
+                    return;
+                } else {
+                    companyField.setCustomValidity('');
+                }
+            }
+
+            try {
+                const response = await fetch('/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, password, role, company_name })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert(result.message);
+                    if (role === 'hr') {
+                        window.location.href = '/hr-dashboard';
+                    } else {
+                        window.location.href = '/dashboard';
+                    }
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error during signup:', error);
+                alert('An unexpected error occurred. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

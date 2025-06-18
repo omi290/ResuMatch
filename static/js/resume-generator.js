@@ -1,4 +1,3 @@
-
 function collectResumeData() {
     const personalInfoInputs = document.querySelectorAll('#personal-info-section .text-input');
     const name = personalInfoInputs[0]?.value.trim() || '';
@@ -69,7 +68,7 @@ document.getElementById('previewBtn')?.addEventListener('click', function() {
         console.error('Preview modal not found in the DOM');
         return;
     }
-    
+
     const resumeData = collectResumeData();
     const previewContent = document.querySelector('.resume-preview');
     if (!previewContent) {
@@ -81,10 +80,10 @@ document.getElementById('previewBtn')?.addEventListener('click', function() {
         <h2 style="text-align: center; color: #2c3e50;">${resumeData.name}</h2>
         <p style="text-align: center;">${resumeData.email} | ${resumeData.phone}</p>
         <hr style="margin: 10px 0;">
-        
+
         <h3 style="color: #3498db;">Professional Summary</h3>
         <p>${resumeData.summary}</p>
-        
+
         <h3 style="color: #3498db;">Experience</h3>
     `;
 
@@ -115,7 +114,7 @@ document.getElementById('previewBtn')?.addEventListener('click', function() {
                 <li style="color: ${skill.matching ? '#0288d1' : 'black'}">${skill.name}</li>
             `).join('')}
         </ul>
-        
+
         <h3 style="color: #3498db;">Projects</h3>
     `;
 
@@ -134,38 +133,38 @@ async function generateResumePDF() {
     console.log("Generate PDF function called");
     const resumeData = collectResumeData();
     console.log("Resume data:", resumeData);
-    
+
     try {
         showLoadingIndicator();
-        
+
         const response = await fetch('http://localhost:5000/generate-resume', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(resumeData),
             signal: AbortSignal.timeout(10000)
         });
-        
+
         if (!response.ok) {
             console.warn(`Server request failed with status: ${response.status}`);
             throw new Error(`Server request failed with status: ${response.status}`);
         }
-        
+
         const blob = await response.blob();
         downloadPDF(blob, 'resume.pdf');
         hideLoadingIndicator();
-        
+
     } catch (error) {
         console.warn('Server-side generation failed:', error);
         console.log('Falling back to client-side PDF generation');
         hideLoadingIndicator();
-        
+
         generateClientSidePDF(resumeData);
     }
 }
 
 function showLoadingIndicator() {
     if (document.getElementById('pdf-loading-indicator')) return;
-    
+
     const indicator = document.createElement('div');
     indicator.id = 'pdf-loading-indicator';
     indicator.style.position = 'fixed';
@@ -178,7 +177,7 @@ function showLoadingIndicator() {
     indicator.style.boxShadow = '0 0 10px rgba(0,0,0,0.2)';
     indicator.style.zIndex = '9999';
     indicator.innerHTML = 'Generating PDF...';
-    
+
     document.body.appendChild(indicator);
 }
 
@@ -201,7 +200,7 @@ function generateClientSidePDF(data) {
         if (window.jspdf && window.jspdf.jsPDF) {
             jsPDF = window.jspdf.jsPDF;
         } else if (window.jsPDF) {
- 
+
             jsPDF = window.jsPDF;
         } else {
             console.error('Could not find jsPDF constructor');
@@ -213,20 +212,20 @@ function generateClientSidePDF(data) {
 
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(18);
-        
+
         const nameWidth = doc.getStringUnitWidth(data.name) * 18 / doc.internal.scaleFactor;
         const pageWidth = doc.internal.pageSize.getWidth();
         doc.text(data.name, (pageWidth - nameWidth) / 2, 20);
-        
+
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
         const contactInfo = `${data.email} | ${data.phone}`;
         const contactWidth = doc.getStringUnitWidth(contactInfo) * 10 / doc.internal.scaleFactor;
         doc.text(contactInfo, (pageWidth - contactWidth) / 2, 28);
-        
+
         doc.setLineWidth(0.5);
         doc.line(20, 32, pageWidth - 20, 32);
-        
+
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(14);
         doc.text('Professional Summary', 20, 40);
@@ -235,194 +234,229 @@ function generateClientSidePDF(data) {
 
         const splitSummary = doc.splitTextToSize(data.summary, pageWidth - 40);
         doc.text(splitSummary, 20, 48);
-        
+
         let yPos = 48 + (splitSummary.length * 5);
 
         yPos += 10;
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(14);
         doc.text('Skills', 20, yPos);
-        
+
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(10);
         yPos += 8;
-        
+
         data.skills.forEach(skill => {
             doc.text(`• ${skill.name}`, 25, yPos);
-            yPos += 5;
+            yPos += 7;
         });
-        
-        yPos += 5;
+
+        yPos += 10;
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(14);
         doc.text('Experience', 20, yPos);
-        yPos += 8;
-        
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+
         data.experience.forEach(exp => {
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(12);
-            doc.text(exp.jobTitle, 20, yPos);
+            yPos += 8;
+            doc.text(`${exp.jobTitle}`, 20, yPos);
             yPos += 5;
-            
-            doc.setFont('helvetica', 'italic');
-            doc.setFontSize(10);
             doc.text(`${exp.company} | ${exp.duration}`, 20, yPos);
             yPos += 5;
-            
-            doc.setFont('helvetica', 'normal');
-            
-            const responsibilities = exp.responsibilities.split('\n');
-            responsibilities.forEach(resp => {
-                if (resp.trim()) {
-                    const cleanedResp = resp.replace('•', '').trim();
-                    const splitResp = doc.splitTextToSize(`• ${cleanedResp}`, pageWidth - 45);
-                    doc.text(splitResp, 25, yPos);
-                    yPos += splitResp.length * 5;
-                }
-            });
-            
-            yPos += 5;
+            const splitResponsibilities = doc.splitTextToSize(exp.responsibilities, pageWidth - 40);
+            doc.text(splitResponsibilities, 25, yPos);
+            yPos += (splitResponsibilities.length * 5) + 5;
         });
-        
+
+        yPos += 10;
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(14);
         doc.text('Education', 20, yPos);
-        yPos += 8;
-        
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+
         data.education.forEach(edu => {
-            if (yPos > 250) {
-                doc.addPage();
-                yPos = 20;
-            }
-            
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(12);
-            doc.text(edu.degree, 20, yPos);
+            yPos += 8;
+            doc.text(`${edu.degree}`, 20, yPos);
             yPos += 5;
-            
-            doc.setFont('helvetica', 'italic');
-            doc.setFontSize(10);
             doc.text(`${edu.institution} | ${edu.duration}`, 20, yPos);
             yPos += 5;
-            
-            doc.setFont('helvetica', 'normal');
-            const splitDesc = doc.splitTextToSize(edu.description, pageWidth - 40);
-            doc.text(splitDesc, 20, yPos);
-            yPos += splitDesc.length * 5 + 5;
+            const splitDescription = doc.splitTextToSize(edu.description, pageWidth - 40);
+            doc.text(splitDescription, 25, yPos);
+            yPos += (splitDescription.length * 5) + 5;
         });
-        
-        if (yPos > 250) {
-            doc.addPage();
-            yPos = 20;
-        }
-        
+
+        yPos += 10;
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(14);
         doc.text('Projects', 20, yPos);
-        yPos += 8;
-        
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+
         data.projects.forEach(proj => {
-            if (proj.name) {
-                doc.setFont('helvetica', 'bold');
-                doc.setFontSize(12);
-                doc.text(proj.name, 20, yPos);
-                yPos += 5;
-                
-                doc.setFont('helvetica', 'normal');
-                doc.setFontSize(10);
-                const splitProjDesc = doc.splitTextToSize(proj.description, pageWidth - 40);
-                doc.text(splitProjDesc, 20, yPos);
-                yPos += splitProjDesc.length * 5 + 5;
-            }
+            yPos += 8;
+            doc.text(`${proj.name}`, 20, yPos);
+            yPos += 5;
+            const splitProjDescription = doc.splitTextToSize(proj.description, pageWidth - 40);
+            doc.text(splitProjDescription, 25, yPos);
+            yPos += (splitProjDescription.length * 5) + 5;
         });
-        
+
         const pdfBlob = doc.output('blob');
         downloadPDF(pdfBlob, 'resume.pdf');
-        
+
     } catch (error) {
-        console.error('Error generating PDF client-side:', error);
-        alert('Could not generate PDF. Please try again or check if jsPDF is properly loaded.');
+        console.error('Error generating client-side PDF:', error);
+        alert('Failed to generate PDF. Please try again.');
     }
 }
 
 function downloadPDF(blob, filename) {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
+    a.style.display = 'none';
     a.href = url;
     a.download = filename;
     document.body.appendChild(a);
     a.click();
-    setTimeout(() => {
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-    }, 100);
+    window.URL.revokeObjectURL(url);
+    a.remove();
 }
 
 function ensureJsPdfLoaded() {
-    return new Promise((resolve, reject) => {
-        if (window.jspdf || window.jsPDF) {
-            resolve();
+    // This function can be used to ensure jsPDF is available before use.
+    // In a production app, you might use dynamic imports or a module loader.
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const sectionItems = document.querySelectorAll('.section-item');
+    const editorFields = document.querySelectorAll('.section-fields');
+
+    sectionItems.forEach(item => {
+        item.addEventListener('click', function() {
+            // Remove active class from all section items
+            sectionItems.forEach(s => s.classList.remove('active'));
+            // Add active class to the clicked section item
+            this.classList.add('active');
+
+            // Hide all editor fields
+            editorFields.forEach(field => field.style.display = 'none');
+
+            // Show the corresponding editor field
+            const targetSection = this.getAttribute('data-section') + '-section';
+            document.getElementById(targetSection).style.display = 'block';
+        });
+    });
+
+    const resumePreviewIframe = document.getElementById('resumePreview');
+
+    // Function to update the resume preview iframe
+    function updatePreviewPane(templateId) {
+        let previewHtml = '';
+        switch (templateId) {
+            case 'professional':
+                previewHtml = `
+                    <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px;">
+                        <h3 style="color: #2c3e50;">Professional Template</h3>
+                        <p style="color: #6c757d;">A clean and traditional layout.</p>
+                        <div style="width: 100px; height: 120px; border: 1px solid #ccc; margin: 10px auto; background-color: #eee;"></div>
+                    </div>`;
+                break;
+            case 'modern':
+                previewHtml = `
+                    <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px;">
+                        <h3 style="color: #3498db;">Modern Template</h3>
+                        <p style="color: #6c757d;">A modern design.</p>
+                        <div style="width: 150px; height: 120px; border: 1px solid #ccc; margin: 10px auto; background-color: #eee;"></div>
+                    </div>`;
+                break;
+            case 'minimalist':
+                previewHtml = `
+                    <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px;">
+                        <div style="background-color: #3498db; color: white; padding: 10px 0; margin-bottom: 20px;"><h3>Minimalist</h3></div>
+                        <h3 style="color: #2c3e50;">Minimalist Template</h3>
+                        <p style="color: #6c757d;">Simple and elegant.</p>
+                    </div>`;
+                break;
+            default:
+                previewHtml = '<p style="text-align: center; color: #6c757d;">Select a template and fill in details to see a preview.</p>';
+        }
+        if (resumePreviewIframe) {
+            resumePreviewIframe.srcdoc = previewHtml;
+        }
+    }
+
+    // Function to fetch and display templates
+    async function fetchAndDisplayTemplates() {
+        const templatesGrid = document.querySelector('.templates-grid');
+        const templateLoadStatus = document.getElementById('templateLoadStatus');
+        if (!templatesGrid || !templateLoadStatus) {
+            console.error('Templates grid or load status element not found.');
             return;
         }
 
-        const script = document.createElement('script');
-        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-        script.onload = resolve;
-        script.onerror = () => reject(new Error('Failed to load jsPDF library'));
-        document.head.appendChild(script);
-    });
-}
-
-document.addEventListener('DOMContentLoaded', async function() {
-    console.log('DOM Content Loaded - Setting up event listeners');
-    
-    try {
-        await ensureJsPdfLoaded();
-        console.log('jsPDF loaded successfully');
-    } catch (err) {
-        console.warn('Could not load jsPDF library:', err);
-    }
-
-    const generateBtn = document.getElementById('generateBtn');
-    const modalDownloadBtn = document.querySelector('.modal-actions .btn-primary');
- 
-    if (!generateBtn) {
-        console.error('Generate button not found in the DOM');
-    } else {
-        const newGenerateBtn = generateBtn.cloneNode(true);
-        generateBtn.parentNode.replaceChild(newGenerateBtn, generateBtn);
-        console.log('Adding click event to Generate button');
-        newGenerateBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('Generate button clicked');
-            generateResumePDF();
-        });
-    }
-    
-    if (!modalDownloadBtn) {
-        console.error('Modal download button not found in the DOM');
-    } else {
-        const newModalDownloadBtn = modalDownloadBtn.cloneNode(true);
-        modalDownloadBtn.parentNode.replaceChild(newModalDownloadBtn, modalDownloadBtn);
-        console.log('Adding click event to Modal Download button');
-        newModalDownloadBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('Modal Download button clicked');
-            generateResumePDF();
-        });
-    }
-    
-    const modalCloseBtn = document.querySelector('.modal-actions .btn-secondary');
-    if (modalCloseBtn) {
-        const newModalCloseBtn = modalCloseBtn.cloneNode(true);
-        modalCloseBtn.parentNode.replaceChild(newModalCloseBtn, modalCloseBtn);
-        newModalCloseBtn.addEventListener('click', function() {
-            const previewModal = document.getElementById('previewModal');
-            if (previewModal) {
-                previewModal.style.display = 'none';
+        try {
+            templateLoadStatus.textContent = 'Loading templates...';
+            const response = await fetch('/get-resume-templates');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
+            const templates = await response.json();
+            console.log('Fetched templates:', templates);
+
+            templatesGrid.innerHTML = ''; // Clear existing content
+
+            templates.forEach(template => {
+                const templateCard = document.createElement('div');
+                templateCard.classList.add('template-card');
+                templateCard.setAttribute('data-template', template.id);
+                templateCard.innerHTML = `
+                    <div class="template-preview">
+                        <i class="fas fa-file-alt fa-3x"></i>
+                        <p class="mt-2">${template.name} Preview</p>
+                    </div>
+                    <div class="template-name">${template.name}</div>
+                `;
+                templatesGrid.appendChild(templateCard);
+
+                templateCard.addEventListener('click', function() {
+                    // Remove 'selected' class from all template cards
+                    document.querySelectorAll('.template-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    // Add 'selected' class to the clicked template card
+                    this.classList.add('selected');
+                    console.log(`Template selected: ${this.getAttribute('data-template')}`);
+                    updatePreviewPane(this.getAttribute('data-template')); // Update the preview pane
+                });
+            });
+
+            templateLoadStatus.textContent = ''; // Clear status on success
+
+            // Select the first template by default if any exist and update preview
+            if (templates.length > 0) {
+                const firstTemplateCard = document.querySelector('.templates-grid .template-card');
+                firstTemplateCard.classList.add('selected');
+                updatePreviewPane(firstTemplateCard.getAttribute('data-template'));
+            }
+
+        } catch (error) {
+            console.error('Error fetching templates:', error);
+            templateLoadStatus.textContent = 'Failed to load templates. Please try again later.';
+        }
+    }
+
+    // Call the function to fetch and display templates when the DOM is loaded
+    fetchAndDisplayTemplates();
+
+    // Add event listener for the Generate PDF button
+    const generateBtn = document.getElementById('generateBtn');
+    if (generateBtn) {
+        generateBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Generate PDF button clicked');
+            generateResumePDF();
         });
     }
-    
-    console.log('Event listeners setup completed');
 });

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seeker Profile - ResuMatch</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">ResuMatch</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container flex-grow-1 py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h2 class="card-title text-center mb-4"><i class="fas fa-user-circle me-2"></i>Job Seeker Profile</h2>
+                        <form id="seekerProfileForm">
+                            <div class="mb-3 text-center">
+                                <img id="profilePhotoPreview" src="{{ user.profile_pic_url if user.profile_pic_url else url_for('static', filename='images/default_profile_pic.png') }}" 
+                                     alt="Profile Photo" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid var(--primary-color);">
+                                <div class="mt-2">
+                                    <label for="profilePhotoInput" class="btn btn-sm btn-outline-secondary">
+                                        <i class="fas fa-camera me-2"></i>Change Photo
+                                    </label>
+                                    <input type="file" id="profilePhotoInput" name="profile_pic" accept="image/png, image/jpeg, image/gif" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="name" name="name" value="{{ user.name }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone Number (Optional)</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" value="{{ user.phone if user.phone else '' }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location (Optional)</label>
+                                <input type="text" class="form-control" id="location" name="location" value="{{ user.location if user.location else '' }}">
+                            </div>
+                            
+                            <!-- Education Section -->
+                            <div class="mb-4">
+                                <h4>Education</h4>
+                                <div id="educationEntries">
+                                    {% if user.education %}
+                                        {% for edu in user.education %}
+                                            <div class="education-entry mb-3 p-3 border rounded bg-light">
+                                                <div class="mb-2">
+                                                    <label class="form-label">Degree</label>
+                                                    <input type="text" class="form-control" name="education_degree" value="{{ edu.degree }}" placeholder="e.g., Bachelor of Science">
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label class="form-label">Institution</label>
+                                                    <input type="text" class="form-control" name="education_institution" value="{{ edu.institution }}" placeholder="e.g., University of XYZ">
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label class="form-label">Year</label>
+                                                    <input type="text" class="form-control" name="education_year" value="{{ edu.year }}" placeholder="e.g., 2023">
+                                                </div>
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="removeEntry(this)">Remove</button>
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p class="text-muted">No education details added yet.</p>
+                                    {% endif %}
+                                </div>
+                                <button type="button" class="btn btn-secondary btn-sm mt-2" onclick="addEducationEntry()">Add Education</button>
+                            </div>
+
+                            <!-- Skills Section -->
+                            <div class="mb-4">
+                                <h4>Skills</h4>
+                                <div id="skillsEntries">
+                                    {% if user.skills %}
+                                        {% for skill in user.skills %}
+                                            <div class="input-group mb-2">
+                                                <input type="text" class="form-control" name="skill" value="{{ skill }}" placeholder="e.g., Python">
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="removeEntry(this)">Remove</button>
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p class="text-muted">No skills added yet.</p>
+                                    {% endif %}
+                                </div>
+                                <button type="button" class="btn btn-secondary btn-sm mt-2" onclick="addSkillEntry()">Add Skill</button>
+                            </div>
+
+                            <!-- Experience Section -->
+                            <div class="mb-4">
+                                <h4>Work Experience</h4>
+                                <div id="experienceEntries">
+                                    {% if user.experience %}
+                                        {% for exp in user.experience %}
+                                            <div class="experience-entry mb-3 p-3 border rounded bg-light">
+                                                <div class="mb-2">
+                                                    <label class="form-label">Job Title</label>
+                                                    <input type="text" class="form-control" name="experience_title" value="{{ exp.title }}" placeholder="e.g., Software Engineer">
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label class="form-label">Company</label>
+                                                    <input type="text" class="form-control" name="experience_company" value="{{ exp.company }}" placeholder="e.g., ABC Corporation">
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Start Date</label>
+                                                        <input type="date" class="form-control" name="experience_start_date" value="{{ exp.start_date }}">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">End Date</label>
+                                                        <input type="date" class="form-control" name="experience_end_date" value="{{ exp.end_date }}">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label class="form-label">Description</label>
+                                                    <textarea class="form-control" name="experience_description" rows="3" placeholder="Describe your responsibilities and achievements">{{ exp.description }}</textarea>
+                                                </div>
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="removeEntry(this)">Remove</button>
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p class="text-muted">No work experience added yet.</p>
+                                    {% endif %}
+                                </div>
+                                <button type="button" class="btn btn-secondary btn-sm mt-2" onclick="addExperienceEntry()">Add Experience</button>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save me-2"></i>Save Profile</button>
+                            </div>
+                        </form>
+                        <div id="responseMessage" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function removeEntry(button) {
+            button.closest('.education-entry, .input-group').remove();
+        }
+
+        function addEducationEntry() {
+            const container = document.getElementById('educationEntries');
+            const newEntry = document.createElement('div');
+            newEntry.classList.add('education-entry', 'mb-3', 'p-3', 'border', 'rounded', 'bg-light');
+            newEntry.innerHTML = `
+                <div class="mb-2">
+                    <label class="form-label">Degree</label>
+                    <input type="text" class="form-control" name="education_degree">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Institution</label>
+                    <input type="text" class="form-control" name="education_institution">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Year</label>
+                    <input type="text" class="form-control" name="education_year">
+                </div>
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeEntry(this)">Remove</button>
+            `;
+            container.appendChild(newEntry);
+        }
+
+        function addSkillEntry() {
+            const container = document.getElementById('skillsEntries');
+            const newEntry = document.createElement('div');
+            newEntry.classList.add('input-group', 'mb-2');
+            newEntry.innerHTML = `
+                <input type="text" class="form-control" name="skill">
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeEntry(this)">Remove</button>
+            `;
+            container.appendChild(newEntry);
+        }
+
+        function addExperienceEntry() {
+            const container = document.getElementById('experienceEntries');
+            const newEntry = document.createElement('div');
+            newEntry.classList.add('experience-entry', 'mb-3', 'p-3', 'border', 'rounded', 'bg-light');
+            newEntry.innerHTML = `
+                <div class="mb-2">
+                    <label class="form-label">Job Title</label>
+                    <input type="text" class="form-control" name="experience_title">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Company</label>
+                    <input type="text" class="form-control" name="experience_company">
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" class="form-control" name="experience_start_date">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">End Date</label>
+                        <input type="date" class="form-control" name="experience_end_date">
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" name="experience_description" rows="3"></textarea>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeEntry(this)">Remove</button>
+            `;
+            container.appendChild(newEntry);
+        }
+
+        document.getElementById('seekerProfileForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const responseMessage = document.getElementById('responseMessage');
+            responseMessage.innerHTML = '';
+
+            const formData = new FormData(this);
+            const data = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                location: formData.get('location'),
+                education: [],
+                skills: [],
+                experience: []
+            };
+
+            // Remove profile_pic from formData if it exists
+            formData.delete('profile_pic');
+
+            // Collect education entries
+            document.querySelectorAll('.education-entry').forEach(entry => {
+                const degree = entry.querySelector('input[name="education_degree"]').value;
+                const institution = entry.querySelector('input[name="education_institution"]').value;
+                const year = entry.querySelector('input[name="education_year"]').value;
+                
+                if (degree || institution || year) {
+                    data.education.push({
+                        degree: degree,
+                        institution: institution,
+                        year: year
+                    });
+                }
+            });
+
+            // Collect skills entries
+            document.querySelectorAll('input[name="skill"]').forEach(input => {
+                if (input.value.trim() !== '') {
+                    data.skills.push(input.value.trim());
+                }
+            });
+
+            // Collect experience entries
+            document.querySelectorAll('.experience-entry').forEach(entry => {
+                const title = entry.querySelector('input[name="experience_title"]').value;
+                const company = entry.querySelector('input[name="experience_company"]').value;
+                const startDate = entry.querySelector('input[name="experience_start_date"]').value;
+                const endDate = entry.querySelector('input[name="experience_end_date"]').value;
+                const description = entry.querySelector('textarea[name="experience_description"]').value;
+                
+                if (title || company || startDate || endDate || description) {
+                    data.experience.push({
+                        title: title,
+                        company: company,
+                        start_date: startDate,
+                        end_date: endDate,
+                        description: description
+                    });
+                }
+            });
+
+            try {
+                const response = await fetch('/profile/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    responseMessage.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
+                    // Refresh the page after 1 second to show updated data
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                } else {
+                    responseMessage.innerHTML = `<div class="alert alert-danger">${result.error}</div>`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                responseMessage.innerHTML = `<div class="alert alert-danger">An unexpected error occurred.</div>`;
+            }
+        });
+
+        // Handle profile photo upload
+        document.getElementById('profilePhotoInput').addEventListener('change', async function(event) {
+            const fileInput = event.target;
+            const file = fileInput.files[0];
+            if (!file) return;
+            const formData = new FormData();
+            formData.append('profile_photo', file);
+            try {
+                const response = await fetch('/profile/upload_photo', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                if (response.ok && result.profile_pic_url) {
+                    document.getElementById('profilePhotoPreview').src = result.profile_pic_url + '?t=' + new Date().getTime();
+                    alert('Profile photo updated successfully!');
+                } else {
+                    alert(result.error || 'Failed to upload profile photo.');
+                }
+            } catch (error) {
+                alert('An error occurred while uploading the profile photo.');
+            }
+        });
+    </script>
+</body>
+</html> 

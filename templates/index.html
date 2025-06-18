@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResuMatch | AI Resume Matching</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-color: #1f2937;
+            --white: #ffffff;
+        }
+        
+        .navbar {
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand {
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+            font-weight: 700;
+        }
+        
+        .nav-link {
+            color: var(--text-color) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .navbar-toggler {
+            border: none;
+            padding: 0.5rem;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(37,99,235,0.1), rgba(37,99,235,0.2));
+            padding: 6rem 0;
+            text-align: center;
+        }
+        
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .hero-section p {
+            font-size: 1.25rem;
+            color: #4b5563;
+        }
+        
+        .feature-card .card-body h3 {
+            color: var(--text-color);
+        }
+        
+        .stats-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stats-card .display-4 {
+            color: var(--primary-color);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-content {
+            background-color: #1a1a1a;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-content .text-muted {
+            color: #a0aec0 !important;
+        }
+        
+        .footer-content a {
+            transition: all 0.3s ease;
+        }
+        
+        .footer-content a:hover {
+            color: var(--white) !important;
+            text-decoration: none;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: var(--white);
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .newsletter-form {
+            margin-top: 1rem;
+        }
+        
+        .newsletter-form .form-control {
+            background-color: #2d3748;
+            border: none;
+            color: var(--white);
+            padding: 0.75rem 1rem;
+        }
+        
+        .newsletter-form .form-control:focus {
+            box-shadow: none;
+            background-color: #2d3748;
+        }
+        
+        .newsletter-form .btn {
+            padding: 0.75rem 1.5rem;
+        }
+        
+        .footer-bottom {
+            background-color: #111111;
+            padding: 1rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            .hero-section p {
+                font-size: 1rem;
+            }
+            .footer-content {
+                text-align: center;
+            }
+            .social-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-file-alt me-2"></i>ResuMatch
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login?role=seeker">Job Seeker</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login?role=hr">HR Portal</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container text-center">
+            <h1 class="fw-bold mb-4">Find Your Perfect Match</h1>
+            <p class="lead mb-5">AI-Powered Resume Matching & Job Search Platform</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="/signup" class="btn btn-primary btn-lg fw-bold shadow-sm px-4">Get Started</a>
+                <a href="/about" class="btn btn-secondary btn-lg fw-bold px-4">Learn More</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <main class="container flex-grow-1 py-5">
+        <section class="mb-5">
+            <h2 class="text-center mb-5 fw-bold">Why Choose ResuMatch?</h2>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4">
+                    <div class="card feature-card border-0 shadow-sm h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-robot feature-icon"></i>
+                            <h3 class="h5 fw-bold mb-3">AI-Powered Matching</h3>
+                            <p class="text-muted mb-0">Smart algorithm to match your skills with the perfect job opportunities</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card border-0 shadow-sm h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-file-alt feature-icon"></i>
+                            <h3 class="h5 fw-bold mb-3">Resume Analysis</h3>
+                            <p class="text-muted mb-0">Get instant feedback and suggestions to improve your resume</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card border-0 shadow-sm h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-chart-line feature-icon"></i>
+                            <h3 class="h5 fw-bold mb-3">Real-time Updates</h3>
+                            <p class="text-muted mb-0">Receive job matches and notifications as they become available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="mb-5">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="stats-card">
+                        <span class="display-4 fw-bold d-block mb-2">1000+</span>
+                        <span class="text-muted">Companies</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stats-card">
+                        <span class="display-4 fw-bold d-block mb-2">50000+</span>
+                        <span class="text-muted">Job Seekers</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stats-card">
+                        <span class="display-4 fw-bold d-block mb-2">95%</span>
+                        <span class="text-muted">Success Rate</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="text-center py-5">
+            <h2 class="fw-bold mb-4">Ready to Find Your Dream Job?</h2>
+            <p class="lead text-muted mb-4">Join thousands of job seekers who have already found their perfect match</p>
+            <a href="/signup" class="btn btn-primary btn-lg px-5">Get Started Now</a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-content">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-white">ResuMatch</h4>
+                    <p class="text-muted">AI-powered resume optimization & job matching platform helping job seekers find their perfect career match.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h4 class="text-white">Quick Links</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/" class="text-decoration-none text-muted">Home</a></li>
+                        <li class="mb-2"><a href="/about" class="text-decoration-none text-muted">About Us</a></li>
+                        <li class="mb-2"><a href="/login" class="text-decoration-none text-muted">Login</a></li>
+                        <li class="mb-2"><a href="/signup" class="text-decoration-none text-muted">Sign Up</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white">Contact Us</h4>
+                    <ul class="list-unstyled">
+                        <li class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> 123 Main St, Anytown USA</li>
+                        <li class="text-muted mb-2"><i class="fas fa-envelope me-2"></i> info@resumatch.com</li>
+                        <li class="text-muted mb-2"><i class="fas fa-phone me-2"></i> +1 (123) 456-7890</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white">Newsletter</h4>
+                    <p class="text-muted">Subscribe to our newsletter for the latest updates and job opportunities.</p>
+                    <form class="newsletter-form">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Enter your email" required>
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <small class="text-muted">© 2024 ResuMatch by Omi. All rights reserved.</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <small class="text-muted">
+                        <a href="#" class="text-decoration-none text-muted me-3">Privacy Policy</a>
+                        <a href="#" class="text-decoration-none text-muted">Terms of Service</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

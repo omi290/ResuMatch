@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ResuMatch</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2 class="card-title text-center mb-4"><i class="fas fa-sign-in-alt"></i> Login to ResuMatch</h2>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" required>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                </div>
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                </div>
+            </form>
+            <div class="mt-3 text-center auth-links">
+                <a href="/signup" class="text-decoration-none">Don't have an account? Sign up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const form = this;
+            form.classList.add('was-validated');
+
+            if (!form.checkValidity()) {
+                return;
+            }
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            try {
+                const response = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Check if a token and user data are returned
+                    if (result.token && result.user) {
+                        localStorage.setItem('token', result.token);
+                        localStorage.setItem('user_role', result.user.role); // Store user role
+                        localStorage.setItem('user_id', result.user.id); // Store user ID
+                        alert(result.message);
+                        // Use the redirect field from the backend response
+                        if (result.redirect) {
+                            window.location.href = result.redirect;
+                        } else {
+                            window.location.href = '/dashboard';
+                        }
+                    } else {
+                        alert('Login successful, but no token or user data received. Please contact support.');
+                        console.warn('Login response missing token or user data:', result);
+                        window.location.href = '/dashboard'; // Still try to redirect, but log warning
+                    }
+                } else {
+                    alert('Login Error: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                alert('An unexpected error occurred during login. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -26,3 +26,10 @@ WeasyPrint
 
 reportlab
 certifi 
+
+pymongo
+PyJWT==2.8.0
+werkzeug==2.3.7
+
+thefuzz[speedup]
+

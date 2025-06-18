@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Job - ResuMatch</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .post-job-container {
+            max-width: 800px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .post-job-card {
+            background-color: #fff;
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .post-job-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        .post-job-card h2 i {
+            margin-right: 0.8rem;
+        }
+        .skills-input-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .skill-tag {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+        }
+        .skill-tag .remove-tag {
+            margin-left: 0.5rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">ResuMatch</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/hr-dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container post-job-container flex-grow-1">
+        <div class="post-job-card">
+            <h2><i class="fas fa-plus-circle"></i> Post New Job</h2>
+            <form id="postJobForm">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Job Title</label>
+                    <input type="text" class="form-control" id="title" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="company" class="form-label">Company Name</label>
+                    <input type="text" class="form-control" id="company" required>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="department" class="form-label">Department</label>
+                        <input type="text" class="form-control" id="department" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" required>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="type" class="form-label">Employment Type</label>
+                        <select id="type" class="form-select" required>
+                            <option value="full-time">Full Time</option>
+                            <option value="part-time">Part Time</option>
+                            <option value="contract">Contract</option>
+                            <option value="internship">Internship</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="experience" class="form-label">Experience Level</label>
+                        <select id="experience" class="form-select" required>
+                            <option value="entry">Entry Level</option>
+                            <option value="mid">Mid Level</option>
+                            <option value="senior">Senior Level</option>
+                            <option value="lead">Lead/Manager</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="skills" class="form-label">Required Skills <span class="text-muted">(These will be saved as job tags)</span></label>
+                    <div class="skills-input-container">
+                        <input type="text" class="form-control" id="skillInput" placeholder="Type a skill and press Enter">
+                        <small class="text-muted">Skills added: <span id="skillsCount">0</span></small>
+                        <div id="skillTags" class="skill-tags"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Job Description</label>
+                    <textarea class="form-control" id="description" rows="6" required></textarea>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label for="salary-min" class="form-label">Salary Range (Min)</label>
+                        <input type="number" class="form-control" id="salary-min" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="salary-max" class="form-label">Salary Range (Max)</label>
+                        <input type="number" class="form-control" id="salary-max" required>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-primary">Post Job</button>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='/hr/dashboard'">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/post-job.js') }}"></script>
+</body>
+</html>

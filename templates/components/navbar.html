@@ -1,0 +1,65 @@
+<nav class="navbar">
+    <div class="nav-brand">
+        <a href="/" style="text-decoration: none; color: inherit;">ResuMatch</a>
+    </div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        
+        <!-- Guest Navigation -->
+        <div id="guest-nav" style="display: inline;">
+            <a href="/login?role=seeker">Job Seeker</a>
+            <a href="/login?role=hr">HR Portal</a>
+        </div>
+
+        <!-- Job Seeker Navigation -->
+        <div id="seeker-nav" style="display: none;">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/resume-upload">Upload Resume</a>
+            <a href="/job-matching">Find Jobs</a>
+            <a href="/resume-generation">Generate Resume</a>
+            <a href="/logout">Logout</a>
+        </div>
+
+        <!-- HR Navigation -->
+        <div id="hr-nav" style="display: none;">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/post-job">Post Job</a>
+            <a href="/view-matches">View Matches</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get user role from session storage
+        const userRole = sessionStorage.getItem('userRole');
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+
+        // Hide all navigation sections first
+        document.getElementById('guest-nav').style.display = 'none';
+        document.getElementById('seeker-nav').style.display = 'none';
+        document.getElementById('hr-nav').style.display = 'none';
+
+        // Show appropriate navigation based on authentication and role
+        if (isLoggedIn && userRole) {
+            if (userRole === 'seeker') {
+                document.getElementById('seeker-nav').style.display = 'inline';
+            } else if (userRole === 'hr') {
+                document.getElementById('hr-nav').style.display = 'inline';
+            }
+        } else {
+            document.getElementById('guest-nav').style.display = 'inline';
+        }
+
+        // Add click handler for logout
+        document.querySelectorAll('a[href="/logout"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                sessionStorage.clear();
+                window.location.href = '/';
+            });
+        });
+    });
+</script>

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ResuMatch - Job Matching</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .job-matching-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .header-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+    .header-section h1 {
+      font-size: 2rem;
+      color: var(--text-color);
+      margin-bottom: 0;
+    }
+    .job-actions .btn {
+      margin-left: 0.5rem;
+    }
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      padding: 1.5rem;
+    }
+    .job-card {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border: 1px solid #e9ecef;
+      transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .job-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .job-card .job-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+    .job-card .job-company {
+      font-size: 0.95rem;
+      color: #6c757d;
+      margin-bottom: 1rem;
+    }
+    .job-card .job-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+    .job-card .job-details span {
+      display: flex;
+      align-items: center;
+    }
+    .job-card .job-details i {
+      margin-right: 0.5rem;
+      color: var(--primary-color);
+    }
+    .job-card .job-skills {
+      margin-top: auto;
+      margin-bottom: 1rem;
+    }
+    .job-card .skills-title {
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 0.8rem;
+      font-size: 0.95rem;
+    }
+    .job-card .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .job-card .skill-item {
+      background-color: var(--light-bg);
+      color: var(--primary-color);
+      padding: 0.3rem 0.7rem;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: 1px solid rgba(37,99,235,0.2);
+    }
+    .match-bar-container {
+      background-color: #e9ecef;
+      border-radius: 5px;
+      height: 8px;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+    }
+    .match-bar-fill {
+      height: 100%;
+      background-color: #28a745;
+      border-radius: 5px;
+      transition: width 0.5s ease-in-out;
+    }
+    .match-percentage-text {
+      text-align: right;
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-bottom: 1rem;
+    }
+    .job-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .job-actions .btn {
+      flex: 1;
+    }
+    .job-type-badge {
+      font-size: 0.8rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 5px;
+      font-weight: 500;
+    }
+    .badge-online {
+      background-color: #e3f2fd;
+      color: #1976d2;
+    }
+    .badge-platform {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+    }
+    .search-filters {
+      background-color: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 2rem;
+    }
+    .filter-group {
+      margin-bottom: 1rem;
+    }
+    .filter-group label {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    @media (max-width: 768px) {
+      .header-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .header-actions {
+        width: 100%;
+        display: flex;
+        gap: 0.5rem;
+      }
+      .header-actions .btn {
+        flex: 1;
+      }
+      .jobs-grid {
+        grid-template-columns: 1fr;
+      }
+      .job-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+  {% if applied_jobs %}
+  <script>
+    window.appliedJobIds = {{ applied_jobs | map(attribute='job_id') | list | tojson }};
+  </script>
+  {% else %}
+  <script>
+    window.appliedJobIds = [];
+  </script>
+  {% endif %}
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container">
+          <a class="navbar-brand fw-bold" href="/">ResuMatch</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                  <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+                  <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
+                  <li class="nav-item"><a class="nav-link" href="/settings">Settings</a></li>
+                  <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+
+  <div class="container job-matching-container flex-grow-1 py-4">
+    <div class="header-section">
+      <h1><i class="fas fa-globe me-2"></i>Online Jobs</h1>
+      <div class="header-actions">
+        <a href="/platform-jobs" class="btn btn-outline-primary btn-sm me-2">
+          <i class="fas fa-building me-2"></i>View Platform Jobs
+        </a>
+      </div>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Job Type</label>
+              <select id="jobTypeFilter" class="form-select" aria-label="Filter by job type">
+                <option value="all">All Types</option>
+                <option value="full-time">Full Time</option>
+                <option value="part-time">Part Time</option>
+                <option value="contract">Contract</option>
+                <option value="internship">Internship</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Experience Level</label>
+              <select id="experienceFilter" class="form-select" aria-label="Filter by experience level">
+                <option value="all">All Levels</option>
+                <option value="entry">Entry Level</option>
+                <option value="mid">Mid Level</option>
+                <option value="senior">Senior Level</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Location</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                <input type="text" class="form-control" id="locationFilter" placeholder="Enter location">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-8">
+            <div class="form-group">
+              <label class="form-label">Skills</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-tools"></i></span>
+                <input type="text" class="form-control" id="skillsFilter" placeholder="Enter skills (e.g., Python, JavaScript)">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Sort By</label>
+              <select id="sortFilter" class="form-select" aria-label="Sort jobs by">
+                <option value="match">Match Score</option>
+                <option value="date">Date Posted</option>
+                <option value="salary">Salary</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Online Jobs Section -->
+    <div class="card mb-4">
+      <div class="card-header bg-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2 class="h5 mb-0"><i class="fas fa-globe me-2"></i>Online Jobs</h2>
+          <div class="header-actions">
+            <button id="findOnlineJobsBtn" class="btn btn-primary btn-sm">
+              <i class="fas fa-search me-2"></i>Search/Refresh Online Jobs
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="jobs-grid" id="onlineJobsGrid">
+          <div class="text-center w-100 py-5">
+            <i class="fas fa-globe fa-3x text-muted mb-3"></i>
+            <h3>Find Online Jobs</h3>
+            <p class="text-muted">Click the button above to search for jobs from various online sources.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platform Jobs Section -->
+    <div class="card">
+      <div class="card-header bg-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2 class="h5 mb-0"><i class="fas fa-building me-2"></i>ResuMatch Platform Jobs</h2>
+          <div class="header-actions">
+            <button id="findPlatformJobsBtn" class="btn btn-primary btn-sm">
+              <i class="fas fa-search me-2"></i>Search/Refresh Platform Jobs
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="jobs-grid" id="platformJobsGrid">
+          <div class="text-center w-100 py-5">
+            <i class="fas fa-building fa-3x text-muted mb-3"></i>
+            <h3>Find Platform Jobs</h3>
+            <p class="text-muted">Click the button above to search for jobs posted on ResuMatch.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer-content bg-dark text-white">
+      <div class="container">
+          <div class="row g-4">
+              <div class="col-lg-4 col-md-6">
+                  <h4 class="text-white">ResuMatch</h4>
+                  <p class="text-white-50">AI-powered resume optimization & job matching platform helping job seekers find their perfect career match.</p>
+                  <div class="social-links">
+                      <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+                      <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                      <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                      <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                  </div>
+              </div>
+              <div class="col-lg-2 col-md-6">
+                  <h4 class="text-white">Quick Links</h4>
+                  <ul class="list-unstyled">
+                      <li class="mb-2"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+                      <li class="mb-2"><a href="/about" class="text-white-50 text-decoration-none">About Us</a></li>
+                      <li class="mb-2"><a href="/login" class="text-white-50 text-decoration-none">Login</a></li>
+                      <li class="mb-2"><a href="/signup" class="text-white-50 text-decoration-none">Sign Up</a></li>
+                  </ul>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                  <h4 class="text-white">Contact Us</h4>
+                  <ul class="list-unstyled">
+                      <li class="text-white-50 mb-2"><i class="fas fa-map-marker-alt me-2"></i> 123 Main St, Anytown USA</li>
+                      <li class="text-white-50 mb-2"><i class="fas fa-envelope me-2"></i> info@resumatch.com</li>
+                      <li class="text-white-50 mb-2"><i class="fas fa-phone me-2"></i> +1 (123) 456-7890</li>
+                  </ul>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                  <h4 class="text-white">Newsletter</h4>
+                  <p class="text-white-50">Subscribe to our newsletter for the latest updates and job opportunities.</p>
+                  <form class="newsletter-form">
+                      <div class="input-group mb-3">
+                          <input type="email" class="form-control" placeholder="Enter your email" required>
+                          <button class="btn btn-primary" type="submit">Subscribe</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </footer>
+  <div class="footer-bottom bg-dark text-white py-3">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-6 text-center text-md-start">
+                  <small class="text-white-50">© 2024 ResuMatch by Omi. All rights reserved.</small>
+              </div>
+              <div class="col-md-6 text-center text-md-end">
+                  <small class="text-white-50">
+                      <a href="#" class="text-white-50 text-decoration-none me-3">Privacy Policy</a>
+                      <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+                  </small>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const onlineJobsGrid = document.getElementById('onlineJobsGrid');
+      const platformJobsGrid = document.getElementById('platformJobsGrid');
+      const findOnlineJobsBtn = document.getElementById('findOnlineJobsBtn');
+      const findPlatformJobsBtn = document.getElementById('findPlatformJobsBtn');
+
+      // Function to render jobs
+      function renderJobs(jobs, container, isOnline = true) {
+        if (!Array.isArray(jobs) || jobs.length === 0) {
+          container.innerHTML = '<div class="col-12 text-center py-5"><i class="fas fa-search fa-3x text-muted mb-3"></i><h3>No jobs found</h3><p class="text-muted">Try adjusting your filters or search criteria</p></div>';
+          return;
+        }
+        container.innerHTML = '';
+        jobs.forEach(job => {
+          // Use correct fields for platform jobs
+          const matchPercent = job.match_percent !== undefined ? job.match_percent : (job.match_percentage !== undefined ? job.match_percentage : null);
+          const matchBadge = matchPercent !== null ? `<span class="badge bg-success ms-2">${Math.round(matchPercent)}% Match</span>` : '';
+          const jobTypeBadge = isOnline ? 
+            '<span class="job-type-badge badge-online">Online</span>' :
+            '<span class="job-type-badge badge-platform">Platform</span>';
+          const company = job.company || job.company_name || 'N/A';
+          const salary = job.salary || job.salary_range || 'Not specified';
+          const jobType = job.job_type || job.employment_type || job.type || 'Full-time';
+          const location = job.location || 'Remote';
+          
+          // Highlight matched skills for platform jobs
+          let skillsHTML = '';
+          if (!isOnline && Array.isArray(job.tags)) {
+            const matched = Array.isArray(job.matched_skills) ? job.matched_skills.map(s => s.toLowerCase()) : [];
+            skillsHTML = job.tags.map(tag => matched.includes(tag.toLowerCase()) ? `<span class="skill-item bg-success text-white">${tag}</span>` : `<span class="skill-item">${tag}</span>`).join('');
+          } else if (Array.isArray(job.tags)) {
+            skillsHTML = job.tags.map(tag => `<span class="skill-item">${tag}</span>`).join('');
+          }
+          
+          // Apply button logic
+          let actionsHTML = '';
+          if (isOnline) {
+            const applyUrl = job.url || '#';
+            actionsHTML = `<a href="${applyUrl}" target="_blank" class="btn btn-primary btn-sm" ${applyUrl === '#' ? 'onclick="alert(\'Apply link not available\'); return false;"' : ''}><i class="fas fa-paper-plane me-2"></i>Apply Now</a>`;
+          } else {
+            // Platform job: check if already applied
+            const jobId = job._id || job.id;
+            const alreadyApplied = Array.isArray(window.appliedJobIds) && window.appliedJobIds.includes(jobId);
+            if (alreadyApplied) {
+              actionsHTML = `<button class="btn btn-success btn-sm" disabled><i class="fas fa-check me-2"></i>Applied</button>`;
+            } else {
+              actionsHTML = `<button class="btn btn-primary btn-sm apply-job-btn" data-job-id="${jobId}"><i class="fas fa-paper-plane me-2"></i>Apply Now</button>`;
+            }
+          }
+          
+          const jobHTML = `
+            <div class="job-card">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h3 class="job-title">${job.title || 'Job Title Not Available'}</h3>
+                ${jobTypeBadge}
+                ${!isOnline ? matchBadge : ''}
+              </div>
+              <div class="job-company">
+                <i class="fas fa-building me-2"></i>${company}
+              </div>
+              <div class="job-details">
+                <span><i class="fas fa-map-marker-alt"></i>${location}</span>
+                <span><i class="fas fa-clock"></i>${jobType}</span>
+                <span><i class="fas fa-money-bill-wave"></i>${salary}</span>
+              </div>
+              <div class="job-skills">
+                <div class="skills-title">Required Skills</div>
+                <div class="skills-list">${skillsHTML}</div>
+              </div>
+              <div class="job-actions">
+                ${actionsHTML}
+                <button class="btn btn-outline-primary btn-sm" onclick="saveJob('${job._id || job.id || job.job_id}')">
+                  <i class="fas fa-bookmark me-2"></i>Save
+                </button>
+              </div>
+            </div>
+          `;
+          container.insertAdjacentHTML('beforeend', jobHTML);
+        });
+      }
+
+      // Find Online Jobs
+      findOnlineJobsBtn.addEventListener('click', async function() {
+        try {
+          onlineJobsGrid.innerHTML = '<div class="text-center w-100 py-5"><div class="spinner-border text-primary" role="status"></div><p class="mt-3">Searching for online jobs...</p></div>';
+          
+          // Get filter values
+          const skills = document.getElementById('skillsFilter').value;
+          const location = document.getElementById('locationFilter').value;
+          const jobType = document.getElementById('jobTypeFilter').value;
+          const experience = document.getElementById('experienceFilter').value;
+          
+          // Build query parameters
+          const params = new URLSearchParams();
+          if (skills) params.append('q', skills);
+          if (location) params.append('location', location);
+          if (jobType !== 'all') params.append('job_type', jobType);
+          if (experience !== 'all') params.append('experience', experience);
+          
+          // Make the request with query parameters
+          const response = await fetch(`/external-jobs?${params.toString()}`);
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          
+          const data = await response.json();
+          
+          if (data.error) {
+            throw new Error(data.error);
+          }
+          
+          renderJobs(data, onlineJobsGrid, true);
+        } catch (error) {
+          console.error('Error fetching online jobs:', error);
+          onlineJobsGrid.innerHTML = `
+            <div class="col-12 text-center py-5">
+              <i class="fas fa-exclamation-circle fa-3x text-danger mb-3"></i>
+              <h3>Error loading jobs</h3>
+              <p class="text-muted">${error.message}</p>
+              <button class="btn btn-primary mt-3" onclick="document.getElementById('findOnlineJobsBtn').click()">
+                <i class="fas fa-refresh me-2"></i>Try Again
+              </button>
+            </div>`;
+        }
+      });
+
+      // Find Platform Jobs
+      findPlatformJobsBtn.addEventListener('click', async function() {
+        try {
+          platformJobsGrid.innerHTML = '<div class="text-center w-100 py-5"><div class="spinner-border text-primary" role="status"></div><p class="mt-3">Searching for platform jobs...</p></div>';
+          const response = await fetch('/jobs');
+          const data = await response.json();
+          renderJobs(data, platformJobsGrid, false);
+        } catch (error) {
+          platformJobsGrid.innerHTML = '<div class="col-12 text-center py-5"><i class="fas fa-exclamation-circle fa-3x text-danger mb-3"></i><h3>Error loading jobs</h3><p class="text-muted">Please try again later</p></div>';
+          console.error('Error:', error);
+        }
+      });
+
+      // Filter handlers
+      const filters = ['jobTypeFilter', 'experienceFilter', 'locationFilter', 'skillsFilter', 'sortFilter'];
+      filters.forEach(filterId => {
+        const element = document.getElementById(filterId);
+        if (element) {
+          element.addEventListener('change', function() {
+            // Implement filter logic here
+            console.log('Filter changed:', filterId, this.value);
+          });
+        }
+      });
+
+      // Event delegation for apply-job-btn in platformJobsGrid
+      platformJobsGrid.addEventListener('click', async function(event) {
+        const btn = event.target.closest('.apply-job-btn');
+        if (btn) {
+          const jobId = btn.dataset.jobId;
+          if (!jobId) return;
+          btn.disabled = true;
+          btn.textContent = 'Applying...';
+          try {
+            const response = await fetch('/apply-job', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ job_id: jobId })
+            });
+            const result = await response.json();
+            if (response.ok) {
+              btn.textContent = 'Applied!';
+              btn.classList.remove('btn-primary');
+              btn.classList.add('btn-success');
+            } else {
+              alert(result.error || 'Failed to submit application.');
+              btn.disabled = false;
+              btn.textContent = 'Apply Now';
+            }
+          } catch (error) {
+            alert('An unexpected error occurred. Please try again.');
+            btn.disabled = false;
+            btn.textContent = 'Apply Now';
+          }
+        }
+      });
+    });
+
+    // Save job function
+    function saveJob(jobId) {
+      // Implement save job logic here
+      console.log('Saving job:', jobId);
+    }
+  </script>
+</body>
+</html>

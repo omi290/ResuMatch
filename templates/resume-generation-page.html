@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResuMatch - Resume Generation</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        .resume-page-container {
+            max-width: 1200px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .header-section h1 {
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 0;
+        }
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .template-card {
+            border: 2px solid #eee;
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: border-color 0.3s, transform 0.3s;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .template-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        .template-card.selected {
+            border-color: var(--primary-color);
+            background-color: var(--light-bg);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+        }
+        .template-preview {
+            height: 150px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            margin-bottom: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #6c757d;
+            font-size: 0.9rem;
+            border: 1px solid #e9ecef;
+        }
+        .template-name {
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+
+        .editor-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .sections-sidebar {
+            flex: 0 0 250px;
+            border-right: 1px solid #eee;
+            padding-right: 2rem;
+        }
+        .section-item {
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.2s ease;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .section-item:hover {
+            background-color: #f0f0f0;
+        }
+        .section-item.active {
+            background-color: var(--primary-color);
+            color: #fff;
+            font-weight: 500;
+        }
+        .section-item.active i {
+            color: #fff;
+        }
+        .content-editor {
+            flex: 1;
+            padding-left: 2rem;
+        }
+        .field-group {
+            margin-bottom: 1.5rem;
+        }
+        .field-label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+        .text-input, .textarea, .form-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .text-input:focus, .textarea:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+            outline: none;
+        }
+        .textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .skill-tag {
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 0.3rem 0.7rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        .skill-tag.matching-skill-tag {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        .remove-skill {
+            margin-left: 0.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            color: #6c757d;
+        }
+        .add-skill {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .skill-input {
+            flex: 1;
+        }
+        .matching-skills {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            display: none; /* Controlled by JS */
+        }
+        .matching-skills-title {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .preview-pane {
+            flex: 0 0 400px; /* Fixed width for preview */
+            background-color: #f0f2f5;
+            border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: sticky;
+            top: 20px; /* Adjust as needed */
+            height: calc(100vh - 100px); /* Adjust height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #e9ecef;
+        }
+        .preview-pane iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .actions-bottom {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .editor-container {
+                flex-direction: column;
+            }
+            .sections-sidebar {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+                padding-right: 0;
+                padding-bottom: 1.5rem;
+                margin-bottom: 1.5rem;
+                flex: none;
+                width: 100%;
+            }
+            .content-editor {
+                padding-left: 0;
+            }
+            .preview-pane {
+                position: relative;
+                width: 100%;
+                height: 500px; /* Fixed height for smaller screens */
+                margin-top: 2rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .header-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .header-actions .btn {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                width: 100%;
+            }
+            .templates-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            .editor-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">ResuMatch</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/settings">Settings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container resume-page-container flex-grow-1 py-4">
+        <div class="header-section">
+            <h1><i class="fas fa-magic me-2"></i>Resume Generation</h1>
+            <div class="header-actions">
+                <a href="/resume-upload-page" class="btn btn-secondary btn-sm"><i class="fas fa-upload me-2"></i>Upload Resume</a>
+                <a href="/job-matching-page" class="btn btn-secondary btn-sm"><i class="fas fa-briefcase me-2"></i>Job Matching</a>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h2 class="card-title section-title"><i class="fas fa-palette me-2"></i>Select Template</h2>
+                <div class="templates-grid">
+                    <!-- Template cards will be dynamically loaded here by JS -->
+                </div>
+                <p class="text-center text-muted" id="templateLoadStatus">Loading templates...</p>
+            </div>
+        </div>
+
+        <div class="editor-container">
+            <div class="sections-sidebar">
+                <h3 class="section-title"><i class="fas fa-cogs me-2"></i>Edit Sections</h3>
+                <div id="sectionList">
+                    <!-- Sections will be dynamically loaded here by JS -->
+                    <div class="section-item active" data-section="personal-info"><i class="fas fa-user"></i> Personal Information</div>
+                    <div class="section-item" data-section="summary"><i class="fas fa-file-alt"></i> Summary</div>
+                    <div class="section-item" data-section="experience"><i class="fas fa-briefcase"></i> Experience</div>
+                    <div class="section-item" data-section="education"><i class="fas fa-graduation-cap"></i> Education</div>
+                    <div class="section-item" data-section="skills"><i class="fas fa-lightbulb"></i> Skills</div>
+                    <div class="section-item" data-section="projects"><i class="fas fa-project-diagram"></i> Projects</div>
+                </div>
+                <div class="d-grid mt-4">
+                    <button id="addSectionBtn" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus-circle me-2"></i>Add Custom Section</button>
+                </div>
+            </div>
+
+            <div class="content-editor">
+                <div id="editorFields">
+                    <!-- Fields will be dynamically loaded here by JS -->
+                    <div id="personal-info-section" class="section-fields">
+                        <h3 class="section-title">Personal Information</h3>
+                        <div class="row g-3">
+                            <div class="col-md-6 field-group">
+                                <label for="fullName" class="field-label">Full Name</label>
+                                <input type="text" id="fullName" class="form-control text-input" placeholder="John Doe">
+                            </div>
+                            <div class="col-md-6 field-group">
+                                <label for="email" class="field-label">Email</label>
+                                <input type="email" id="email" class="form-control text-input" placeholder="john.doe@example.com">
+                            </div>
+                            <div class="col-md-6 field-group">
+                                <label for="phone" class="field-label">Phone</label>
+                                <input type="tel" id="phone" class="form-control text-input" placeholder="+1 (555) 123-4567">
+                            </div>
+                            <div class="col-md-6 field-group">
+                                <label for="linkedin" class="field-label">LinkedIn Profile</label>
+                                <input type="url" id="linkedin" class="form-control text-input" placeholder="linkedin.com/in/johndoe">
+                            </div>
+                            <div class="col-md-6 field-group">
+                                <label for="portfolio" class="field-label">Portfolio/Website</label>
+                                <input type="url" id="portfolio" class="form-control text-input" placeholder="www.johndoe.com">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summary Section -->
+                    <div id="summary-section" class="section-fields" style="display: none;">
+                        <h3 class="section-title">Professional Summary</h3>
+                        <div class="field-group">
+                            <label for="summaryText" class="field-label">Professional Summary / Objective</label>
+                            <textarea id="summaryText" class="form-control textarea" rows="5" placeholder="A concise overview of your skills and career goals."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Experience Section -->
+                    <div id="experience-section" class="section-fields" style="display: none;">
+                        <h3 class="section-title">Experience</h3>
+                        <div id="experienceEntries">
+                            <div class="experience-entry">
+                                <div class="row g-3">
+                                    <div class="col-md-6 field-group">
+                                        <label for="expJobTitle" class="field-label">Job Title</label>
+                                        <input type="text" id="expJobTitle" class="form-control text-input" placeholder="Software Engineer">
+                                    </div>
+                                    <div class="col-md-6 field-group">
+                                        <label for="expCompany" class="field-label">Company</label>
+                                        <input type="text" id="expCompany" class="form-control text-input" placeholder="Google Inc.">
+                                    </div>
+                                    <div class="col-md-6 field-group">
+                                        <label for="expDuration" class="field-label">Duration</label>
+                                        <input type="text" id="expDuration" class="form-control text-input" placeholder="Jan 2020 - Dec 2022">
+                                    </div>
+                                    <div class="col-12 field-group">
+                                        <label for="expResponsibilities" class="field-label">Responsibilities / Achievements</label>
+                                        <textarea id="expResponsibilities" class="form-control textarea" rows="4" placeholder="- Developed web applications...&#10;- Led a team of engineers..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="addExperienceBtn" class="btn btn-outline-primary btn-sm mt-3"><i class="fas fa-plus-circle me-2"></i>Add Experience</button>
+                    </div>
+
+                    <!-- Education Section -->
+                    <div id="education-section" class="section-fields" style="display: none;">
+                        <h3 class="section-title">Education</h3>
+                        <div id="educationEntries">
+                            <div class="education-entry">
+                                <div class="row g-3">
+                                    <div class="col-md-6 field-group">
+                                        <label for="eduDegree" class="field-label">Degree / Major</label>
+                                        <input type="text" id="eduDegree" class="form-control text-input" placeholder="B.Sc. Computer Science">
+                                    </div>
+                                    <div class="col-md-6 field-group">
+                                        <label for="eduInstitution" class="field-label">Institution</label>
+                                        <input type="text" id="eduInstitution" class="form-control text-input" placeholder="University of Example">
+                                    </div>
+                                    <div class="col-md-6 field-group">
+                                        <label for="eduDuration" class="field-label">Duration</label>
+                                        <input type="text" id="eduDuration" class="form-control text-input" placeholder="Sept 2016 - May 2020">
+                                    </div>
+                                    <div class="col-12 field-group">
+                                        <label for="eduDescription" class="field-label">Description (e.g., GPA, Honors)</label>
+                                        <textarea id="eduDescription" class="form-control textarea" rows="2" placeholder="GPA: 3.8/4.0, Dean\'s List"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="addEducationBtn" class="btn btn-outline-primary btn-sm mt-3"><i class="fas fa-plus-circle me-2"></i>Add Education</button>
+                    </div>
+
+                    <!-- Skills Section -->
+                    <div id="skills-section" class="section-fields" style="display: none;">
+                        <h3 class="section-title">Skills</h3>
+                        <div class="field-group">
+                            <label for="skillInput" class="field-label">Add Skills</label>
+                            <div class="add-skill">
+                                <input type="text" id="skillInput" class="form-control skill-input" placeholder="e.g., Python, JavaScript">
+                                <button id="addSkillBtn" class="btn btn-primary btn-sm">Add</button>
+                            </div>
+                            <div class="skills-container" id="currentSkills">
+                                <!-- Added skills will appear here -->
+                            </div>
+                        </div>
+                        <div class="matching-skills" id="matchingSkillsSection">
+                            <h4 class="matching-skills-title">Suggested Skills (based on job descriptions)</h4>
+                            <div class="skills-container" id="suggestedSkills">
+                                <!-- Suggested skills will appear here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Projects Section -->
+                    <div id="projects-section" class="section-fields" style="display: none;">
+                        <h3 class="section-title">Projects</h3>
+                        <div id="projectEntries">
+                            <div class="project-entry">
+                                <div class="row g-3">
+                                    <div class="col-12 field-group">
+                                        <label for="projName" class="field-label">Project Name</label>
+                                        <input type="text" id="projName" class="form-control text-input" placeholder="My Awesome Project">
+                                    </div>
+                                    <div class="col-12 field-group">
+                                        <label for="projDescription" class="field-label">Project Description</label>
+                                        <textarea id="projDescription" class="form-control textarea" rows="4" placeholder="- Developed a full-stack application...&#10;- Utilized React and Node.js..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="addProjectBtn" class="btn btn-outline-primary btn-sm mt-3"><i class="fas fa-plus-circle me-2"></i>Add Project</button>
+                    </div>
+                </div>
+                <div class="actions-bottom">
+                    <button id="previewBtn" class="btn btn-info me-2"><i class="fas fa-eye me-2"></i>Preview Resume</button>
+                    <button id="saveDraftBtn" class="btn btn-secondary me-2"><i class="fas fa-save me-2"></i>Save Draft</button>
+                    <button id="generateBtn" class="btn btn-primary"><i class="fas fa-file-pdf me-2"></i>Generate PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="previewModal" class="modal" tabindex="-1" style="display: none; align-items: center; justify-content: center; background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Resume Preview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="document.getElementById('previewModal').style.display='none';"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="resume-preview" style="padding: 20px; border: 1px solid #eee; min-height: 400px; overflow-y: auto;">
+                        <!-- Resume content will be injected here -->
+                    </div>
+                </div>
+                <div class="modal-footer modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('previewModal').style.display='none';">Close</button>
+                    <button type="button" class="btn btn-primary" id="modalDownloadBtn">Download PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-content bg-dark text-white">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-white">ResuMatch</h4>
+                    <p class="text-white-50">AI-powered resume optimization & job matching platform helping job seekers find their perfect career match.</p>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h4 class="text-white">Quick Links</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="/about" class="text-white-50 text-decoration-none">About Us</a></li>
+                        <li class="mb-2"><a href="/login" class="text-white-50 text-decoration-none">Login</a></li>
+                        <li class="mb-2"><a href="/signup" class="text-white-50 text-decoration-none">Sign Up</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white">Contact Us</h4>
+                    <ul class="list-unstyled">
+                        <li class="text-white-50 mb-2"><i class="fas fa-map-marker-alt me-2"></i> 123 Main St, Anytown USA</li>
+                        <li class="text-white-50 mb-2"><i class="fas fa-envelope me-2"></i> info@resumatch.com</li>
+                        <li class="text-white-50 mb-2"><i class="fas fa-phone me-2"></i> +1 (123) 456-7890</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white">Newsletter</h4>
+                    <p class="text-white-50">Subscribe to our newsletter for the latest updates and job opportunities.</p>
+                    <form class="newsletter-form">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Enter your email" required>
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="footer-bottom bg-dark text-white py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <small class="text-white-50">© 2024 ResuMatch by Omi. All rights reserved.</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <small class="text-white-50">
+                        <a href="#" class="text-white-50 text-decoration-none me-3">Privacy Policy</a>
+                        <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Your custom JavaScript for resume generation -->
+    <script src="{{ url_for('static', filename='js/resume-generator.js') }}"></script>
+</body>
+</html> 
