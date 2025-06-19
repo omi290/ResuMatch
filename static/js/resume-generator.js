@@ -413,7 +413,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 templateCard.setAttribute('data-template', template.id);
                 templateCard.innerHTML = `
                     <div class="template-preview">
-                        <i class="fas fa-file-alt fa-3x"></i>
+                        <img src="${template.image_url}" alt="${template.name} Preview" style="max-width: 100%; max-height: 120px; object-fit: contain; border-radius: 4px;">
                         <p class="mt-2">${template.name} Preview</p>
                     </div>
                     <div class="template-name">${template.name}</div>
@@ -459,4 +459,25 @@ document.addEventListener('DOMContentLoaded', function() {
             generateResumePDF();
         });
     }
+
+    // New code to fetch and pre-fill user profile data
+    async function fetchAndPrefillProfile() {
+        try {
+            const response = await fetch('/get-user-profile');
+            if (!response.ok) throw new Error('Failed to fetch user profile');
+            const profile = await response.json();
+
+            // Pre-fill form fields
+            document.getElementById('fullName').value = profile.full_name || '';
+            document.getElementById('email').value = profile.email || '';
+            document.getElementById('phone').value = profile.phone || '';
+            document.getElementById('linkedin').value = profile.linkedin || '';
+            document.getElementById('portfolio').value = profile.portfolio || '';
+        } catch (error) {
+            console.error('Error fetching user profile:', error);
+        }
+    }
+
+    // Call pre-fill function on DOMContentLoaded
+    fetchAndPrefillProfile();
 });

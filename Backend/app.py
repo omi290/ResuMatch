@@ -27,6 +27,7 @@ from Backend.resume_parser import test_parser_configuration
 from bson import ObjectId
 import requests
 import pprint
+from Backend.cpp_integration import run_skill_matcher
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -280,6 +281,9 @@ def hr_dashboard_alt():
         print(f"  Candidates: {len(job.get('candidates', []))}")
         for cand in job.get('candidates', []):
             print(f"    - {cand.get('seeker_name')} (Status: {cand.get('status')})")
+
+    for job in jobs_with_candidates:
+        job['id'] = str(job['_id'])
 
     return render_template('hr_dashboard.html', 
                            user=user,
@@ -835,22 +839,12 @@ def external_jobs():
                         # Remove duplicates and limit to 10 skills
                         job_skills_list = list(dict.fromkeys(job_skills_list))[:10]
                         
-                        # Simple skill matching without C++ executable
+                        # Use C++ skill matcher for match percentage
                         match_percentage = 0.0
                         if resume_skills and job_skills_list:
-                            # Convert all skills to lowercase for comparison
-                            resume_skills_lower = [skill.lower() for skill in resume_skills]
-                            job_skills_lower = [skill.lower() for skill in job_skills_list]
-                            
-                            # Count matches
-                            matches = sum(1 for job_skill in job_skills_lower if any(resume_skill in job_skill or job_skill in resume_skill for resume_skill in resume_skills_lower))
-                            
-                            # Calculate percentage based on job skills (what percentage of job skills match resume skills)
-                            if job_skills_lower:
-                                match_percentage = (matches / len(job_skills_lower)) * 100
-                        
-                        print(f"[DEBUG] Skill matcher for job {job_id} returned: {match_percentage}%")
-                        
+                            print(f"[DEBUG] Calling run_skill_matcher with job_skills_list: {job_skills_list}, resume_skills: {resume_skills}")
+                            match_percentage = run_skill_matcher(job_skills_list, resume_skills)
+                            print(f"[DEBUG] run_skill_matcher returned: {match_percentage}")
                         job['match_percentage'] = match_percentage
                         job['tags'] = job_skills_list
                         all_jobs.append(job)
@@ -1001,14 +995,15 @@ def get_all_jobs():
         seeker_skills = user['parsed_resume_data'].get('skills', [])
         if not seeker_skills:
             seeker_skills = user['parsed_resume_data'].get('data', {}).get('document', {}).get('skills', [])
-    # Add match percent and matched_skills to each job
+    # Add match percent and matched_skills to each job using C++ matcher
     for job in jobs:
         job_skills = job.get('tags', [])
         if seeker_skills and job_skills:
+            print(f"[DEBUG] Calling run_skill_matcher with job_skills: {job_skills}, seeker_skills: {seeker_skills}")
+            match_percent = run_skill_matcher(job_skills, seeker_skills)
+            print(f"[DEBUG] run_skill_matcher returned: {match_percent}")
             matched_skills = [skill for skill in job_skills if skill.lower() in [s.lower() for s in seeker_skills]]
-            match_count = len(matched_skills)
-            match_percent = int((match_count / len(seeker_skills)) * 100) if seeker_skills else 0
-            job['match_percent'] = match_percent
+            job['match_percent'] = int(round(match_percent))
             job['matched_skills'] = matched_skills
         else:
             job['match_percent'] = 0
@@ -1029,10 +1024,11 @@ def platform_jobs_page():
     for job in jobs:
         job_skills = job.get('tags', [])
         if seeker_skills and job_skills:
+            print(f"[DEBUG] Calling run_skill_matcher with job_skills: {job_skills}, seeker_skills: {seeker_skills}")
+            match_percent = run_skill_matcher(job_skills, seeker_skills)
+            print(f"[DEBUG] run_skill_matcher returned: {match_percent}")
             matched_skills = [skill for skill in job_skills if skill.lower() in [s.lower() for s in seeker_skills]]
-            match_count = len(matched_skills)
-            match_percent = int((match_count / len(seeker_skills)) * 100) if seeker_skills else 0
-            job['match_percent'] = match_percent
+            job['match_percent'] = int(round(match_percent))
             job['matched_skills'] = matched_skills
         else:
             job['match_percent'] = 0
@@ -1465,6 +1461,42 @@ def view_candidate_details(application_id):
 
     except Exception as e:
         logger.error(f"Error viewing candidate details for application ID {application_id}: {str(e)}", exc_info=True)
+        flash(f"An error occurred: {str(e)}", 'danger')
+        return redirect(url_for('hr_dashboard_alt'))
+
+@app.route('/view-candidate-profile/<string:resume_id>')
+@login_required
+@role_required('hr')
+def view_candidate_profile(resume_id):
+    from Backend.database import resumes, users
+    from bson import ObjectId
+    user = get_current_user()
+    if not user or user.get('role') != 'hr':
+        flash('You do not have permission to view candidate details.', 'danger')
+        return redirect(url_for('dashboard'))
+    try:
+        resume = resumes.find_one({'_id': ObjectId(resume_id)})
+        if not resume:
+            flash('Resume not found.', 'danger')
+            return redirect(url_for('hr_dashboard_alt'))
+        seeker = users.find_one({'_id': resume.get('user_id')})
+        candidate_data = {
+            'application_id': None,
+            'seeker_name': seeker.get('name', 'N/A') if seeker else 'N/A',
+            'seeker_email': seeker.get('email', 'N/A') if seeker else 'N/A',
+            'seeker_phone': seeker.get('phone', 'N/A') if seeker else 'N/A',
+            'seeker_location': seeker.get('location', 'N/A') if seeker else 'N/A',
+            'job_title': 'N/A',
+            'company_name': 'N/A',
+            'application_date': 'N/A',
+            'status': 'Not Applied',
+            'status_color': 'secondary',
+            'match_score': 'N/A',
+            'resume_data': resume.get('parsed_data', {}).get('data', {}).get('document', {})
+        }
+        return render_template('candidate_details.html', candidate=candidate_data, current_year=datetime.now().year)
+    except Exception as e:
+        logger.error(f"Error viewing candidate profile for resume ID {resume_id}: {str(e)}", exc_info=True)
         flash(f"An error occurred: {str(e)}", 'danger')
         return redirect(url_for('hr_dashboard_alt'))
 

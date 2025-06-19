@@ -1,6 +1,6 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from .job_poster import post_job, get_jobs, update_job, delete_job
-from .match_viewer import find_matches, get_matches, update_match_status
+from .match_viewer import find_matches, get_matches, update_match_status, find_top_matches_for_job
 from Backend.auth.auth_handler import require_auth, require_role
 
 hr_bp = Blueprint('hr', __name__)
@@ -135,4 +135,23 @@ def handle_update_match(match_id):
             return jsonify({'error': result}), 400
             
     except Exception as e:
-        return jsonify({'error': str(e)}), 500 
+        return jsonify({'error': str(e)}), 500
+
+@hr_bp.route('/job/<job_id>/top-matches', methods=['GET'])
+@require_auth
+@require_role('hr')
+def handle_top_matches(job_id):
+    try:
+        success, result = find_top_matches_for_job(job_id)
+        if success:
+            return jsonify(result), 200
+        else:
+            return jsonify({'error': result}), 400
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@hr_bp.route('/job/<job_id>/top-matches-view', methods=['GET'])
+@require_auth
+@require_role('hr')
+def top_matches_view(job_id):
+    return render_template('hr_top_matches.html', job_id=job_id) 

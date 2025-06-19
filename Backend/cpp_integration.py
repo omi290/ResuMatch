@@ -1,6 +1,7 @@
 import subprocess
 import json
 import os
+import tempfile
 
 def run_skill_matcher(job_skills, resume_skills):
     """
@@ -12,19 +13,29 @@ def run_skill_matcher(job_skills, resume_skills):
         float: match percentage (0-100)
     """
     try:
-        # Prepare input JSON string
-        input_data = json.dumps({
-            "job_skills": job_skills,
-            "resume_skills": resume_skills
-        })
-        # Path to skill_matcher executable
+        # Write resume_skills and job_skills to temporary JSON files
+        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix='.json') as resume_file, \
+             tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix='.json') as job_file:
+            json.dump({"skills": resume_skills}, resume_file)
+            resume_file.flush()
+            json.dump({"tags": job_skills}, job_file)
+            job_file.flush()
+            resume_file_path = resume_file.name
+            job_file_path = job_file.name
         exe_path = os.path.join(os.path.dirname(__file__), "cpp_modules", "skill_matcher.exe")
-        # Run subprocess with input data
-        result = subprocess.run([exe_path], input=input_data.encode(), capture_output=True, check=True)
-        # Parse output as float match percentage
-        output = result.stdout.decode().strip()
-        match_percentage = float(output)
-        return match_percentage
+        # Call the executable with file paths as arguments
+        result = subprocess.run([exe_path, resume_file_path, job_file_path], capture_output=True, text=True, check=True)
+        output = result.stdout.strip()
+        # Clean up temp files
+        os.remove(resume_file_path)
+        os.remove(job_file_path)
+        # Parse output for match percentage
+        for line in output.splitlines():
+            if "Match Percentage:" in line:
+                percent_str = line.split(":")[-1].replace("%", "").strip()
+                return float(percent_str)
+        # If not found, return 0
+        return 0.0
     except Exception as e:
         print(f"Error running skill_matcher: {e}")
         return 0.0

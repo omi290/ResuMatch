@@ -73,20 +73,22 @@
     </nav>
 
     <div class="container candidate-details-container flex-grow-1">
-        <h1 class="mb-4 text-center text-primary">Candidate Application Details</h1>
+        <h1 class="mb-4 text-center text-primary">Candidate Details</h1>
 
+        <!-- Only show Application Info and Contact Info if candidate.application_id is present -->
+        {% if candidate.application_id %}
         <div class="row mb-4">
             <div class="col-md-6">
                 <div class="card shadow-sm h-100">
                     <div class="card-body">
                         <h5 class="card-title text-primary"><i class="fas fa-info-circle me-2"></i>Application Info</h5>
                         <ul class="list-unstyled mb-0">
-                            <li><strong>Candidate Name:</strong> {{ candidate.seeker_name | default('N/A') }}</li>
-                            <li><strong>Applied For:</strong> {{ candidate.job_title | default('N/A') }} at {{ candidate.company_name | default('N/A') }}</li>
-                            <li><strong>Application Date:</strong> {{ candidate.application_date | default('N/A') }}</li>
-                            <li><strong>Status:</strong> <span class="badge bg-{{ candidate.status_color }}">{{ candidate.status | default('N/A') }}</span></li>
+                            <li><strong>Candidate Name:</strong> {{ candidate.seeker_name }}</li>
+                            <li><strong>Applied For:</strong> {{ candidate.job_title }} at {{ candidate.company_name }}</li>
+                            <li><strong>Application Date:</strong> {{ candidate.application_date }}</li>
+                            <li><strong>Status:</strong> <span class="badge bg-{{ candidate.status_color }}">{{ candidate.status }}</span></li>
                             {% if candidate.match_score is not none %}
-                            <li><strong>Match Score:</strong> {{ candidate.match_score | default('N/A') }}%</li>
+                            <li><strong>Match Score:</strong> {{ candidate.match_score }}%</li>
                             {% endif %}
                         </ul>
                     </div>
@@ -97,14 +99,15 @@
                     <div class="card-body">
                         <h5 class="card-title text-primary"><i class="fas fa-id-card me-2"></i>Contact Info</h5>
                         <ul class="list-unstyled mb-0">
-                            <li><strong>Email:</strong> {{ candidate.seeker_email | default('N/A') }}</li>
-                            <li><strong>Phone:</strong> {{ candidate.seeker_phone | default('N/A') }}</li>
-                            <li><strong>Location:</strong> {{ candidate.seeker_location | default('N/A') }}</li>
+                            {% if candidate.seeker_email and candidate.seeker_email != 'N/A' %}<li><strong>Email:</strong> {{ candidate.seeker_email }}</li>{% endif %}
+                            {% if candidate.seeker_phone and candidate.seeker_phone != 'N/A' %}<li><strong>Phone:</strong> {{ candidate.seeker_phone }}</li>{% endif %}
+                            {% if candidate.seeker_location and candidate.seeker_location != 'N/A' %}<li><strong>Location:</strong> {{ candidate.seeker_location }}</li>{% endif %}
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
+        {% endif %}
 
         <h2 class="section-header"><i class="fas fa-file-alt me-2"></i>Candidate Resume</h2>
 
@@ -112,11 +115,11 @@
         <div class="mb-4">
             <h4 class="text-primary">Personal Information</h4>
             <div class="section-content">
-                <p><strong>Name:</strong> {{ candidate.resume_data.name | default('N/A') }}</p>
-                <p><strong>Email:</strong> {{ candidate.resume_data.email | default('N/A') }}</p>
-                <p><strong>Phone:</strong> {{ candidate.resume_data.phone | default('N/A') }}</p>
-                <p><strong>Location:</strong> {{ candidate.resume_data.location | default('N/A') }}</p>
-                <p><strong>Summary:</strong> {{ candidate.resume_data.summary | default('N/A') }}</p>
+                {% if candidate.resume_data.name and candidate.resume_data.name != 'N/A' %}<p><strong>Name:</strong> {{ candidate.resume_data.name }}</p>{% endif %}
+                {% if candidate.resume_data.email and candidate.resume_data.email != 'N/A' %}<p><strong>Email:</strong> {{ candidate.resume_data.email }}</p>{% endif %}
+                {% if candidate.resume_data.phone and candidate.resume_data.phone != 'N/A' %}<p><strong>Phone:</strong> {{ candidate.resume_data.phone }}</p>{% endif %}
+                {% if candidate.resume_data.location and candidate.resume_data.location != 'N/A' %}<p><strong>Location:</strong> {{ candidate.resume_data.location }}</p>{% endif %}
+                {% if candidate.resume_data.summary and candidate.resume_data.summary != 'N/A' %}<p><strong>Summary:</strong> {{ candidate.resume_data.summary }}</p>{% endif %}
             </div>
         </div>
 

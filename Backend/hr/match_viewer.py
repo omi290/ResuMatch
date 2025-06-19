@@ -1,64 +1,63 @@
 from datetime import datetime
-from Backend.database import jobs, resumes, matches
+from Backend.database import jobs, resumes, matches, applications, users
 from bson import ObjectId
 from Backend.cpp_integration import run_skill_matcher, run_resume_ranker
 
 def calculate_match_score(job_requirements, resume_skills):
     """Calculate match score between job requirements and resume skills using C++ skill_matcher"""
     try:
-        match_score = run_skill_matcher(job_requirements, resume_skills)
+        # Parse job requirements into a list of skills
+        if isinstance(job_requirements, str):
+            job_skills_norm = [s.strip().lower() for s in job_requirements.split(',') if s.strip()]
+        elif isinstance(job_requirements, list):
+            job_skills_norm = [s.strip().lower() for s in job_requirements if isinstance(s, str) and s.strip()]
+        else:
+            job_skills_norm = []
+        resume_skills_norm = [skill.strip().lower() for skill in resume_skills if isinstance(skill, str)]
+        print(f"Calculating match score. Job skills: {job_skills_norm}, Resume skills: {resume_skills_norm}")
+        match_score = run_skill_matcher(job_skills_norm, resume_skills_norm)
+        print(f"Match score calculated: {match_score}")
         return round(match_score, 2)
     except Exception as e:
         print(f"Error calculating match score with C++: {str(e)}")
         return 0
 
 def find_matches(job_id):
-    """Find matching resumes for a job using C++ skill matcher and resume ranker"""
+    """Find matching applicants for a job using C++ skill matcher and priority queue"""
     try:
         job = jobs.find_one({'_id': ObjectId(job_id)})
         if not job:
             return False, "Job not found"
-        
-        all_resumes = list(resumes.find({'status': 'active'}))
-        
+        # Fetch all applications for this job
+        job_applications = list(applications.find({'job_id': str(job_id)}))
+        if not job_applications:
+            return True, []
         # Prepare list for ranking
-        resume_list = []
-        for resume in all_resumes:
+        applicant_list = []
+        for app in job_applications:
+            seeker_id = app.get('seeker_id')
+            resume = resumes.find_one({'user_id': seeker_id, 'status': 'active'})
+            if not resume:
+                continue
             skills = resume.get('parsed_data', {}).get('skills', [])
-            match_score = calculate_match_score(job['requirements'], skills)
-            if match_score > 0:
-                resume_list.append({
-                    'resume_id': str(resume['_id']),
-                    'user_id': resume['user_id'],
-                    'skills': skills,
-                    'match_score': match_score
-                })
-        
-        # Use C++ resume_ranker to get top ranked resumes
-        top_ranked = run_resume_ranker(resume_list)
-        
-        job_matches = []
-        for item in top_ranked[:10]:  # Top 10 matches
-            match_data = {
-                'job_id': str(job['_id']),
-                'resume_id': item['resume_id'],
-                'user_id': item['user_id'],
-                'match_score': item['match_score'],
-                'created_at': datetime.utcnow(),
-                'status': 'pending'
-            }
-            matches.update_one(
-                {
-                    'job_id': str(job['_id']),
-                    'resume_id': item['resume_id']
-                },
-                {'$set': match_data},
-                upsert=True
-            )
-            job_matches.append(match_data)
-        
-        return True, job_matches
-        
+            match_score = calculate_match_score(job.get('requirements', []), skills)
+            user = users.find_one({'_id': ObjectId(seeker_id)})
+            applicant_list.append({
+                'application_id': str(app['_id']),
+                'resume_id': str(resume['_id']),
+                'user_id': seeker_id,
+                'skills': skills,
+                'match_score': match_score,
+                'seeker_name': user.get('name', 'N/A') if user else 'N/A',
+                'seeker_email': user.get('email', 'N/A') if user else 'N/A',
+                'seeker_phone': user.get('phone', 'N/A') if user else 'N/A',
+                'seeker_location': user.get('location', 'N/A') if user else 'N/A',
+                'applied_date': app.get('application_date', ''),
+                'status': app.get('status', 'Pending')
+            })
+        # Sort by match_score descending, take top 10 or all if less
+        sorted_applicants = sorted(applicant_list, key=lambda x: x['match_score'], reverse=True)[:10]
+        return True, sorted_applicants
     except Exception as e:
         return False, str(e)
 
@@ -120,5 +119,56 @@ def update_match_status(match_id, status, user_id):
             
         return True, "Match status updated successfully"
         
+    except Exception as e:
+        return False, str(e)
+
+def find_top_matches_for_job(job_id):
+    """Find top matching seekers for a job using C++ skill matcher and priority queue (for HR View button)."""
+    try:
+        job = jobs.find_one({'_id': ObjectId(job_id)})
+        if not job:
+            return False, "Job not found"
+        # Parse job requirements into a list of skills
+        if isinstance(job.get('requirements', []), str):
+            job_skills = [s.strip().lower() for s in job['requirements'].split(',') if s.strip()]
+        elif isinstance(job.get('requirements', []), list):
+            job_skills = [s.strip().lower() for s in job['requirements'] if isinstance(s, str) and s.strip()]
+        else:
+            job_skills = []
+        seeker_users = list(users.find({'role': 'seeker'}))
+        if not seeker_users:
+            return True, []
+        seeker_list = []
+        for user in seeker_users:
+            user_id = user.get('_id')
+            resume = resumes.find_one({'user_id': str(user_id), 'status': 'active'})
+            print(f"User: {user.get('email')}, Resume: {resume}")
+            if not resume:
+                continue
+            # Extract skills from the correct nested path
+            skills = (
+                resume.get('parsed_data', {})
+                      .get('data', {})
+                      .get('document', {})
+                      .get('skills', [])
+            )
+            if not skills:
+                # fallback to old path if needed
+                skills = resume.get('parsed_data', {}).get('skills', [])
+            print(f"Parsed skills for user {user.get('email')}: {skills}")
+            match_score = calculate_match_score(job_skills, skills)
+            seeker_list.append({
+                'user_id': str(user_id),
+                'resume_id': str(resume['_id']),
+                'skills': skills,
+                'match_score': match_score,
+                'seeker_name': user.get('name', 'N/A'),
+                'seeker_email': user.get('email', 'N/A'),
+                'seeker_phone': user.get('phone', 'N/A'),
+                'seeker_location': user.get('location', 'N/A'),
+                'status': 'Not Applied'  # Default status for non-applicants
+            })
+        sorted_seekers = sorted(seeker_list, key=lambda x: x['match_score'], reverse=True)[:10]
+        return True, sorted_seekers
     except Exception as e:
         return False, str(e)

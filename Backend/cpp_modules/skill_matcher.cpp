@@ -56,7 +56,7 @@ vector<string> load_skills_from_json(const string& filepath, const string& key) 
 }
 
 double calculate_match_percentage(const vector<string>& resume_skills, const vector<string>& job_skills) {
-    if (resume_skills.empty()) return 0.0;
+    if (job_skills.empty()) return 0.0;
     unordered_set<string> resume_set(resume_skills.begin(), resume_skills.end());
     int match_count = 0;
     for (const auto& skill : job_skills) {
@@ -64,7 +64,7 @@ double calculate_match_percentage(const vector<string>& resume_skills, const vec
             match_count++;
         }
     }
-    return (static_cast<double>(match_count) / resume_skills.size()) * 100.0;
+    return (static_cast<double>(match_count) / job_skills.size()) * 100.0;
 }
 
 extern "C" {
